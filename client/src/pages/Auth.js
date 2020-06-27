@@ -14,7 +14,20 @@ export default function Auth() {
       const result = await firebase.auth().signInWithPopup(provider);
       //const token = result.credential.accessToken;
       const user = result.user;
-      console.log(user);
+      //console.log(user);
+      // await firebase.firestore().collection("users").doc(user.uid).set({
+      //   name: "Los Angeles",
+      //   state: "CA",
+      //   country: "USA",
+      // });
+      const userRef = await firebase
+        .firestore()
+        .collection("users")
+        .doc(user.uid);
+      const doc = await userRef.get();
+      const users = doc.data();
+
+      console.log(users);
       history.push("/main");
     } catch (err) {
       console.error(err);
