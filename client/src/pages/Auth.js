@@ -3,8 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { Button, CssBaseline, Container } from "@material-ui/core";
 
-import firebase from "firebase/app";
-import "firebaseui";
+import firebase from "firebase";
 
 export default function Auth() {
   const history = useHistory();
