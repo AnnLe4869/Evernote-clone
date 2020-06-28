@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,15 +15,19 @@ import "./App.css";
 
 function App() {
   const [user, setUser] = useState(
-    firebase.auth().currentUser ? firebase.auth().currentUser.uid : null
+    firebase.auth().currentUser ? firebase.auth().currentUser : null
   );
   const [isAuthenticated, setAuthenticated] = useState(
     firebase.auth().currentUser ? true : false
   );
 
   const login = () => {
-    setAuthenticated(true);
-    setUser(firebase.auth.currentUser);
+    try {
+      setAuthenticated(true);
+      setUser(firebase.auth().currentUser);
+    } catch (err) {
+      console.error(err);
+    }
   };
   return (
     <Router>
@@ -34,11 +39,9 @@ function App() {
         }}
       >
         <Switch>
-          {isAuthenticated ? null : (
-            <Route path="/auth">
-              <Authentication />
-            </Route>
-          )}
+          <Route path="/auth">
+            <Authentication />
+          </Route>
 
           {isAuthenticated ? (
             <Route path="/main">

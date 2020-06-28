@@ -1,42 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import firebase from "firebase";
 
 import { Button, CssBaseline, Container } from "@material-ui/core";
 
-import firebase from "firebase";
+//import firebase from "firebase";
 
 import AuthContext from "../context/auth-context";
 
 export default function Auth() {
+  const { user, isAuthenticated, login } = useContext(AuthContext);
   const history = useHistory();
-  const { user, login } = useContext(AuthContext);
+  const provider = new firebase.auth.GoogleAuthProvider();
 
   const handleClick = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
     try {
-      const result = await firebase.auth().signInWithPopup(provider);
-      //const token = result.credential.accessToken;
-      const user = result.user;
-      //console.log(result);
-      await firebase.firestore().collection("users").doc(user.uid).set({
-        name: "San Francisco",
-        state: "CA",
-        country: "USA",
-      });
-      const userRef = await firebase
-        .firestore()
-        .collection("users")
-        .doc(user.uid);
-      login();
-      const doc = await userRef.get();
-      const users = doc.data();
-
-      console.log(users);
+      await firebase.auth().signInWithPopup(provider);
+      if (!isAuthenticated) login();
       history.push("/main");
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,6 +34,7 @@ export default function Auth() {
         <Button variant="contained" color="secondary" onClick={handleClick}>
           Sign in with Google
         </Button>
+        <div>{user ? user.email : null}</div>
       </div>
     </Container>
   );
