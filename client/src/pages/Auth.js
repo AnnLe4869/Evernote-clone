@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Button, CssBaseline, Container } from "@material-ui/core";
 
 import firebase from "firebase";
 
+import AuthContext from "../context/auth-context";
+
 export default function Auth() {
   const history = useHistory();
+  const { user, login } = useContext(AuthContext);
 
   const handleClick = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -14,16 +17,17 @@ export default function Auth() {
       const result = await firebase.auth().signInWithPopup(provider);
       //const token = result.credential.accessToken;
       const user = result.user;
-      //console.log(user);
-      // await firebase.firestore().collection("users").doc(user.uid).set({
-      //   name: "Los Angeles",
-      //   state: "CA",
-      //   country: "USA",
-      // });
+      //console.log(result);
+      await firebase.firestore().collection("users").doc(user.uid).set({
+        name: "San Francisco",
+        state: "CA",
+        country: "USA",
+      });
       const userRef = await firebase
         .firestore()
         .collection("users")
         .doc(user.uid);
+      login();
       const doc = await userRef.get();
       const users = doc.data();
 

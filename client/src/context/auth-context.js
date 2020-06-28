@@ -1,4 +1,6 @@
-export default {
+import React from "react";
+export default React.createContext({
   user: null,
-  token: null,
-};
+  isAuthenticated: false,
+  login: () => {},
+});
