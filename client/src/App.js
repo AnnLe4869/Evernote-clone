@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   BrowserRouter as Router,
@@ -14,17 +14,26 @@ import AuthContext from "./context/auth-context";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(
-    firebase.auth().currentUser ? firebase.auth().currentUser : null
+  const [userId, setUserId] = useState(
+    firebase.auth().currentUser ? firebase.auth().currentUser.uid : null
   );
   const [isAuthenticated, setAuthenticated] = useState(
     firebase.auth().currentUser ? true : false
   );
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        setUserId(user.uid);
+        setAuthenticated(true);
+      }
+    });
+  }, [userId]);
+
   const login = () => {
     try {
       setAuthenticated(true);
-      setUser(firebase.auth().currentUser);
+      setUserId(firebase.auth().currentUser.uid);
     } catch (err) {
       console.error(err);
     }
@@ -33,7 +42,7 @@ function App() {
     <Router>
       <AuthContext.Provider
         value={{
-          user,
+          userId,
           isAuthenticated,
           login,
         }}

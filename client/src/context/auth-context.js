@@ -1,6 +1,6 @@
 import React from "react";
 export default React.createContext({
-  user: null,
+  userId: null,
   isAuthenticated: false,
   provider: null,
   login: () => {},
