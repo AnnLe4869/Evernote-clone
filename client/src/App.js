@@ -17,22 +17,17 @@ function App() {
   const [userId, setUserId] = useState(
     firebase.auth().currentUser ? firebase.auth().currentUser.uid : null
   );
-  const [isAuthenticated, setAuthenticated] = useState(
-    firebase.auth().currentUser ? true : false
-  );
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUserId(user.uid);
-        setAuthenticated(true);
       }
     });
-  }, [userId]);
+  }, []);
 
   const login = () => {
     try {
-      setAuthenticated(true);
       setUserId(firebase.auth().currentUser.uid);
     } catch (err) {
       console.error(err);
@@ -43,7 +38,6 @@ function App() {
       <AuthContext.Provider
         value={{
           userId,
-          isAuthenticated,
           login,
         }}
       >
@@ -52,7 +46,7 @@ function App() {
             <Authentication />
           </Route>
 
-          {isAuthenticated ? (
+          {userId ? (
             <Route path="/main">
               <MainContent />
             </Route>
