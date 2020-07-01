@@ -14,21 +14,21 @@ import AuthContext from "./context/auth-context";
 import "./App.css";
 
 function App() {
-  const [userId, setUserId] = useState(
-    firebase.auth().currentUser ? firebase.auth().currentUser.uid : null
+  const [userEmail, setUserEmail] = useState(
+    firebase.auth().currentUser ? firebase.auth().currentUser.email : null
   );
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        setUserId(user.uid);
+        setUserEmail(user.email);
       }
     });
   }, []);
 
   const login = () => {
     try {
-      setUserId(firebase.auth().currentUser.uid);
+      setUserEmail(firebase.auth().currentUser.email);
     } catch (err) {
       console.error(err);
     }
@@ -37,7 +37,7 @@ function App() {
     <Router>
       <AuthContext.Provider
         value={{
-          userId,
+          userEmail,
           login,
         }}
       >
@@ -46,7 +46,7 @@ function App() {
             <Authentication />
           </Route>
 
-          {userId ? (
+          {userEmail ? (
             <Route path="/main">
               <MainContent />
             </Route>

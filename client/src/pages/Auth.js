@@ -10,14 +10,14 @@ import AuthContext from "../context/auth-context";
 
 export default function Auth() {
   const [count, setCount] = useState(0);
-  const { userId, login } = useContext(AuthContext);
+  const { userEmail, login } = useContext(AuthContext);
   const history = useHistory();
   const provider = new firebase.auth.GoogleAuthProvider();
 
   const handleClick = async () => {
     try {
       await firebase.auth().signInWithPopup(provider);
-      if (!userId) login();
+      if (!userEmail) login();
       history.push("/main");
     } catch (err) {
       console.error(err);
@@ -25,10 +25,10 @@ export default function Auth() {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (userEmail) {
       history.push("/main");
     }
-  }, [userId, history]);
+  }, [userEmail, history]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,7 +45,7 @@ export default function Auth() {
         >
           Increment
         </Button>
-        <div>{userId ? firebase.auth().currentUser.email : null}</div>
+        <div>{userEmail ? firebase.auth().currentUser.email : null}</div>
       </div>
     </Container>
   );
