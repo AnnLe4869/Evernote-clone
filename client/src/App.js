@@ -9,9 +9,8 @@ import {
 import firebase from "firebase";
 
 import Authentication from "./pages/Auth";
-import MainContent from "./pages/Main";
+import MainContent from "./pages/Content";
 import AuthContext from "./context/auth-context";
-import "./App.css";
 
 function App() {
   const [userEmail, setUserEmail] = useState(
@@ -33,6 +32,7 @@ function App() {
       console.error(err);
     }
   };
+
   return (
     <Router>
       <AuthContext.Provider
@@ -45,8 +45,8 @@ function App() {
           <Route path="/auth">
             <Authentication />
           </Route>
-
-          {userEmail ? (
+          {/* Temporarily disable the protected route           */}
+          {true ? (
             <Route path="/main">
               <MainContent />
             </Route>
