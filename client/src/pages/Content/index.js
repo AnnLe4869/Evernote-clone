@@ -10,7 +10,7 @@ import NoteList from "./NoteList";
 
 export default function Main() {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <div>
       <CssBaseline />
@@ -18,7 +18,7 @@ export default function Main() {
       <Grid
         container
         component="main"
-        style={{ height: "100vh", marginLeft: matches ? "240px" : null }}
+        style={{ height: "100vh", marginLeft: matches ? "18vw" : null }}
       >
         <Grid item md={6} sm={12}>
           <NoteList />
