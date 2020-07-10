@@ -11,10 +11,15 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+<<<<<<< HEAD
 import SvgIcon from "@material-ui/core/SvgIcon";
 import DeleteIcon from "@material-ui/icons/Delete";
 import StarIcon from "@material-ui/icons/Star";
 import PeopleIcon from "@material-ui/icons/People";
+=======
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+>>>>>>> 001e3ca4e279e50cbe5f6a018a6c39e99f451a37
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const drawerWidth = "18vw";
@@ -141,6 +146,7 @@ export default function Navigator() {
         </List>
         <Divider />
         <List></List>
+
       </Drawer>
     </div>
   );
