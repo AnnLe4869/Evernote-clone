@@ -28,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   menuButton: {
-    marginRight: theme.spacing(2),
-    marginLeft: theme.spacing(2),
+    position: "absolute",
+    left: theme.spacing(2),
+    bottom: theme.spacing(2),
   },
   hide: {
     display: "none",
@@ -50,9 +51,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
   },
   drawerHeader: {
     display: "flex",
@@ -85,12 +83,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navigator() {
+export default function Navigator({ open, setOpen }) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-
-  const [open, setOpen] = React.useState(!matches);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,7 +99,7 @@ export default function Navigator() {
   useEffect(() => {
     if (matches) setOpen(true);
     if (!matches) setOpen(false);
-  }, [matches]);
+  }, [matches, setOpen]);
 
   return (
     <div>

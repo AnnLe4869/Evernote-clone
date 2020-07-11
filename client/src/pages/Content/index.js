@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -11,14 +11,21 @@ import NoteList from "./NoteList";
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
+
+  const [open, setOpen] = useState(!matches);
+
   return (
     <div>
       <CssBaseline />
-      <Navigator />
+      <Navigator open={open} setOpen={setOpen} />
       <Grid
         container
         component="main"
-        style={{ height: "100vh", marginLeft: matches ? "18vw" : null }}
+        style={{
+          height: "100vh",
+          paddingLeft: open ? "18vw" : null,
+          border: "yellow solid",
+        }}
       >
         <Grid item md={6} sm={12}>
           <NoteList />
