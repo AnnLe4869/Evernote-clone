@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
     left: theme.spacing(2),
     bottom: theme.spacing(2),
   },
+  headerText: {
+    fontSize: "20px",
+    fontWeight: 400,
+    letterSpacing: "0.03em",
+  },
   action: {
     position: "absolute",
     right: theme.spacing(0),
@@ -45,7 +50,12 @@ export default function NoteList() {
           <ListItemText
             primary={
               <React.Fragment>
-                <Typography component="span" variant="h5" color="textPrimary">
+                <Typography
+                  component="span"
+                  variant="h5"
+                  color="textPrimary"
+                  className={classes.headerText}
+                >
                   Notebook title
                 </Typography>
               </React.Fragment>
@@ -54,7 +64,7 @@ export default function NoteList() {
           <Typography
             component="span"
             variant="subtitle2"
-            color="textPrimary"
+            color="textSecondary"
             className={classes.subtitle}
           >
             Notebook title
@@ -65,44 +75,49 @@ export default function NoteList() {
         </ListItem>
         <Divider component="li" />
 
-        <ListItem alignItems="flex-start" button>
+        <ListItem alignItems="flex-start" button className={classes.item}>
           <ListItemText
-            primary="Summer BBQ"
+            primary={
+              <React.Fragment>
+                <Typography component="div" variant="h6" color="textPrimary">
+                  to Scott, Alex, Jennifer
+                </Typography>
+              </React.Fragment>
+            }
             secondary={
               <React.Fragment>
                 <Typography
                   component="span"
-                  variant="body2"
+                  variant="subtitle2"
                   className={classes.inline}
-                  color="textPrimary"
+                  color="textSecondary"
                 >
                   to Scott, Alex, Jennifer
                 </Typography>
-                {" — Wish I could come, but I'm out of town this…"}
               </React.Fragment>
             }
           />
         </ListItem>
         <Divider component="li" />
 
-        <ListItem alignItems="flex-start" button>
+        <ListItem alignItems="flex-start" button className={classes.item}>
           <ListItemText
-            primary="Oui Oui"
+            primary="Summer BBQ"
             secondary={
               <React.Fragment>
                 <Typography
                   component="span"
-                  variant="body2"
+                  variant="subtitle2"
                   className={classes.inline}
-                  color="textPrimary"
+                  color="textSecondary"
                 >
-                  Sandra Adams
+                  to Scott, Alex, Jennifer
                 </Typography>
-                {" — Do you have Paris recommendations? Have you ever…"}
               </React.Fragment>
             }
           />
         </ListItem>
+        <Divider component="li" />
       </List>
     </div>
   );
