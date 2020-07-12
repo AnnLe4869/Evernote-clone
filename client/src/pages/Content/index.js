@@ -24,13 +24,12 @@ export default function Main() {
         style={{
           height: "100vh",
           paddingLeft: open ? "18vw" : null,
-          border: "yellow solid",
         }}
       >
-        <Grid item md={6} sm={12}>
+        <Grid item md={3} sm={12}>
           <NoteList />
         </Grid>
-        <Grid item md={6} sm={12}>
+        <Grid item md={9} sm={12}>
           <Editor />
         </Grid>
       </Grid>

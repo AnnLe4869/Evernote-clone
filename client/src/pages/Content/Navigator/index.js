@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     left: theme.spacing(2),
     bottom: theme.spacing(2),
+    zIndex: 1200,
   },
   hide: {
     display: "none",
@@ -57,14 +58,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: theme.spacing(0, 1),
     justifyContent: "flex-end",
+    position: "absolute",
+    bottom: theme.spacing(1),
+    right: theme.spacing(1),
   },
   search: {
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
@@ -121,15 +121,6 @@ export default function Navigator({ open, setOpen }) {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
@@ -188,7 +179,15 @@ export default function Navigator({ open, setOpen }) {
           </ListItem>
         </List>
         <Divider />
-        <List></List>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
       </Drawer>
     </div>
   );
