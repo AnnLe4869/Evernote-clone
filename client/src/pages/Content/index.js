@@ -22,8 +22,9 @@ export default function Main() {
         container
         component="main"
         style={{
-          height: "100vh",
           paddingLeft: open ? "18vw" : null,
+          height: "100vh",
+          overflow: "hidden",
         }}
       >
         <Grid item md={4} sm={12}>

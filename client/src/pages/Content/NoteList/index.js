@@ -5,7 +5,6 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-//import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
@@ -13,12 +12,10 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    height: "100%",
     backgroundColor: theme.palette.background.paper,
   },
-  inline: {
-    display: "inline",
-  },
+
   listItem: {
     height: "8rem",
     position: "relative",
@@ -50,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     left: theme.spacing(2),
     bottom: theme.spacing(2),
+  },
+  itemDisplay: {
+    height: "calc(100vh - 8rem)",
+    overflowY: "auto",
+    boxSizing: "content-box",
   },
 }));
 
@@ -87,296 +89,297 @@ export default function NoteList() {
         </ListItem>
         <Divider component="li" />
 
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
+        <div className={classes.itemDisplay}>
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
 
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
 
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
-        <ListItem alignItems="flex-start" button className={classes.listItem}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="div"
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.itemPrimaryText}
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <Typography
-            component="span"
-            variant="subtitle2"
-            color="textSecondary"
-            className={classes.itemSubtitle}
-          >
-            Jul 13
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+          <Divider component="li" />
+          <ListItem alignItems="flex-start" button className={classes.listItem}>
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <Typography
+                    component="div"
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.itemPrimaryText}
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="subtitle2"
+                    color="textSecondary"
+                  >
+                    to Scott, Alex, Jennifer
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <Typography
+              component="span"
+              variant="subtitle2"
+              color="textSecondary"
+              className={classes.itemSubtitle}
+            >
+              Jul 13
+            </Typography>
+          </ListItem>
+        </div>
       </List>
     </div>
   );
