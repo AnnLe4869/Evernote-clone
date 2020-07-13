@@ -10,10 +10,10 @@
 
 # production
 /build
+firebase.config.js
 
 # misc
 .DS_Store
-firebase.config.js
 .env.local
 .env.development.local
 .env.test.local
