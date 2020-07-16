@@ -9,6 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import StarIcon from "@material-ui/icons/Star";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +67,12 @@ const useStyles = makeStyles((theme) => ({
       outline: "1px solid slate grey",
     },
   },
+  itemStarIcon: {
+    color: "#f5cc05",
+    fontSize: 15,
+    verticalAlign: "-0.1em",
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 export default function NoteList() {
@@ -73,6 +80,7 @@ export default function NoteList() {
   return (
     <div>
       <List className={classes.root}>
+        {/* This is the notebook title and utility button */}
         <ListItem alignItems="flex-start" className={classes.listHeader}>
           <ListItemText
             primary={
@@ -102,6 +110,7 @@ export default function NoteList() {
         </ListItem>
         <Divider component="li" />
 
+        {/* The below are item */}
         <div className={classes.itemDisplay}>
           <ListItem alignItems="flex-start" button className={classes.listItem}>
             <ListItemText
@@ -113,7 +122,8 @@ export default function NoteList() {
                     color="textPrimary"
                     className={classes.itemPrimaryText}
                   >
-                    to Scott, Alex, Jennifer
+                    Item title
+                    <StarIcon className={classes.itemStarIcon} />
                   </Typography>
                 </React.Fragment>
               }
@@ -124,7 +134,7 @@ export default function NoteList() {
                     variant="subtitle2"
                     color="textSecondary"
                   >
-                    to Scott, Alex, Jennifer
+                    Item content
                   </Typography>
                 </React.Fragment>
               }
@@ -135,7 +145,7 @@ export default function NoteList() {
               color="textSecondary"
               className={classes.itemSubtitle}
             >
-              Jul 13
+              Date of editing
             </Typography>
           </ListItem>
           <Divider component="li" />
