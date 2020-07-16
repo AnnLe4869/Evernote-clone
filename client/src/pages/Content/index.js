@@ -30,7 +30,7 @@ export default function Main() {
         <Grid item md={4} sm={12}>
           <NoteList />
         </Grid>
-        <Grid item md={7} sm={12}>
+        <Grid item md={8} sm={12}>
           <Editor />
         </Grid>
       </Grid>
