@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: theme.spacing(0),
     bottom: theme.spacing(0),
+    marginRight: theme.spacing(1),
   },
   itemPrimaryText: {
     fontSize: 14,
@@ -77,6 +80,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NoteList() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div>
       <List className={classes.root}>
@@ -104,9 +116,22 @@ export default function NoteList() {
           >
             Notebook title
           </Typography>
-          <IconButton className={classes.headerAction}>
+          <IconButton className={classes.headerAction} onClick={handleClick}>
             <MoreHorizIcon />
           </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            getContentAnchorEl={null}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            <MenuItem onClick={handleClose}>Share notebook</MenuItem>
+            <MenuItem onClick={handleClose}>Share notebook</MenuItem>
+            <MenuItem onClick={handleClose}>Share notebook</MenuItem>
+          </Menu>
         </ListItem>
         <Divider component="li" />
 
