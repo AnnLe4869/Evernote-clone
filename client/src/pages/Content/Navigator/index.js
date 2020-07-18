@@ -1,6 +1,15 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  useTheme,
+  fade,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
+
+import Button from "@material-ui/core/Button";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -13,6 +22,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SvgIcon from "@material-ui/core/SvgIcon";
+
+import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import StarIcon from "@material-ui/icons/Star";
 import SearchIcon from "@material-ui/icons/Search";
@@ -33,8 +44,17 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     zIndex: 1200,
   },
+  addButton: {
+    margin: theme.spacing(2),
+    width: "calc(100% - 45px)",
+    borderRadius: "20px;",
+    color: "inherit",
+  },
   hide: {
     display: "none",
+  },
+  icon: {
+    color: "#ccc",
   },
   drawer: {
     width: drawerWidth,
@@ -42,9 +62,16 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: "#1a1a1a",
+    color: "#fff",
   },
-  inputRoot: {
-    color: "inherit",
+  // inputRoot: {
+  //   color: "inherit",
+  // },
+  listItem: {
+    "&:hover": {
+      backgroundColor: "#333",
+    },
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -82,6 +109,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
 }));
+const buttonTheme = createMuiTheme({
+  palette: {
+    primary: green,
+  },
+});
 
 export default function Navigator({ open, setOpen }) {
   const classes = useStyles();
@@ -113,6 +145,7 @@ export default function Navigator({ open, setOpen }) {
       >
         <MenuIcon />
       </IconButton>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -125,7 +158,7 @@ export default function Navigator({ open, setOpen }) {
         {/* This is the search bar */}
         <div className={classes.search}>
           <div className={classes.searchIcon}>
-            <SearchIcon />
+            <SearchIcon color="inherit" />
           </div>
           <InputBase
             placeholder="Search…"
@@ -137,19 +170,32 @@ export default function Navigator({ open, setOpen }) {
           />
         </div>
         <Divider />
+        <div>
+          <ThemeProvider theme={buttonTheme}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="medium"
+              startIcon={<AddIcon />}
+              className={classes.addButton}
+            >
+              New note
+            </Button>
+          </ThemeProvider>
+        </div>
 
         {/* This is the list of options to select from */}
         <List>
           {/* Show all shortcuts */}
-          <ListItem button key="Shortcuts">
+          <ListItem button key="Shortcuts" className={classes.listItem}>
             <ListItemIcon>
-              <StarIcon />
+              <StarIcon className={classes.icon} />
             </ListItemIcon>
             <ListItemText primary="Shortcuts" />
           </ListItem>
           {/* Show all notes */}
-          <ListItem button key="All Notes">
-            <ListItemIcon>
+          <ListItem button key="All Notes" className={classes.listItem}>
+            <ListItemIcon className={classes.icon}>
               <SvgIcon>
                 <path
                   fill="currentColor"
@@ -160,8 +206,8 @@ export default function Navigator({ open, setOpen }) {
             <ListItemText primary="All Notes" />
           </ListItem>
           {/* Show all notebooks */}
-          <ListItem button key="Notebooks">
-            <ListItemIcon>
+          <ListItem button key="Notebooks" className={classes.listItem}>
+            <ListItemIcon className={classes.icon}>
               <SvgIcon>
                 <path
                   fill="currentColor"
@@ -172,15 +218,15 @@ export default function Navigator({ open, setOpen }) {
             <ListItemText primary="Notebooks" />
           </ListItem>
           {/* Show all files that are shared to me */}
-          <ListItem button key="Shared with me">
-            <ListItemIcon>
+          <ListItem button key="Shared with me" className={classes.listItem}>
+            <ListItemIcon className={classes.icon}>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Shared with me" />
           </ListItem>
           {/* Show all file that has been deleted */}
-          <ListItem button key="Deleted">
-            <ListItemIcon>
+          <ListItem button key="Deleted" className={classes.listItem}>
+            <ListItemIcon className={classes.icon}>
               <DeleteIcon />
             </ListItemIcon>
             <ListItemText primary="Deleted" />
@@ -189,7 +235,10 @@ export default function Navigator({ open, setOpen }) {
         <Divider />
         {/* This is the button to collapse the navigation bar */}
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton
+            onClick={handleDrawerClose}
+            className={clsx(classes.icon, classes.listItem)}
+          >
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
