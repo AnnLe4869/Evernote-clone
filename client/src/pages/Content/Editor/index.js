@@ -20,6 +20,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import SvgIcon from "@material-ui/core/SvgIcon";
@@ -84,6 +85,16 @@ export default function Editor({ setExpandStatus }) {
   const [focusStatus, setFocusStatus] = useState(false);
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
   const [isAllowEdit, setIsAllowEdit] = useState(false);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClickOpenUtilityList = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseUtilityList = () => {
+    setAnchorEl(null);
+  };
 
   const handleClickOpenDialog = () => {
     setDialogOpenStatus(true);
@@ -153,9 +164,29 @@ export default function Editor({ setExpandStatus }) {
                 Share
               </Button>
             </ThemeProvider>
-            <IconButton>
+            <IconButton onClick={handleClickOpenUtilityList}>
               <MoreVertIcon />
             </IconButton>
+            {/* This is the utility list that will show up when we click the icon MoreVertIcon */}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleCloseUtilityList}
+              getContentAnchorEl={null}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <MenuItem onClick={handleCloseUtilityList}>
+                Share notebook
+              </MenuItem>
+              <MenuItem onClick={handleCloseUtilityList}>
+                Share notebook
+              </MenuItem>
+              <MenuItem onClick={handleCloseUtilityList}>
+                Share notebook
+              </MenuItem>
+            </Menu>
             {/* This is the dialog that appear when we click the Share button */}
             <Dialog
               open={dialogOpenStatus}
