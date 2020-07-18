@@ -148,6 +148,7 @@ export default function NoteList() {
       <List className={classes.root}>
         {/* This is the notebook title and utility button */}
         <ListItem alignItems="flex-start" className={classes.listHeader}>
+          {/* Show notebook name */}
           <ListItemText
             primary={
               <React.Fragment>
@@ -162,13 +163,14 @@ export default function NoteList() {
               </React.Fragment>
             }
           />
+          {/* Show number of notes within this notebook */}
           <Typography
             component="span"
             variant="subtitle2"
             color="textSecondary"
             className={classes.headerSubtitle}
           >
-            Notebook title
+            3 notes
           </Typography>
           {/* This is the utility button */}
           <IconButton className={classes.headerAction} onClick={handleClick}>
@@ -210,14 +212,15 @@ export default function NoteList() {
               size="small"
               label="Find the location"
               ///defaultValue="hello world"
-              //className={classes.dialogTextSearch}
               fullWidth
             />
+            {/* Show list of all notebook to move to */}
             <List
               component="nav"
               aria-label="main"
               className={classes.dialogItemDisplay}
             >
+              {/* This one item has subtitle as it show which notebook we are in now */}
               <ListItem button>
                 <ListItemIcon>
                   <SvgIcon>
@@ -227,8 +230,24 @@ export default function NoteList() {
                     />
                   </SvgIcon>
                 </ListItemIcon>
-                <ListItemText primary="Inbox" />
+                <ListItemText
+                  primary={
+                    <Typography component="span" variant="body1">
+                      Item title {"     "}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      component="span"
+                      variant="subtitle2"
+                      color="textSecondary"
+                    >
+                      (current)
+                    </Typography>
+                  }
+                />
               </ListItem>
+              {/* Other item just show normal text */}
               <ListItem button>
                 <ListItemIcon>
                   <SvgIcon>
@@ -240,9 +259,9 @@ export default function NoteList() {
                 </ListItemIcon>
                 <ListItemText primary="Drafts" />
               </ListItem>
-              {/* The below are just a test */}
             </List>
           </DialogContent>
+          {/* After we choose the place to move to we click the Move button */}
           <DialogActions>
             <ThemeProvider theme={theme}>
               <Button
@@ -260,8 +279,9 @@ export default function NoteList() {
         </Dialog>
         <Divider component="li" />
 
-        {/* The below are item */}
+        {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
+          {/* Some special item have a star to show that they are in shortcut */}
           <ListItem alignItems="flex-start" button className={classes.listItem}>
             <ListItemText
               primary={
@@ -300,6 +320,7 @@ export default function NoteList() {
           </ListItem>
           <Divider component="li" />
 
+          {/* The rest are quite similar */}
           <ListItem alignItems="flex-start" button className={classes.listItem}>
             <ListItemText
               primary={

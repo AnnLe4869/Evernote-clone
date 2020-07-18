@@ -126,6 +126,7 @@ export default function Editor({ setExpandStatus }) {
           alignContent="center"
           alignItems="center"
         >
+          {/* Expand button */}
           <IconButton
             className={classes.headerExpandIcon}
             onClick={setExpandStatus}
@@ -138,6 +139,7 @@ export default function Editor({ setExpandStatus }) {
             </SvgIcon>
           </IconButton>
           <Divider orientation="vertical" className={classes.headerDivider} />
+          {/* Show the notebook name */}
           <SvgIcon className={classes.headerNotebookIcon}>
             <path
               fill="currentColor"
@@ -154,6 +156,7 @@ export default function Editor({ setExpandStatus }) {
           </Typography>
 
           <div className={classes.headerUtility}>
+            {/* Share button */}
             <ThemeProvider theme={theme}>
               <Button
                 variant="contained"

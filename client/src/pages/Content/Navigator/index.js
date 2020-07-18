@@ -103,6 +103,7 @@ export default function Navigator({ open, setOpen }) {
 
   return (
     <div>
+      {/* This is the menu button that will appear when drawer collapse */}
       <IconButton
         color="inherit"
         aria-label="open drawer"
@@ -121,6 +122,7 @@ export default function Navigator({ open, setOpen }) {
           paper: classes.drawerPaper,
         }}
       >
+        {/* This is the search bar */}
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
@@ -136,13 +138,16 @@ export default function Navigator({ open, setOpen }) {
         </div>
         <Divider />
 
+        {/* This is the list of options to select from */}
         <List>
+          {/* Show all shortcuts */}
           <ListItem button key="Shortcuts">
             <ListItemIcon>
               <StarIcon />
             </ListItemIcon>
             <ListItemText primary="Shortcuts" />
           </ListItem>
+          {/* Show all notes */}
           <ListItem button key="All Notes">
             <ListItemIcon>
               <SvgIcon>
@@ -154,6 +159,7 @@ export default function Navigator({ open, setOpen }) {
             </ListItemIcon>
             <ListItemText primary="All Notes" />
           </ListItem>
+          {/* Show all notebooks */}
           <ListItem button key="Notebooks">
             <ListItemIcon>
               <SvgIcon>
@@ -165,12 +171,14 @@ export default function Navigator({ open, setOpen }) {
             </ListItemIcon>
             <ListItemText primary="Notebooks" />
           </ListItem>
+          {/* Show all files that are shared to me */}
           <ListItem button key="Shared with me">
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Shared with me" />
           </ListItem>
+          {/* Show all file that has been deleted */}
           <ListItem button key="Deleted">
             <ListItemIcon>
               <DeleteIcon />
@@ -179,6 +187,7 @@ export default function Navigator({ open, setOpen }) {
           </ListItem>
         </List>
         <Divider />
+        {/* This is the button to collapse the navigation bar */}
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
