@@ -13,27 +13,44 @@ export default function Main() {
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const [open, setOpen] = useState(!matches);
+  const [expandStatus, setExpandStatus] = useState(false);
 
   return (
     <div>
       <CssBaseline />
-      <Navigator open={open} setOpen={setOpen} />
-      <Grid
-        container
-        component="main"
-        style={{
-          paddingLeft: open ? "18vw" : null,
-          height: "100vh",
-          overflow: "hidden",
-        }}
-      >
-        <Grid item md={4} sm={12}>
-          <NoteList />
+      {!expandStatus ? <Navigator open={open} setOpen={setOpen} /> : null}
+
+      {expandStatus ? (
+        <Grid
+          container
+          component="main"
+          style={{
+            height: "100vh",
+            overflow: "hidden",
+          }}
+        >
+          <Grid item md={12} sm={12}>
+            <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+          </Grid>
         </Grid>
-        <Grid item md={8} sm={12}>
-          <Editor />
+      ) : (
+        <Grid
+          container
+          component="main"
+          style={{
+            paddingLeft: open ? "18vw" : null,
+            height: "100vh",
+            overflow: "hidden",
+          }}
+        >
+          <Grid item md={4} sm={12}>
+            <NoteList />
+          </Grid>
+          <Grid item md={8} sm={12}>
+            <Editor setExpandStatus={setExpandStatus} />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 }

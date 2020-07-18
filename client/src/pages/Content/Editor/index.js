@@ -78,7 +78,7 @@ const theme = createMuiTheme({
   },
 });
 
-export default function Editor() {
+export default function Editor({ setExpandStatus }) {
   const classes = useStyles();
   const [text, setText] = useState("hello");
   const [focusStatus, setFocusStatus] = useState(false);
@@ -115,7 +115,10 @@ export default function Editor() {
           alignContent="center"
           alignItems="center"
         >
-          <IconButton className={classes.headerExpandIcon}>
+          <IconButton
+            className={classes.headerExpandIcon}
+            onClick={setExpandStatus}
+          >
             <SvgIcon>
               <path
                 fill-rule="currentColor"
