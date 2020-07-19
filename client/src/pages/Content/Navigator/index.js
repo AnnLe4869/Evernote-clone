@@ -1,60 +1,32 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
-import {
-  makeStyles,
-  useTheme,
-  fade,
-  createMuiTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
-import { green } from "@material-ui/core/colors";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import Button from "@material-ui/core/Button";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import SvgIcon from "@material-ui/core/SvgIcon";
-
-import AddIcon from "@material-ui/icons/Add";
-import DeleteIcon from "@material-ui/icons/Delete";
-import StarIcon from "@material-ui/icons/Star";
-import SearchIcon from "@material-ui/icons/Search";
-import PeopleIcon from "@material-ui/icons/People";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+import NavigationSearch from "./NavigatorSearch/NavigatorSearch";
+import NewNoteButton from "./NewNoteButton/NewNoteButton";
+import ShortcutView from "./ShortcutView/ShortcutView";
+import AllNotesView from "./AllNotesView/AllNotesView";
+import NotebooksView from "./NotebooksView/NotebooksView";
+import ShareWithMeView from "./ShareWithMeView/ShareWithMeView";
+import DeleteView from "./DeletedView/DeleteView";
 
 const drawerWidth = "18vw";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-
   menuButton: {
     position: "absolute",
     left: theme.spacing(2),
     bottom: theme.spacing(2),
     zIndex: 1200,
-  },
-  addButton: {
-    margin: theme.spacing(2),
-    width: "calc(100% - 45px)",
-    borderRadius: "20px;",
-    color: "inherit",
-  },
-  hide: {
-    display: "none",
-  },
-  icon: {
-    color: "#ccc",
   },
   drawer: {
     width: drawerWidth,
@@ -65,55 +37,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#1a1a1a",
     color: "#fff",
   },
-  // inputRoot: {
-  //   color: "inherit",
-  // },
+  icon: {
+    color: "#ccc",
+  },
   listItem: {
     "&:hover": {
       backgroundColor: "#333",
     },
   },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-  },
-  drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    justifyContent: "flex-end",
+  drawerCollapseButton: {
     position: "absolute",
     bottom: theme.spacing(1),
     right: theme.spacing(1),
   },
-  search: {
-    position: "relative",
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
 }));
-const buttonTheme = createMuiTheme({
-  palette: {
-    primary: green,
-  },
-});
 
 export default function Navigator({ open, setOpen }) {
   const classes = useStyles();
@@ -141,7 +78,7 @@ export default function Navigator({ open, setOpen }) {
         aria-label="open drawer"
         onClick={handleDrawerOpen}
         edge="start"
-        className={clsx(classes.menuButton, open && classes.hide)}
+        className={classes.menuButton}
       >
         <MenuIcon />
       </IconButton>
@@ -156,94 +93,30 @@ export default function Navigator({ open, setOpen }) {
         }}
       >
         {/* This is the search bar */}
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon color="inherit" />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ "aria-label": "search" }}
-          />
-        </div>
-        <Divider />
-        <div>
-          <ThemeProvider theme={buttonTheme}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="medium"
-              startIcon={<AddIcon />}
-              className={classes.addButton}
-            >
-              New note
-            </Button>
-          </ThemeProvider>
-        </div>
+        <NavigationSearch />
+        {/* This is the new note button */}
+        <NewNoteButton />
 
         {/* This is the list of options to select from */}
         <List>
           {/* Show all shortcuts */}
-          <ListItem button key="Shortcuts" className={classes.listItem}>
-            <ListItemIcon>
-              <StarIcon className={classes.icon} />
-            </ListItemIcon>
-            <ListItemText primary="Shortcuts" />
-          </ListItem>
+          <ShortcutView />
           {/* Show all notes */}
-          <ListItem button key="All Notes" className={classes.listItem}>
-            <ListItemIcon className={classes.icon}>
-              <SvgIcon>
-                <path
-                  fill="currentColor"
-                  d="M15 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9L15 3M19 19H5V5H14V10H19M17 14H7V12H17M14 17H7V15H14"
-                />
-              </SvgIcon>
-            </ListItemIcon>
-            <ListItemText primary="All Notes" />
-          </ListItem>
+          <AllNotesView />
           {/* Show all notebooks */}
-          <ListItem button key="Notebooks" className={classes.listItem}>
-            <ListItemIcon className={classes.icon}>
-              <SvgIcon>
-                <path
-                  fill="currentColor"
-                  d="M3,7V5H5V4C5,2.89 5.9,2 7,2H13V9L15.5,7.5L18,9V2H19C20.05,2 21,2.95 21,4V20C21,21.05 20.05,22 19,22H7C5.95,22 5,21.05 5,20V19H3V17H5V13H3V11H5V7H3M7,11H5V13H7V11M7,7V5H5V7H7M7,19V17H5V19H7Z"
-                />
-              </SvgIcon>
-            </ListItemIcon>
-            <ListItemText primary="Notebooks" />
-          </ListItem>
+          <NotebooksView />
           {/* Show all files that are shared to me */}
-          <ListItem button key="Shared with me" className={classes.listItem}>
-            <ListItemIcon className={classes.icon}>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Shared with me" />
-          </ListItem>
+          <ShareWithMeView />
           {/* Show all file that has been deleted */}
-          <ListItem button key="Deleted" className={classes.listItem}>
-            <ListItemIcon className={classes.icon}>
-              <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Deleted" />
-          </ListItem>
+          <DeleteView />
         </List>
-        <Divider />
         {/* This is the button to collapse the navigation bar */}
-        <div className={classes.drawerHeader}>
+        <div className={classes.drawerCollapseButton}>
           <IconButton
             onClick={handleDrawerClose}
             className={clsx(classes.icon, classes.listItem)}
           >
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronLeftIcon />
           </IconButton>
         </div>
       </Drawer>
