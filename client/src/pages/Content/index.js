@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
+import firebase from "firebase";
 
 import Editor from "./Editor";
 import Navigator from "./Navigator";
@@ -14,6 +15,13 @@ export default function Main() {
 
   const [open, setOpen] = useState(!matches);
   const [expandStatus, setExpandStatus] = useState(false);
+
+  // useEffect(() => {
+  //   firebase
+  //     .auth()
+  //     .currentUser.getIdToken(true)
+  //     .then((token) => console.log(token));
+  // });
 
   return (
     <div>

@@ -20,6 +20,7 @@ function App() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
+        //console.log(user);
         setUserEmail(user.email);
       }
     });
@@ -32,6 +33,10 @@ function App() {
       console.error(err);
     }
   };
+  const logout = () => {
+    firebase.auth().signOut();
+    setUserEmail(null);
+  };
 
   return (
     <Router>
@@ -39,6 +44,7 @@ function App() {
         value={{
           userEmail,
           login,
+          logout,
         }}
       >
         <Switch>
@@ -46,7 +52,7 @@ function App() {
             <Authentication />
           </Route>
           {/* Temporarily disable the protected route           */}
-          {true ? (
+          {userEmail ? (
             <Route path="/main">
               <MainContent />
             </Route>

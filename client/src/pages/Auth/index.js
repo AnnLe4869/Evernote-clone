@@ -36,7 +36,7 @@ export default function Auth() {
     <div>
       <Switch>
         <Route path={`${match.url}/login`}>
-          <LogIn></LogIn>
+          <LogIn signIn={handleClick}></LogIn>
         </Route>
         <Route path={`${match.url}/signup`}>
           <SignUp></SignUp>

@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LogIn() {
+export default function LogIn({ signIn }) {
   const classes = useStyles();
 
   return (
@@ -121,6 +121,7 @@ export default function LogIn() {
               variant="outlined"
               color="secondary"
               fullWidth
+              onClick={signIn}
               className={classes.submit}
               startIcon={
                 <SvgIcon>
