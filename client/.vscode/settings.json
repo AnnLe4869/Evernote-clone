@@ -3,10 +3,15 @@
         "aria",
         "aria labelledby",
         "clsx",
+        "devtools",
+        "extension",
+        "firestore",
         "horiz",
         "icon",
         "labelledby",
         "more",
-        "more horiz icon"
+        "more horiz icon",
+        "redux",
+        "redux devtools extension"
     ]
 }

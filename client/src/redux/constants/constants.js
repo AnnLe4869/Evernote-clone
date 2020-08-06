@@ -1,5 +1,48 @@
 // For authentication
-const LOG_IN_WITH_PASSWORD = "LOG_IN_WITH_PASSWORD";
-const LOG_IN_WITH_GOOGLE = "LOG_IN_WITH_GOOGLE";
-const SIGN_UP_WITH_PASSWORD = "SIGN_UP_WITH_PASSWORD";
-const LOG_OUT = "LOG_OUT";
+export const LOG_IN_WITH_PASSWORD = "LOG_IN_WITH_PASSWORD";
+export const LOG_IN_WITH_GOOGLE = "LOG_IN_WITH_GOOGLE";
+export const SIGN_UP_WITH_PASSWORD = "SIGN_UP_WITH_PASSWORD";
+export const LOG_OUT = "LOG_OUT";
+
+// For note
+export const ADD_NOTE = "ADD_NOTE";
+export const ADD_NOTE_TO_SHORTCUT = "ADD_NOTE_TO_SHORTCUT";
+export const DELETE_NOTE = "DELETE_NOTE";
+export const GET_ALL_NOTES = "GET_ALL_NOTES";
+export const MOVE_NOTE = "MOVE_NOTE";
+export const MOVE_NOTE_TO_TRASH = "MOVE_NOTE_TO_TRASH";
+export const REMOVE_NOTE_FROM_SHORTCUT = "REMOVE_NOTE_FROM_SHORTCUT";
+export const RESTORE_NOTE = "RESTORE_NOTE";
+export const SELECT_NOTE = "SELECT_NOTE";
+export const SHARE_NOTE = "SHARE_NOTE";
+export const SUBMIT_NOTE_CONTENT = "SUBMIT_NOTE_CONTENT";
+
+// For notebook
+export const ADD_NOTEBOOK = "ADD_NOTEBOOK";
+export const ADD_NOTEBOOK_TO_SHORTCUT = "ADD_NOTEBOOK_TO_SHORTCUT";
+export const DELETE_NOTEBOOK = "DELETE_NOTEBOOK";
+export const GET_ALL_NOTEBOOKS = "GET_ALL_NOTEBOOKS";
+export const MOVE_NOTEBOOK_TO_TRASH = "MOVE_NOTEBOOK_TO_TRASH";
+export const REMOVE_NOTEBOOK_FROM_SHORTCUT = "REMOVE_NOTEBOOK_FROM_SHORTCUT";
+export const RENAME_NOTEBOOK = "RENAME_NOTEBOOK";
+export const RESTORE_NOTEBOOK = "RESTORE_NOTEBOOK";
+export const SELECT_NOTEBOOK = "SELECT_NOTEBOOK";
+export const SHARE_NOTEBOOK = "SHARE_NOTEBOOK";
+
+// For note/notebook that is shared with us
+export const GET_ALL_SHARED_NOTES = "GET_ALL_SHARED_NOTES";
+export const GET_ALL_SHARED_NOTEBOOKS = "GET_ALL_SHARED_NOTEBOOKS";
+
+// For loading status
+export const SET_IS_LOADING = "SET_IS_LOADING";
+export const GET_LOADING_STATUS = "GET_LOADING_STATUS";
+
+// For error message
+export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
+export const GET_ERROR_MESSAGE = "GET_ERROR_MESSAGE";
+
+// For user and authentication status
+export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_AUTH_STATUS = "SET_AUTH_STATUS";
+export const GET_AUTH_STATUS = "GET_AUTH_STATUS";
