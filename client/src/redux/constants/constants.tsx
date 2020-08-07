@@ -34,7 +34,7 @@ export const GET_ALL_SHARED_NOTES = "GET_ALL_SHARED_NOTES";
 export const GET_ALL_SHARED_NOTEBOOKS = "GET_ALL_SHARED_NOTEBOOKS";
 
 // For loading status
-export const SET_IS_LOADING = "SET_IS_LOADING";
+export const SET_LOADING_STATUS = "SET_LOADING_STATUS";
 export const GET_LOADING_STATUS = "GET_LOADING_STATUS";
 
 // For error message

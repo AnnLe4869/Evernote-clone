@@ -1,36 +1,32 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import firebase from "firebase";
+import { useSelector, useDispatch } from "react-redux";
+import { User } from "firebase";
 
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
-//import firebase from "firebase";
+import { logInWithGoogle } from "../../redux/actions/authAction";
 
-import AuthContext from "../../context/auth-context";
+interface RootState {
+  user: User;
+}
 
 export default function Auth() {
-  const { userEmail, login } = useContext(AuthContext);
   const history = useHistory();
   const match = useRouteMatch();
+  const dispatch = useDispatch();
+  const userId = useSelector((store: RootState) => store.user.uid);
 
-  const handleClick = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-      await firebase.auth().signInWithPopup(provider);
-      if (!userEmail) login();
-      history.push("/main");
-    } catch (err) {
-      console.error(err);
-    }
+  const handleClick = () => {
+    dispatch(logInWithGoogle());
   };
 
   useEffect(() => {
-    //firebase.auth().signOut();
-    if (userEmail) {
+    if (userId) {
       history.push("/main");
     }
-  }, [userEmail, history]);
+  }, [userId, history]);
 
   return (
     <div>
