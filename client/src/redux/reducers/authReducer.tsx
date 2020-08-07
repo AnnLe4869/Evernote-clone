@@ -5,9 +5,9 @@ import {
 } from "../constants/constants";
 
 const user = {
-  id: "",
-  name: "",
-  avatarUrl: "",
+  uid: "",
+  displayName: "",
+  photoURL: "",
 };
 
 export default function (initialState = user, action: any) {
@@ -17,11 +17,13 @@ export default function (initialState = user, action: any) {
         ...initialState,
         ...action.user,
       };
+
     case SET_CURRENT_USER:
       return {
         ...initialState,
         ...action.user,
       };
+
     case LOG_IN_WITH_GOOGLE:
       return initialState;
     default:

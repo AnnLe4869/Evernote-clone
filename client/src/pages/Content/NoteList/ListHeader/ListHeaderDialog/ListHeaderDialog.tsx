@@ -145,7 +145,6 @@ export default function ListHeaderDialog({
           </ThemeProvider>
         </DialogActions>
       </Dialog>
-      <Divider component="li" />
     </>
   );
 }

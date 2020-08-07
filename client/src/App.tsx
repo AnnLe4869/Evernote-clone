@@ -11,7 +11,7 @@ import firebase, { User } from "firebase";
 
 import Authentication from "./pages/Auth";
 import MainContent from "./pages/Content";
-import { getCurrentUser } from "./redux/actions/userAction";
+import { setCurrentUser } from "./redux/actions/userAction";
 
 interface RootState {
   user: User;
@@ -22,9 +22,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
-      console.log(user);
       if (user) {
-        dispatch(getCurrentUser());
+        const { displayName, uid, photoURL } = user;
+        dispatch(setCurrentUser({ displayName, uid, photoURL }));
       }
     });
   });
