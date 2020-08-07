@@ -19,7 +19,15 @@ const theme = createMuiTheme({
   },
 });
 
-export default function HeaderDialog({ dialogOpenStatus, handleCloseDialog }) {
+interface Props {
+  dialogOpenStatus: boolean;
+  handleCloseDialog: () => void;
+}
+
+export default function HeaderDialog({
+  dialogOpenStatus,
+  handleCloseDialog,
+}: Props) {
   const [isAllowEdit, setIsAllowEdit] = useState(false);
 
   return (
@@ -51,12 +59,12 @@ export default function HeaderDialog({ dialogOpenStatus, handleCloseDialog }) {
               select
               fullWidth
               value={isAllowEdit}
-              onChange={(e) => setIsAllowEdit(e.target.value)}
+              onChange={(e) => setIsAllowEdit(e.target.value === "edit")}
             >
-              <MenuItem key={true} value={true}>
+              <MenuItem key="edit" value="edit">
                 Can view and edit
               </MenuItem>
-              <MenuItem key={false} value={false}>
+              <MenuItem key="view" value="view">
                 Can view only
               </MenuItem>
             </TextField>

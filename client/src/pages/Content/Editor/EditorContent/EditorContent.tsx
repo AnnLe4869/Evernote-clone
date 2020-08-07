@@ -33,7 +33,7 @@ export default function Editor() {
     if (!focusStatus) setFocusStatus(true);
   };
 
-  const handleChange = (value) => setText(value);
+  const handleChange = (value: string) => setText(value);
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>

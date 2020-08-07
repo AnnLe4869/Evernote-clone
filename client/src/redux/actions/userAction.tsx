@@ -16,7 +16,7 @@ export const getCurrentUser = () => {
     const { displayName, uid, photoURL } = user;
     return {
       type: GET_CURRENT_USER,
-      user: { displayName, uid, photoURL },
+      user: { displayName, id: uid, photoURL },
     };
   }
   return {

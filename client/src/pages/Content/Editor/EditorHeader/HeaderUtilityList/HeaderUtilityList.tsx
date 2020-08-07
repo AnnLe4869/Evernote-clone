@@ -9,7 +9,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 export default function HeaderUtilityList() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClickOpenUtilityList = (event) => {
+  const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 

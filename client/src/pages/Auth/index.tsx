@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { User } from "firebase";
 
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import { logInWithGoogle } from "../../redux/actions/authAction";
+import { UserType } from "../../redux/type/type";
 
 interface RootState {
-  user: User;
+  user: UserType;
 }
 
 export default function Auth() {
   const history = useHistory();
   const match = useRouteMatch();
   const dispatch = useDispatch();
-  const userId = useSelector((store: RootState) => store.user.uid);
+  const userId = useSelector((store: RootState) => store.user.id);
 
   const handleClick = () => {
     dispatch(logInWithGoogle());

@@ -26,7 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditorHeader({ setExpandStatus }) {
+interface Props {
+  setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
+}
+
+export default function EditorHeader({ setExpandStatus }: Props) {
   const classes = useStyles();
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
 

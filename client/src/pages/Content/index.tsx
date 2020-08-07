@@ -25,7 +25,9 @@ export default function Main() {
   return (
     <div>
       <CssBaseline />
-      {!expandStatus ? <Navigator open={open} setOpen={setOpen} /> : null}
+      {!expandStatus ? (
+        <Navigator open={open} setOpen={(value) => setOpen(value)} />
+      ) : null}
 
       {expandStatus ? (
         <Grid
@@ -45,7 +47,7 @@ export default function Main() {
           container
           component="main"
           style={{
-            paddingLeft: open ? "18vw" : null,
+            paddingLeft: open ? "18vw" : "",
             height: "100vh",
             overflow: "hidden",
           }}
@@ -54,7 +56,7 @@ export default function Main() {
             <NoteList />
           </Grid>
           <Grid item md={8} sm={12}>
-            <Editor setExpandStatus={setExpandStatus} />
+            <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
           </Grid>
         </Grid>
       )}

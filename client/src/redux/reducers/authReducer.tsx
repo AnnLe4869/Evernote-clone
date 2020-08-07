@@ -5,7 +5,7 @@ import {
 } from "../constants/constants";
 
 const user = {
-  uid: "",
+  id: "",
   displayName: "",
   photoURL: "",
 };

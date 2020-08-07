@@ -9,7 +9,12 @@ const theme = createMuiTheme({
     primary: green,
   },
 });
-export default function HeaderShareButton({ handleClickOpenDialog }) {
+
+interface Props {
+  handleClickOpenDialog: () => void;
+}
+
+export default function HeaderShareButton({ handleClickOpenDialog }: Props) {
   return (
     <>
       <ThemeProvider theme={theme}>

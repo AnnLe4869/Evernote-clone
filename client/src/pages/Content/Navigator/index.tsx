@@ -52,7 +52,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navigator({ open, setOpen }) {
+interface Props {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+}
+
+export default function Navigator({ open, setOpen }: Props) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));

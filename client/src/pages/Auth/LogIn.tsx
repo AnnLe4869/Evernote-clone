@@ -55,9 +55,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LogIn({ signIn }) {
-  const classes = useStyles();
+interface Props {
+  signIn: () => void;
+}
 
+export default function LogIn(props: Props): any {
+  const classes = useStyles();
+  const { signIn } = props;
   return (
     <div>
       <Grid container component="main" className={classes.root}>

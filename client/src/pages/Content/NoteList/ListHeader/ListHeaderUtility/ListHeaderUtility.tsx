@@ -17,14 +17,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface Props {
+  handleClickOpenDialog: () => void;
+  anchorEl: any;
+  setAnchorEl: (value: any) => void;
+}
+
 export default function ListHeaderUtility({
   handleClickOpenDialog,
   anchorEl,
   setAnchorEl,
-}) {
+}: Props) {
   const classes = useStyles();
 
-  const handleClickOpenUtilityList = (event) => {
+  const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 

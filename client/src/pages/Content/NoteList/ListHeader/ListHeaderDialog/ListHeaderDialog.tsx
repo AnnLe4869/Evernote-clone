@@ -52,10 +52,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+interface Props {
+  dialogOpenStatus: boolean;
+  handleCloseDialog: () => void;
+}
+
 export default function ListHeaderDialog({
   dialogOpenStatus,
   handleCloseDialog,
-}) {
+}: Props) {
   const classes = useStyles();
 
   return (
