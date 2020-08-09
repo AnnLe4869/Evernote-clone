@@ -8,7 +8,7 @@ export const getAllNotes = () => async (
   dispatch: Dispatch,
   getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
-  // Display the loading
+  // Change the loading status to true
   dispatch(setLoadingStatus(true));
   // Get the user's id
   const { user } = getState();
@@ -19,9 +19,22 @@ export const getAllNotes = () => async (
       .where("creator", "==", user.id)
       .get();
     const allNotes: any = [];
-    querySnapshots.forEach((doc) => allNotes.push(doc.data()));
+    // Fetch item's data and id
+    querySnapshots.forEach((doc) => {
+      const { timestamp } = doc.data();
+      allNotes.push({
+        ...doc.data(),
+        id: doc.id,
+        timestamp: timestamp.toDate().toLocaleTimeString(),
+      });
+    });
+    // Dispatch the data to reducer
+    dispatch({
+      type: GET_ALL_NOTES,
+      allNotes: allNotes,
+    });
+    // Change the loading status to false
     dispatch(setLoadingStatus(false));
-    dispatch(setAllNotes(allNotes));
   } catch (err) {
     console.error(err);
   }
@@ -40,7 +53,7 @@ export const addNote = (note: any) => async (
     if (user.id !== "") {
       const newNote = {
         creator: user.id,
-        timestamp: firebase.firestore.Timestamp.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         content: "hello world from Typescript",
         title: "hello message",
         shareWith: [],
@@ -58,11 +71,4 @@ export const addNote = (note: any) => async (
   } catch (err) {
     console.error(err);
   }
-};
-
-const setAllNotes = (allNotes: NoteType[]) => {
-  return {
-    type: GET_ALL_NOTES,
-    allNotes: allNotes,
-  };
 };

@@ -51,15 +51,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListContent(props: NoteType) {
   const classes = useStyles();
-  const { id, title, content, creator, inShortcut, inTrash } = props;
+  const { id, title, content, timestamp, creator, inShortcut, inTrash } = props;
 
   return (
-    <ListItem
-      alignItems="flex-start"
-      button
-      className={classes.listItem}
-      key={id}
-    >
+    <ListItem alignItems="flex-start" button className={classes.listItem}>
       <ListItemText
         primary={
           <React.Fragment>
@@ -92,7 +87,7 @@ export default function ListContent(props: NoteType) {
         color="textSecondary"
         className={classes.itemSubtitle}
       >
-        {"hello"}
+        {timestamp}
       </Typography>
       <Divider component="li" />
     </ListItem>

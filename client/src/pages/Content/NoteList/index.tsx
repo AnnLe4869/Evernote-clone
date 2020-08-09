@@ -47,11 +47,11 @@ export default function NoteList() {
   const dispatch = useDispatch();
   //const userId = useSelector((store: RootState) => store.user.id);
 
-  const note = useSelector((store: RootState) => store.note);
+  const notes = useSelector((store: RootState) => store.note);
 
   useEffect(() => {
     dispatch(getAllNotes());
-  }, [note.selectedNote, dispatch]);
+  }, [notes.selectedNote, dispatch]);
 
   return (
     <div>
@@ -61,8 +61,8 @@ export default function NoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
-          {note.allNotes.map((note) => (
-            <ListContent {...note} />
+          {notes.allNotes.map((note) => (
+            <ListContent key={note.id} {...note} />
           ))}
         </div>
       </List>
