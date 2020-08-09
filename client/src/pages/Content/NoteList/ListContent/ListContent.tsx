@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Divider from "@material-ui/core/Divider";
@@ -7,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 import StarIcon from "@material-ui/icons/Star";
+import { NoteType } from "../../../../redux/type/type";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -48,8 +49,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListContent() {
+export default function ListContent(props: NoteType) {
   const classes = useStyles();
+  const { id, title, content, creator, timestamp, inShortcut, inTrash } = props;
+
+  useEffect(() => {
+    console.log(props);
+  });
 
   return (
     <ListItem alignItems="flex-start" button className={classes.listItem}>
@@ -62,7 +68,7 @@ export default function ListContent() {
               color="textPrimary"
               className={classes.itemPrimaryText}
             >
-              Item title
+              {title}
               <StarIcon className={classes.itemStarIcon} />
             </Typography>
           </React.Fragment>
@@ -74,7 +80,7 @@ export default function ListContent() {
               variant="subtitle2"
               color="textSecondary"
             >
-              Item content
+              {content}
             </Typography>
           </React.Fragment>
         }
@@ -85,7 +91,7 @@ export default function ListContent() {
         color="textSecondary"
         className={classes.itemSubtitle}
       >
-        Date of editing
+        {timestamp}
       </Typography>
       <Divider component="li" />
     </ListItem>

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import List from "@material-ui/core/List";
 
 import ListHeader from "./ListHeader/ListHeader";
 import ListContent from "./ListContent/ListContent";
+import { useSelector, useDispatch } from "react-redux";
+import { NoteType, UserType } from "../../../redux/type/type";
+import { getAllNotes } from "../../../redux/actions/noteAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,8 +34,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface RootState {
+  note: {
+    allNotes: NoteType[];
+    selectedNote: string;
+  };
+  user: UserType;
+}
+
 export default function NoteList() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  //const userId = useSelector((store: RootState) => store.user.id);
+
+  const note = useSelector((store: RootState) => store.note);
+
+  useEffect(() => {
+    dispatch(getAllNotes());
+    //console.log(notes);
+  }, [note, dispatch]);
 
   return (
     <div>
@@ -42,11 +62,9 @@ export default function NoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
-          <ListContent />
-          <ListContent />
-          <ListContent />
-          <ListContent />
-          <ListContent />
+          {note.allNotes.map((note) => {
+            return <ListContent {...note} />;
+          })}
         </div>
       </List>
     </div>

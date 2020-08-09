@@ -1,20 +1,30 @@
-import {
-  GET_CURRENT_USER,
-  LOG_IN_WITH_GOOGLE,
-  SET_CURRENT_USER,
-  GET_ALL_NOTES,
-  ADD_NOTE,
-} from "../constants/constants";
+import { GET_ALL_NOTES, ADD_NOTE } from "../constants/constants";
 import { NoteType } from "../type/type";
 
-const notes: Array<NoteType> = [];
+interface Note {
+  allNotes: NoteType[];
+  selectedNote: string;
+}
 
-export default function (initialState = notes, action: any) {
+const note: Note = {
+  allNotes: [],
+  selectedNote: "",
+};
+
+export default function (initialState = note, action: any) {
   switch (action.type) {
     case GET_ALL_NOTES:
-      return [...initialState, ...action.notes];
+      console.log("Hello world");
+      console.log(action.allNotes);
+      return {
+        allNotes: [...initialState.allNotes, ...action.allNotes],
+        selectedNote: initialState.selectedNote,
+      };
     case ADD_NOTE:
-      return [...initialState, action.note];
+      return {
+        allNotes: [...initialState.allNotes, action.note],
+        selectedNote: initialState.selectedNote,
+      };
     default:
       return initialState;
   }
