@@ -7,7 +7,7 @@ export const logInWithGoogle = () => async (
   dispatch: Dispatch
 ): Promise<any> => {
   //Display the loading
-  dispatch(setLoadingStatus(true));
+  //dispatch(setLoadingStatus(true));
   // Handle the authentication
   const provider = new firebase.auth.GoogleAuthProvider();
   try {

@@ -14,8 +14,6 @@ const note: Note = {
 export default function (initialState = note, action: any) {
   switch (action.type) {
     case GET_ALL_NOTES:
-      console.log("Hello world");
-      console.log(action.allNotes);
       return {
         allNotes: [...initialState.allNotes, ...action.allNotes],
         selectedNote: initialState.selectedNote,

@@ -5,7 +5,7 @@ import List from "@material-ui/core/List";
 
 import ListHeader from "./ListHeader/ListHeader";
 import ListContent from "./ListContent/ListContent";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { NoteType, UserType } from "../../../redux/type/type";
 import { getAllNotes } from "../../../redux/actions/noteAction";
 
@@ -51,8 +51,7 @@ export default function NoteList() {
 
   useEffect(() => {
     dispatch(getAllNotes());
-    //console.log(notes);
-  }, [note, dispatch]);
+  }, [note.selectedNote, dispatch]);
 
   return (
     <div>
@@ -62,9 +61,9 @@ export default function NoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
-          {note.allNotes.map((note) => {
-            return <ListContent {...note} />;
-          })}
+          {note.allNotes.map((note) => (
+            <ListContent {...note} />
+          ))}
         </div>
       </List>
     </div>
