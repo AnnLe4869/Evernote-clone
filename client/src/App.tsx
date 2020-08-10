@@ -7,12 +7,12 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import firebase, { User } from "firebase";
+import firebase from "firebase";
 
 import Authentication from "./pages/Auth";
 import MainContent from "./pages/Content";
 import { setCurrentUser } from "./redux/actions/userAction";
-import { getAllNotes, addNote } from "./redux/actions/noteAction";
+import { fetchAllNotes } from "./redux/actions/noteAction";
 import { UserType } from "./redux/type/type";
 
 interface RootState {

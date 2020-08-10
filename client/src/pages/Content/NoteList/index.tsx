@@ -7,7 +7,7 @@ import ListHeader from "./ListHeader/ListHeader";
 import ListContent from "./ListContent/ListContent";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { NoteType, UserType } from "../../../redux/type/type";
-import { getAllNotes } from "../../../redux/actions/noteAction";
+import { fetchAllNotes } from "../../../redux/actions/noteAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,8 +50,8 @@ export default function NoteList() {
   const notes = useSelector((store: RootState) => store.note);
 
   useEffect(() => {
-    dispatch(getAllNotes());
-  }, [notes.selectedNote, dispatch]);
+    dispatch(fetchAllNotes());
+  }, [dispatch]);
 
   return (
     <div>

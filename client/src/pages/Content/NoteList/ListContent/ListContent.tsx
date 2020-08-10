@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 
 import StarIcon from "@material-ui/icons/Star";
 import { NoteType } from "../../../../redux/type/type";
+import { selectNote } from "../../../../redux/actions/noteAction";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -51,10 +53,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListContent(props: NoteType) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { id, title, content, timestamp, creator, inShortcut, inTrash } = props;
 
+  const handleClick = () => {
+    dispatch(selectNote(id));
+  };
+
   return (
-    <ListItem alignItems="flex-start" button className={classes.listItem}>
+    <ListItem
+      alignItems="flex-start"
+      button
+      className={classes.listItem}
+      onClick={handleClick}
+    >
       <ListItemText
         primary={
           <React.Fragment>
