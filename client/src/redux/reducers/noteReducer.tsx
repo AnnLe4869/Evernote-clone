@@ -21,7 +21,7 @@ export default function (initialState = note, action: any) {
     case GET_ALL_NOTES:
       return {
         allNotes: [...initialState.allNotes, ...action.allNotes],
-        selectedNote: initialState.selectedNote,
+        selectedNote: action.allNotes[0].id,
       };
     case ADD_NOTE:
       return {
@@ -34,7 +34,7 @@ export default function (initialState = note, action: any) {
       );
       return {
         allNotes: [action.note, ...allNotesUpdated],
-        selectedNote: "",
+        selectedNote: initialState.allNotes[0].id,
       };
     case SELECT_NOTE:
       return {

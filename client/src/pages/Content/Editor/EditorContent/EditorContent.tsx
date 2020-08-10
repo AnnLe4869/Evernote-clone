@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
+import { NoteType } from "../../../../redux/type/type";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -21,9 +22,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Editor() {
+export default function Editor(props: any) {
   const classes = useStyles();
-  const [text, setText] = useState("hello");
+  const { title, creator, content, timestamp } = props;
+
+  const [text, setText] = useState(content);
   const [focusStatus, setFocusStatus] = useState(false);
 
   const handleClickAway = () => {
@@ -33,8 +36,8 @@ export default function Editor() {
     if (!focusStatus) setFocusStatus(true);
   };
 
-  const handleChange = (value: string) => {
-    setText(value);
+  const handleChange = (content: string) => {
+    setText(content);
   };
 
   return (
@@ -49,7 +52,7 @@ export default function Editor() {
         ) : (
           <ReactQuill
             className={classes.editorContentRead}
-            value={text}
+            value={text || "hello"}
             readOnly
             theme="bubble"
           />

@@ -29,3 +29,11 @@ export interface NotebookType {
   inShortcut: boolean;
   inTrash: boolean;
 }
+
+export interface StoreType {
+  user: UserType;
+  note: {
+    allNotes: NoteType[];
+    selectedNote: string;
+  };
+}

@@ -105,7 +105,7 @@ export const updateNote = (note: NoteType) => async (
   }
 };
 
-export const selectNote = (id: string) => {
+export const setSelectedNote = (id: string) => {
   return {
     type: SELECT_NOTE,
     noteId: id,

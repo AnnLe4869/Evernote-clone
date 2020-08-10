@@ -8,7 +8,10 @@ import Typography from "@material-ui/core/Typography";
 
 import StarIcon from "@material-ui/icons/Star";
 import { NoteType } from "../../../../redux/type/type";
-import { selectNote } from "../../../../redux/actions/noteAction";
+import {
+  setSelectedNote,
+  updateNote,
+} from "../../../../redux/actions/noteAction";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   itemStarIcon: {
-    color: "#f5cc05",
+    //color: "#f5cc05",
     fontSize: 15,
     verticalAlign: "-0.1em",
     marginLeft: theme.spacing(1),
@@ -54,10 +57,33 @@ const useStyles = makeStyles((theme) => ({
 export default function ListContent(props: NoteType) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { id, title, content, timestamp, creator, inShortcut, inTrash } = props;
+  const {
+    id,
+    title,
+    content,
+    timestamp,
+    creator,
+    inShortcut,
+    inTrash,
+    shareWith,
+  } = props;
 
-  const handleClick = () => {
-    dispatch(selectNote(id));
+  const selectItem = () => {
+    dispatch(setSelectedNote(id));
+  };
+  const addItemToShortcut = () => {
+    dispatch(
+      updateNote({
+        id,
+        content,
+        title,
+        timestamp,
+        creator,
+        inTrash,
+        inShortcut: true,
+        shareWith,
+      })
+    );
   };
 
   return (
@@ -65,7 +91,7 @@ export default function ListContent(props: NoteType) {
       alignItems="flex-start"
       button
       className={classes.listItem}
-      onClick={handleClick}
+      onClick={selectItem}
     >
       <ListItemText
         primary={
@@ -77,7 +103,11 @@ export default function ListContent(props: NoteType) {
               className={classes.itemPrimaryText}
             >
               {title}
-              <StarIcon className={classes.itemStarIcon} />
+              <StarIcon
+                className={classes.itemStarIcon}
+                style={{ color: inShortcut ? "#f5cc05" : "#666" }}
+                onClick={addItemToShortcut}
+              />
             </Typography>
           </React.Fragment>
         }

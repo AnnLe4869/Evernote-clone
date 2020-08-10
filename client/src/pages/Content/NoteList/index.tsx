@@ -5,7 +5,7 @@ import List from "@material-ui/core/List";
 
 import ListHeader from "./ListHeader/ListHeader";
 import ListContent from "./ListContent/ListContent";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NoteType, UserType } from "../../../redux/type/type";
 import { fetchAllNotes } from "../../../redux/actions/noteAction";
 
