@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import EditorHeader from "./EditorHeader/EditorHeader";
 import EditorContent from "./EditorContent/EditorContent";
@@ -10,18 +10,21 @@ interface Props {
 }
 
 export default function Editor({ setExpandStatus }: Props) {
-  const allNotes = useSelector((store: StoreType) => store.note.allNotes);
-  const selectedNoteId = useSelector(
+  const selectedNote = useSelector(
     (store: StoreType) => store.note.selectedNote
   );
-  const displayedNote = allNotes.find((note) => note.id === selectedNoteId);
-  useEffect(() => console.log(displayedNote));
+
+  useEffect(() => {
+    console.log("this is the selected note");
+    console.log(selectedNote);
+  });
+
   return (
     <div>
       {/* The header of the editor */}
       <EditorHeader setExpandStatus={setExpandStatus} />
       {/* The actual editor part */}
-      <EditorContent {...displayedNote} />
+      <EditorContent {...selectedNote} />
     </div>
   );
 }

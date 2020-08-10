@@ -34,6 +34,6 @@ export interface StoreType {
   user: UserType;
   note: {
     allNotes: NoteType[];
-    selectedNote: string;
+    selectedNote: NoteType;
   };
 }

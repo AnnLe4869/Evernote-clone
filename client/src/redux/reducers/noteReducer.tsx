@@ -21,25 +21,25 @@ export default function (initialState = note, action: any) {
     case GET_ALL_NOTES:
       return {
         allNotes: [...initialState.allNotes, ...action.allNotes],
-        selectedNote: action.allNotes[0].id,
+        selectedNote: action.allNotes[0],
       };
     case ADD_NOTE:
       return {
         allNotes: [action.note, ...initialState.allNotes],
-        selectedNote: action.note.id,
+        selectedNote: action.addedNote,
       };
     case UPDATE_NOTE:
       const allNotesUpdated = initialState.allNotes.filter(
-        (note) => note.id !== action.note.id
+        (note) => note.id !== action.updatedNote.id
       );
       return {
         allNotes: [action.note, ...allNotesUpdated],
-        selectedNote: initialState.allNotes[0].id,
+        selectedNote: initialState.allNotes[0],
       };
     case SELECT_NOTE:
       return {
         allNotes: initialState.allNotes,
-        selectedNote: action.noteId,
+        selectedNote: action.selectedNote,
       };
     default:
       return initialState;

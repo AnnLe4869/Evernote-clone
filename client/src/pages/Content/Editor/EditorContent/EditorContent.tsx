@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
@@ -22,12 +22,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Editor(props: any) {
+export default function Editor(props: NoteType) {
   const classes = useStyles();
   const { title, creator, content, timestamp } = props;
 
-  const [text, setText] = useState(content);
+  const [text, setText] = useState("");
   const [focusStatus, setFocusStatus] = useState(false);
+
+  // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
+  useEffect(() => {
+    if (content) {
+      setText(content);
+    }
+  }, [content]);
 
   const handleClickAway = () => {
     if (focusStatus) setFocusStatus(false);
@@ -52,7 +59,7 @@ export default function Editor(props: any) {
         ) : (
           <ReactQuill
             className={classes.editorContentRead}
-            value={text || "hello"}
+            value={text}
             readOnly
             theme="bubble"
           />

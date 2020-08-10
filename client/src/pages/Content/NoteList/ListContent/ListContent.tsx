@@ -69,7 +69,7 @@ export default function ListContent(props: NoteType) {
   } = props;
 
   const selectItem = () => {
-    dispatch(setSelectedNote(id));
+    dispatch(setSelectedNote(props));
   };
   const addItemToShortcut = () => {
     dispatch(

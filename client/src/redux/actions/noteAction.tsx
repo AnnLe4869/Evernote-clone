@@ -69,7 +69,7 @@ export const addNewNote = (note: any) => async (
     dispatch(setLoadingStatus(false));
     dispatch({
       type: ADD_NOTE,
-      note: newNote,
+      addedNote: newNote,
     });
   } catch (err) {
     console.error(err);
@@ -105,9 +105,9 @@ export const updateNote = (note: NoteType) => async (
   }
 };
 
-export const setSelectedNote = (id: string) => {
+export const setSelectedNote = (note: NoteType) => {
   return {
     type: SELECT_NOTE,
-    noteId: id,
+    selectedNote: note,
   };
 };
