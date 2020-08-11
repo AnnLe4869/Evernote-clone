@@ -61,9 +61,9 @@ export default function NoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
-          {notes.allNotes.map((note) => (
-            <ListContent key={note.id} {...note} />
-          ))}
+          {notes.allNotes.map((note) => {
+            return <ListContent key={note.id} {...note} />;
+          })}
         </div>
       </List>
     </div>

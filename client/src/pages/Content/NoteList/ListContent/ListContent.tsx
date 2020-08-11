@@ -7,12 +7,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 import StarIcon from "@material-ui/icons/Star";
-import { NoteType } from "../../../../redux/type/type";
+import { NoteType, StoreType } from "../../../../redux/type/type";
 import {
   setSelectedNote,
   updateNote,
 } from "../../../../redux/actions/noteAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   itemStarIcon: {
-    //color: "#f5cc05",
+    color: "#f5cc05",
     fontSize: 15,
     verticalAlign: "-0.1em",
     marginLeft: theme.spacing(1),
@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
 export default function ListContent(props: NoteType) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const selectedNote = useSelector(
+    (store: StoreType) => store.note.selectedNote
+  );
   const {
     id,
     title,
@@ -69,21 +72,8 @@ export default function ListContent(props: NoteType) {
   } = props;
 
   const selectItem = () => {
+    console.log("This is select note action " + Date.now());
     dispatch(setSelectedNote(props));
-  };
-  const addItemToShortcut = () => {
-    dispatch(
-      updateNote({
-        id,
-        content,
-        title,
-        timestamp,
-        creator,
-        inTrash,
-        inShortcut: true,
-        shareWith,
-      })
-    );
   };
 
   return (
@@ -92,6 +82,7 @@ export default function ListContent(props: NoteType) {
       button
       className={classes.listItem}
       onClick={selectItem}
+      style={{ backgroundColor: selectedNote.id === id ? "#222" : "inherit" }}
     >
       <ListItemText
         primary={
@@ -103,11 +94,9 @@ export default function ListContent(props: NoteType) {
               className={classes.itemPrimaryText}
             >
               {title}
-              <StarIcon
-                className={classes.itemStarIcon}
-                style={{ color: inShortcut ? "#f5cc05" : "#666" }}
-                onClick={addItemToShortcut}
-              />
+              {inShortcut ? (
+                <StarIcon className={classes.itemStarIcon} />
+              ) : null}
             </Typography>
           </React.Fragment>
         }

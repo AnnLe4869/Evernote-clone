@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function HeaderFootnote() {
+export default function HeaderFootnote({ timestamp }: { timestamp: string }) {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ export default function HeaderFootnote() {
       display="block"
       className={classes.headerFootnote}
     >
-      last edit on 07/07/2020
+      Last edit at {timestamp}
     </Typography>
   );
 }

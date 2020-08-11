@@ -25,7 +25,7 @@ export default function (initialState = note, action: any) {
       };
     case ADD_NOTE:
       return {
-        allNotes: [action.note, ...initialState.allNotes],
+        allNotes: [action.addedNote, ...initialState.allNotes],
         selectedNote: action.addedNote,
       };
     case UPDATE_NOTE:
@@ -33,9 +33,10 @@ export default function (initialState = note, action: any) {
         (note) => note.id !== action.updatedNote.id
       );
       return {
-        allNotes: [action.note, ...allNotesUpdated],
-        selectedNote: initialState.allNotes[0],
+        allNotes: [action.updatedNote, ...allNotesUpdated],
+        selectedNote: action.updatedNote,
       };
+
     case SELECT_NOTE:
       return {
         allNotes: initialState.allNotes,

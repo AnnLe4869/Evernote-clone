@@ -28,9 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
+  timestamp: string;
 }
 
-export default function EditorHeader({ setExpandStatus }: Props) {
+export default function EditorHeader({ setExpandStatus, timestamp }: Props) {
   const classes = useStyles();
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
 
@@ -74,7 +75,7 @@ export default function EditorHeader({ setExpandStatus }: Props) {
         </div>
       </Grid>
       {/* Bottom part of the header */}
-      <HeaderFootnote />
+      <HeaderFootnote timestamp={timestamp} />
     </Paper>
   );
 }

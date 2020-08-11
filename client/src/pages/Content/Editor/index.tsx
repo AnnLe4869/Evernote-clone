@@ -14,15 +14,15 @@ export default function Editor({ setExpandStatus }: Props) {
     (store: StoreType) => store.note.selectedNote
   );
 
-  useEffect(() => {
-    console.log("this is the selected note");
-    console.log(selectedNote);
-  });
+  // useEffect(() => {
+  //   console.log("this is the selected note");
+  //   console.log(selectedNote);
+  // });
 
   return (
     <div>
       {/* The header of the editor */}
-      <EditorHeader setExpandStatus={setExpandStatus} />
+      <EditorHeader setExpandStatus={setExpandStatus} {...selectedNote} />
       {/* The actual editor part */}
       <EditorContent {...selectedNote} />
     </div>
