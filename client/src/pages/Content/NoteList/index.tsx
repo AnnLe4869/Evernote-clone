@@ -62,7 +62,9 @@ export default function NoteList() {
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
           {notes.allNotes.map((note) => {
-            return <ListContent key={note.id} {...note} />;
+            return !note.inTrash ? (
+              <ListContent key={note.id} {...note} />
+            ) : null;
           })}
         </div>
       </List>

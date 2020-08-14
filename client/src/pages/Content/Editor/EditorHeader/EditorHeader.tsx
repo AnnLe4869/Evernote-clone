@@ -11,6 +11,7 @@ import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
 import HeaderUtilityList from "./HeaderUtilityList/HeaderUtilityList";
 import HeaderDialog from "./HeaderDialog/HeaderDialog";
 import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
+import { NoteType } from "../../../../redux/type/type";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -26,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
+interface Props extends NoteType {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
-  timestamp: string;
 }
 
-export default function EditorHeader({ setExpandStatus, timestamp }: Props) {
+export default function EditorHeader(props: Props) {
   const classes = useStyles();
+  const { setExpandStatus, ...note } = props;
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
 
   const handleClickOpenDialog = () => {
@@ -65,7 +66,7 @@ export default function EditorHeader({ setExpandStatus, timestamp }: Props) {
           <HeaderShareButton handleClickOpenDialog={handleClickOpenDialog} />
 
           {/* This is the button to show utility list and utility list itself */}
-          <HeaderUtilityList />
+          <HeaderUtilityList {...note} />
 
           {/* This is the dialog that appear when we click the Share button */}
           <HeaderDialog
@@ -75,7 +76,7 @@ export default function EditorHeader({ setExpandStatus, timestamp }: Props) {
         </div>
       </Grid>
       {/* Bottom part of the header */}
-      <HeaderFootnote timestamp={timestamp} />
+      <HeaderFootnote timestamp={note.timestamp} />
     </Paper>
   );
 }

@@ -49,7 +49,6 @@ export default function Editor(props: NoteType) {
   useEffect(() => {
     if (content) {
       setEditorText(content);
-      console.log(props);
       setCurrentNote(props);
     }
   }, [content]);
@@ -58,7 +57,6 @@ export default function Editor(props: NoteType) {
     if (focusStatus) setFocusStatus(false);
     // Check if the content of the item is different from the content in the editor
     if (currentNote.content !== editorText) {
-      console.log("hello world");
       dispatch(updateNote({ ...currentNote, content: editorText }));
     }
   };
