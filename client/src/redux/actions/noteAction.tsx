@@ -45,7 +45,7 @@ export const fetchAllNotes = () => async (
   }
 };
 
-export const addNewNote = (note: any) => async (
+export const addNewNote = () => async (
   dispatch: Dispatch,
   getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
@@ -55,16 +55,25 @@ export const addNewNote = (note: any) => async (
   const { user } = getState();
   try {
     const db = firebase.firestore();
-    const newNote = {
+    let newNote = {
+      id: "",
       creator: user.id,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      content: "",
-      title: "",
+      content: "    ",
+      title: "nothing for now",
       shareWith: [],
       inShortcut: false,
       inTrash: false,
     };
-    await db.collection("notes").add(newNote);
+    const noteRef = await db.collection("notes").add(newNote);
+    const returnedData = await noteRef.get();
+
+    const doc: any = returnedData.data();
+    newNote = {
+      ...newNote,
+      id: doc.uid,
+      timestamp: doc.timestamp.toDate().toLocaleTimeString(),
+    };
 
     dispatch(setLoadingStatus(false));
     dispatch({
@@ -87,13 +96,16 @@ export const updateNote = (note: NoteType) => async (
     const db = firebase.firestore();
     const { content, title, inShortcut, inTrash } = note;
 
-    // await db.collection("notes").doc(note.id).update({
-    //   content,
-    //   title,
-    //   inShortcut,
-    //   inTrash,
-    //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    // });
+    await db
+      .collection("notes")
+      .doc(note.id)
+      .update({
+        content,
+        title: title ? title : "nothing",
+        inShortcut,
+        inTrash,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
     dispatch(setLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTE,

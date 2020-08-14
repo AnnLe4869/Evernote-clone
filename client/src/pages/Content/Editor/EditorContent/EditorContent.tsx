@@ -49,6 +49,7 @@ export default function Editor(props: NoteType) {
   useEffect(() => {
     if (content) {
       setEditorText(content);
+      console.log(props);
       setCurrentNote(props);
     }
   }, [content]);
