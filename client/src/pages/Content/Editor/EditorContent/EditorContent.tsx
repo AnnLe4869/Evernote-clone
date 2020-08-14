@@ -8,10 +8,7 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import { NoteType } from "../../../../redux/type/type";
 import { useDispatch } from "react-redux";
-import {
-  updateNote,
-  setSelectedNote,
-} from "../../../../redux/actions/noteAction";
+import { updateNote } from "../../../../redux/actions/noteAction";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -30,30 +27,38 @@ const useStyles = makeStyles(() => ({
 export default function Editor(props: NoteType) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { title, content } = props;
+  const { content } = props;
 
-  const [text, setText] = useState("");
+  const [editorText, setEditorText] = useState("");
   const [focusStatus, setFocusStatus] = useState(false);
+  // This refer to the note we previously working/display with before we click other note
+  // This is needed because we need to know which item we work before so that we can update accordingly
+  // Remember, when click away we re-render this component and the props is changed
+  const [currentNote, setCurrentNote] = useState({
+    id: "",
+    creator: "",
+    timestamp: "",
+    content: "",
+    title: "",
+    shareWith: [{ user: "", canWrite: false }],
+    inShortcut: false,
+    inTrash: false,
+  });
 
   // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
   useEffect(() => {
     if (content) {
-      console.log("This is inside the useEffect of the editor " + Date.now());
-      setText(content);
+      setEditorText(content);
+      setCurrentNote(props);
     }
-  }, [content, focusStatus]);
-
-  // useEffect(() => {
-  //   return () => console.log("hello world");
-  // });
+  }, [content]);
 
   const handleClickAway = () => {
     if (focusStatus) setFocusStatus(false);
-    console.log(props);
-    console.log(text);
-    if (content !== text) {
-      console.log("This is in handleClickAway " + Date.now());
-      dispatch(updateNote({ ...props, content: text }));
+    // Check if the content of the item is different from the content in the editor
+    if (currentNote.content !== editorText) {
+      console.log("hello world");
+      dispatch(updateNote({ ...currentNote, content: editorText }));
     }
   };
   const handleFocusIn = () => {
@@ -61,7 +66,7 @@ export default function Editor(props: NoteType) {
   };
 
   const handleChange = (content: string) => {
-    setText(content);
+    setEditorText(content);
   };
 
   return (
@@ -70,13 +75,13 @@ export default function Editor(props: NoteType) {
         {focusStatus ? (
           <ReactQuill
             className={classes.editorContentWrite}
-            value={text}
+            value={editorText}
             onChange={handleChange}
           />
         ) : (
           <ReactQuill
             className={classes.editorContentRead}
-            value={text}
+            value={editorText}
             readOnly
             theme="bubble"
           />

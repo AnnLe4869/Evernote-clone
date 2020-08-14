@@ -72,7 +72,6 @@ export default function ListContent(props: NoteType) {
   } = props;
 
   const selectItem = () => {
-    console.log("This is select note action " + Date.now());
     dispatch(setSelectedNote(props));
   };
 

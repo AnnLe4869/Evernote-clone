@@ -34,7 +34,7 @@ export default function (initialState = note, action: any) {
       );
       return {
         allNotes: [action.updatedNote, ...allNotesUpdated],
-        selectedNote: action.updatedNote,
+        selectedNote: initialState.selectedNote,
       };
 
     case SELECT_NOTE:
