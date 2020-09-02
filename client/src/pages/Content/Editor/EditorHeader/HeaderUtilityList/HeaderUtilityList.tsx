@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { NoteType } from "../../../../../redux/type/type";
+import { NoteType } from "../../../../../redux/type/globalType";
 import { useDispatch } from "react-redux";
 import { updateNote } from "../../../../../redux/actions/noteAction";
 

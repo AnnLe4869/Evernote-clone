@@ -1,47 +1,26 @@
-import {
-  GET_ALL_NOTES,
-  ADD_NOTE,
-  UPDATE_NOTE,
-  SELECT_NOTE,
-} from "../constants/constants";
-import { NoteType } from "../type/type";
+import { GET_ALL_NOTES, ADD_NOTE, UPDATE_NOTE } from "../constants/constants";
+import { noteActionTypes } from "../type/actionType/noteActionType";
+import { NoteType } from "../type/globalType";
 
-interface Note {
-  allNotes: NoteType[];
-  selectedNote: string;
-}
+const note: NoteType[] = [];
 
-const note: Note = {
-  allNotes: [],
-  selectedNote: "",
-};
-
-export default function (initialState = note, action: any) {
+export default function (
+  initialState = note,
+  action: noteActionTypes
+): NoteType[] {
   switch (action.type) {
     case GET_ALL_NOTES:
-      return {
-        allNotes: [...initialState.allNotes, ...action.allNotes],
-        selectedNote: action.allNotes[0],
-      };
+      return [...initialState, ...action.allNotes];
+
     case ADD_NOTE:
-      return {
-        allNotes: [action.addedNote, ...initialState.allNotes],
-        selectedNote: action.addedNote,
-      };
+      return [action.addedNote, ...initialState];
+
     case UPDATE_NOTE:
-      const allNotesUpdated = initialState.allNotes.filter(
+      const allNotesUpdated = initialState.filter(
         (note) => note.id !== action.updatedNote.id
       );
-      return {
-        allNotes: [action.updatedNote, ...allNotesUpdated],
-        selectedNote: initialState.selectedNote,
-      };
+      return [action.updatedNote, ...allNotesUpdated];
 
-    case SELECT_NOTE:
-      return {
-        allNotes: initialState.allNotes,
-        selectedNote: action.selectedNote,
-      };
     default:
       return initialState;
   }

@@ -12,16 +12,14 @@ import firebase from "firebase";
 import Authentication from "./pages/Auth";
 import MainContent from "./pages/Content";
 import { setCurrentUser } from "./redux/actions/userAction";
-import { fetchAllNotes } from "./redux/actions/noteAction";
-import { UserType } from "./redux/type/type";
+import { StoreType, UserType } from "./redux/type/globalType";
 
-interface RootState {
-  user: UserType;
-}
+
 
 function App() {
-  const userId = useSelector((store: RootState) => store.user.id);
+  const userId = useSelector((store: StoreType) => store.user.id);
   const dispatch = useDispatch();
+  // Fetch the current user and add listener for potential user change
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {

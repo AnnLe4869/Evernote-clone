@@ -11,7 +11,7 @@ import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
 import HeaderUtilityList from "./HeaderUtilityList/HeaderUtilityList";
 import HeaderDialog from "./HeaderDialog/HeaderDialog";
 import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
-import { NoteType } from "../../../../redux/type/type";
+import { NoteType } from "../../../../redux/type/globalType";
 
 const useStyles = makeStyles((theme) => ({
   header: {

@@ -5,7 +5,7 @@ import { setLoadingStatus } from "./loadingAction";
 
 export const logInWithGoogle = () => async (
   dispatch: Dispatch
-): Promise<any> => {
+): Promise<void> => {
   //Display the loading
   //dispatch(setLoadingStatus(true));
   // Handle the authentication
@@ -18,9 +18,9 @@ export const logInWithGoogle = () => async (
       id: result.user?.uid,
       photoURL: result.user?.photoURL,
     });
-    return {
+    dispatch( {
       type: LOG_IN_WITH_GOOGLE,
-    };
+    })
   } catch (err) {
     console.error(err);
   }

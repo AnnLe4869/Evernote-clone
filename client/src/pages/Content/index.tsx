@@ -7,10 +7,15 @@ import { useTheme } from "@material-ui/core/styles";
 import Editor from "./Editor";
 import Navigator from "./Navigator";
 import NoteList from "./NoteList";
+import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
+import NotebookList from "./NotebookList";
+import AllNoteLoading from "./Loading/AllNoteLoading";
+import FilterNoteLoading from "./Loading/FilterNoteLoading";
 
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
+  const { url } = useRouteMatch();
 
   const [open, setOpen] = useState(!matches);
   const [expandStatus, setExpandStatus] = useState(false);
@@ -25,7 +30,41 @@ export default function Main() {
   return (
     <div>
       <CssBaseline />
-      {!expandStatus ? (
+      <Navigator open={open} setOpen={(value) => setOpen(value)} />
+
+      <Switch>
+        <Route path={`${url}/notebooks`}>
+          <NotebookList />
+        </Route>
+        <Route path={`${url}/notes`}>
+          <AllNoteLoading />
+        </Route>
+        <Route path={`${url}/notebooks/:notebookId/notes`}>
+          <FilterNoteLoading />
+        </Route>
+
+        <Route path={`${url}/notes/:noteId`}>
+          <Grid item md={4} sm={12}>
+            <NoteList />
+          </Grid>
+          <Grid item md={8} sm={12}>
+            <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+          </Grid>
+        </Route>
+
+        <Route path= {`${url}/notebooks/:notebookId/notes/:noteId`}>
+          <Grid item md={4} sm={12}>
+            <NoteList />
+          </Grid>
+          <Grid item md={8} sm={12}>
+            <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+          </Grid>
+        </Route>
+
+        <Redirect to={`${url}/notes`} />
+      </Switch>
+
+      {/* {!expandStatus ? (
         <Navigator open={open} setOpen={(value) => setOpen(value)} />
       ) : null}
 
@@ -59,7 +98,7 @@ export default function Main() {
             <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
           </Grid>
         </Grid>
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,13 +1,19 @@
 import firebase from "firebase";
 import { Dispatch } from "redux";
 import { setLoadingStatus } from "./loadingAction";
-import { GET_ALL_NOTES, ADD_NOTE, UPDATE_NOTE } from "../constants/constants";
+import {
+  GET_ALL_NOTES,
+  ADD_NOTE,
+  UPDATE_NOTE,
+  SELECT_NOTE,
+  GET_ALL_NOTEBOOKS,
+} from "../constants/constants";
 import { UserType, NoteType } from "../type/globalType";
 
-export const fetchAllNotes = () => async (
+export const fetchAllNotebooks = () => async (
   dispatch: Dispatch,
   getState: () => { user: UserType; [propName: string]: any }
-): Promise<void> => {
+): Promise<any> => {
   // Change the loading status to true
   dispatch(setLoadingStatus(true));
   // Get the user's id
@@ -15,14 +21,14 @@ export const fetchAllNotes = () => async (
   try {
     const db = firebase.firestore();
     const querySnapshots = await db
-      .collection("notes")
+      .collection("notebooks")
       .where("creator", "==", user.id)
       .get();
-    const allNotes: any = [];
+    const allNotebooks: any = [];
     // Fetch item's data and id
     querySnapshots.forEach((doc) => {
       const { timestamp } = doc.data();
-      allNotes.push({
+      allNotebooks.push({
         ...doc.data(),
         id: doc.id,
         timestamp: timestamp.toDate().toLocaleTimeString(),
@@ -30,8 +36,8 @@ export const fetchAllNotes = () => async (
     });
     // Dispatch the data to reducer
     dispatch({
-      type: GET_ALL_NOTES,
-      allNotes: allNotes,
+      type: GET_ALL_NOTEBOOKS,
+      allNotebooks: allNotebooks,
     });
     // Change the loading status to false
     dispatch(setLoadingStatus(false));
@@ -40,7 +46,7 @@ export const fetchAllNotes = () => async (
   }
 };
 
-export const addNewNote = () => async (
+export const addNewNotebook = () => async (
   dispatch: Dispatch,
   getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
@@ -52,13 +58,13 @@ export const addNewNote = () => async (
     const db = firebase.firestore();
     let newNote = {
       id: "",
+      name: "",
       creator: user.id,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      content: "    ",
-      title: "nothing for now",
+      notes: [],
       shareWith: [],
       inShortcut: false,
       inTrash: false,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
     const noteRef = await db.collection("notes").add(newNote);
     const returnedData = await noteRef.get();
@@ -80,7 +86,7 @@ export const addNewNote = () => async (
   }
 };
 
-export const updateNote = (note: NoteType) => async (
+export const updateNotebook = (note: NoteType) => async (
   dispatch: Dispatch
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
@@ -111,7 +117,7 @@ export const updateNote = (note: NoteType) => async (
   }
 };
 
-export const moveNoteToTrash = (note: NoteType) => async (
+export const moveNotebookToTrash = (note: NoteType) => async (
   dispatch: Dispatch
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {

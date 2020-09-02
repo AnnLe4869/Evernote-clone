@@ -7,12 +7,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 import StarIcon from "@material-ui/icons/Star";
-import { NoteType, StoreType } from "../../../../redux/type/type";
-import {
-  setSelectedNote,
-  updateNote,
-} from "../../../../redux/actions/noteAction";
-import { useDispatch, useSelector } from "react-redux";
+import { NoteType } from "../../../../redux/type/globalType";
+import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -56,23 +52,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListContent(props: NoteType) {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const selectedNote = useSelector(
-    (store: StoreType) => store.note.selectedNote
-  );
-  const {
-    id,
-    title,
-    content,
-    timestamp,
-    creator,
-    inShortcut,
-    inTrash,
-    shareWith,
-  } = props;
+  const history = useHistory();
+  const { noteId, notebookId } = useParams();
+
+  const { id, title, content, timestamp, inShortcut } = props;
 
   const selectItem = () => {
-    dispatch(setSelectedNote(props));
+    if (!notebookId)
+      return history.push(`/notebooks/${notebookId}/notes/${id}`);
+    return history.push(`/notes/${id}`);
   };
 
   return (
@@ -81,7 +69,7 @@ export default function ListContent(props: NoteType) {
       button
       className={classes.listItem}
       onClick={selectItem}
-      style={{ backgroundColor: selectedNote.id === id ? "#222" : "inherit" }}
+      style={{ backgroundColor: noteId === id ? "#222" : "inherit" }}
     >
       <ListItemText
         primary={

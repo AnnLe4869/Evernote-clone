@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import { logInWithGoogle } from "../../redux/actions/authAction";
-import { UserType } from "../../redux/type/type";
+import { UserType } from "../../redux/type/globalType";
 
 interface RootState {
   user: UserType;

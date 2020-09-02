@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import EditorHeader from "./EditorHeader/EditorHeader";
 import EditorContent from "./EditorContent/EditorContent";
 import { useSelector } from "react-redux";
-import { StoreType, NoteType } from "../../../redux/type/type";
+import { StoreType, NoteType } from "../../../redux/type/globalType";
+import { useParams } from "react-router-dom";
 
 interface Props {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function Editor({ setExpandStatus }: Props) {
-  const selectedNote = useSelector(
-    (store: StoreType) => store.note.selectedNote
-  );
+  const { noteId } = useParams();
 
-  // useEffect(() => {
-  //   console.log("this is the selected note");
-  //   console.log(selectedNote);
-  // });
+  const allNotes = useSelector((store: StoreType) => store.notes);
+
+  const selectedNote = useMemo(() => {
+    return allNotes.find((note) => note.id === noteId);
+  }, [noteId]);
+
+  if (!selectedNote) return <div>Error</div>;
 
   return (
     <div>

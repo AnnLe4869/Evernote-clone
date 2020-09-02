@@ -14,5 +14,6 @@
         "redux",
         "redux devtools extension",
         "reduxjs"
-    ]
+    ],
+    "compile-hero.disable-compile-files-on-did-save-code": true
 }

@@ -1,7 +1,7 @@
 import firebase from "firebase";
 
 import { SET_CURRENT_USER, GET_CURRENT_USER } from "../constants/constants";
-import { UserType } from "../type/type";
+import { UserType } from "../type/globalType";
 
 export const setCurrentUser = (user: UserType) => {
   return {

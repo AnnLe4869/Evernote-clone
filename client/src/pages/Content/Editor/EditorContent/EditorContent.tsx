@@ -6,7 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
-import { NoteType } from "../../../../redux/type/type";
+import { NoteType } from "../../../../redux/type/globalType";
 import { useDispatch } from "react-redux";
 import { updateNote } from "../../../../redux/actions/noteAction";
 
