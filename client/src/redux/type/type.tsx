@@ -21,6 +21,7 @@ export interface NoteType {
 export interface NotebookType {
   id: string;
   name: string;
+  creator: string;
   notes: Array<string>;
   shareWith: Array<{
     user: string;
@@ -35,5 +36,9 @@ export interface StoreType {
   note: {
     allNotes: NoteType[];
     selectedNote: NoteType;
+  };
+  notebook: {
+    allNotebooks: NotebookType[];
+    selectedNotebook: NotebookType;
   };
 }
