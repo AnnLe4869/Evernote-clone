@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import List from "@material-ui/core/List";
@@ -45,25 +45,38 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NoteList() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { notebookId } = useParams<ParamType>();
 
   const allNotes = useSelector((store: StoreType) => store.notes);
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
 
-  const selectedNotebook = useMemo(
-    () => allNotebooks.find((notebook) => notebook.id === notebookId),
-    [notebookId]
+  const [selectedNotebook, setSelectedNotebook] = useState<NotebookType>(
+    allNotebooks[0]
+  );
+  const [filteredNotes, setFilteredNotes] = useState<NoteType[]>(allNotes);
+
+  useEffect(
+    () => {
+      const notebook = allNotebooks.find(
+        (notebook) => notebook.id === notebookId
+      );
+      if (notebook) setSelectedNotebook(notebook);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allNotes.length, allNotebooks.length, notebookId]
   );
 
-  const filteredNotes = useMemo(() => {
-    if (selectedNotebook === undefined) return allNotes;
-    return allNotes.filter((note) => selectedNotebook.notes.includes(note.id));
-  }, [notebookId, selectedNotebook]);
+  useEffect(
+    () => {
+      setFilteredNotes(
+        allNotes.filter((note) => selectedNotebook.notes.includes(note.id))
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allNotes.length, allNotebooks.length, notebookId]
+  );
 
-  useEffect(() => {
-    dispatch(fetchAllNotes());
-  }, []);
+  if (!filteredNotes) return <div>Loading</div>;
 
   return (
     <div>

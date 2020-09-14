@@ -2,11 +2,9 @@ import firebase from "firebase";
 import { Dispatch } from "redux";
 import { setLoadingStatus } from "./loadingAction";
 import {
-  GET_ALL_NOTES,
-  ADD_NOTE,
-  UPDATE_NOTE,
-  SELECT_NOTE,
   GET_ALL_NOTEBOOKS,
+  ADD_NOTEBOOK,
+  UPDATE_NOTEBOOK,
 } from "../constants/constants";
 import { UserType, NoteType } from "../type/globalType";
 
@@ -78,7 +76,7 @@ export const addNewNotebook = () => async (
 
     dispatch(setLoadingStatus(false));
     dispatch({
-      type: ADD_NOTE,
+      type: ADD_NOTEBOOK,
       addedNote: newNote,
     });
   } catch (err) {
@@ -109,7 +107,7 @@ export const updateNotebook = (note: NoteType) => async (
       });
     dispatch(setLoadingStatus(false));
     dispatch({
-      type: UPDATE_NOTE,
+      type: UPDATE_NOTEBOOK,
       updatedNote: note,
     });
   } catch (err) {
@@ -134,7 +132,7 @@ export const moveNotebookToTrash = (note: NoteType) => async (
     });
     dispatch(setLoadingStatus(false));
     dispatch({
-      type: UPDATE_NOTE,
+      type: UPDATE_NOTEBOOK,
       updatedNote: note,
     });
   } catch (err) {

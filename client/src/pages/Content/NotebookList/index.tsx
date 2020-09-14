@@ -5,12 +5,9 @@ import { fetchAllNotebooks } from "../../../redux/actions/notebookAction";
 import { StoreType } from "../../../redux/type/globalType";
 
 export default function NotebookList() {
-  const dispatch = useDispatch();
   const notebooks = useSelector((state: StoreType) => state.notebooks);
 
-  useEffect(() => {
-    dispatch(fetchAllNotebooks());
-  }, []);
+  
 
   if (notebooks.length === 0) return <div>Loading</div>;
 

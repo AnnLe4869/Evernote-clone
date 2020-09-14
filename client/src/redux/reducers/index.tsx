@@ -5,8 +5,8 @@ import notebookReducer from "../reducers/notebookReducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  note: noteReducer,
-  notebook: notebookReducer,
+  notes: noteReducer,
+  notebooks: notebookReducer,
   user: authReducer,
   loading: loadingReducer,
 });

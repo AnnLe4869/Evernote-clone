@@ -9,8 +9,9 @@ export default function AllNoteLoading() {
   const allNotes = useSelector((store: StoreType) => store.notes);
   const history = useHistory();
   useEffect(() => {
-    history.push("/notes/" + allNotes[0].id);
-  });
+    if (allNotes.length > 0) history.push("/main/notes/" + allNotes[0].id);
+  }, [allNotes.length]);
+
   return (
     <div>
       <CircularProgress />

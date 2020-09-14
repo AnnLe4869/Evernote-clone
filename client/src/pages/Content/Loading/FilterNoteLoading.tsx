@@ -2,9 +2,9 @@ import React, { useEffect, useMemo } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { StoreType } from "../../../redux/type/globalType";
+import { ParamType, StoreType } from "../../../redux/type/globalType";
 export default function FilterNoteLoading() {
-  const { notebookId } = useParams();
+  const { notebookId } = useParams<ParamType>();
   const history = useHistory();
 
   const allNotes = useSelector((store: StoreType) => store.notes);
@@ -21,7 +21,7 @@ export default function FilterNoteLoading() {
 
   useEffect(() => {
     if (!defaultNote) return;
-    history.push(`/notebooks/${notebookId}/notes/${defaultNote.id}`);
+    history.push(`/main/notebooks/${notebookId}/notes/${defaultNote.id}`);
   }, [notebookId]);
 
   return (

@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 import StarIcon from "@material-ui/icons/Star";
-import { NoteType } from "../../../../redux/type/globalType";
+import { NoteType, ParamType } from "../../../../redux/type/globalType";
 import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ListContent(props: NoteType) {
   const classes = useStyles();
   const history = useHistory();
-  const { noteId, notebookId } = useParams();
+  const { noteId, notebookId } = useParams<ParamType>();
 
   const { id, title, content, timestamp, inShortcut } = props;
 

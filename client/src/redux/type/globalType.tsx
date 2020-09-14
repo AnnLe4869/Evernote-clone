@@ -29,6 +29,7 @@ export interface NotebookType {
   }>;
   inShortcut: boolean;
   inTrash: boolean;
+  timestamp: string;
 }
 
 export interface StoreType {

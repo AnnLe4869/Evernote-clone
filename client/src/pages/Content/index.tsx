@@ -11,14 +11,23 @@ import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import NotebookList from "./NotebookList";
 import AllNoteLoading from "./Loading/AllNoteLoading";
 import FilterNoteLoading from "./Loading/FilterNoteLoading";
+import { useDispatch } from "react-redux";
+import { fetchAllNotes } from "../../redux/actions/noteAction";
+import { fetchAllNotebooks } from "../../redux/actions/notebookAction";
 
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const { url } = useRouteMatch();
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(!matches);
   const [expandStatus, setExpandStatus] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchAllNotes());
+    dispatch(fetchAllNotebooks());
+  }, []);
 
   // useEffect(() => {
   //   firebase
@@ -30,20 +39,20 @@ export default function Main() {
   return (
     <div>
       <CssBaseline />
-      <Navigator open={open} setOpen={(value) => setOpen(value)} />
+      {/* <Navigator open={open} setOpen={(value) => setOpen(value)} /> */}
 
       <Switch>
-        <Route path={`${url}/notebooks`}>
+        <Route path={`${url}/notebooks`} exact>
           <NotebookList />
         </Route>
-        <Route path={`${url}/notes`}>
+        <Route path={`${url}/notes`} exact>
           <AllNoteLoading />
         </Route>
-        <Route path={`${url}/notebooks/:notebookId/notes`}>
+        <Route path={`${url}/notebooks/:notebookId/notes`} exact>
           <FilterNoteLoading />
         </Route>
 
-        <Route path={`${url}/notes/:noteId`}>
+        <Route path={`${url}/notes/:noteId`}      exact>
           <Grid item md={4} sm={12}>
             <NoteList />
           </Grid>
@@ -52,7 +61,7 @@ export default function Main() {
           </Grid>
         </Route>
 
-        <Route path= {`${url}/notebooks/:notebookId/notes/:noteId`}>
+        <Route path={`${url}/notebooks/:notebookId/notes/:noteId`}      exact>
           <Grid item md={4} sm={12}>
             <NoteList />
           </Grid>
