@@ -77,6 +77,7 @@ export const addNewNotebook = () => async (
     dispatch(setLoadingStatus(false));
     dispatch({
       type: ADD_NOTEBOOK,
+
       addedNote: newNote,
     });
   } catch (err) {
@@ -108,6 +109,7 @@ export const updateNotebook = (note: NoteType) => async (
     dispatch(setLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTEBOOK,
+
       updatedNote: note,
     });
   } catch (err) {
@@ -133,6 +135,7 @@ export const moveNotebookToTrash = (note: NoteType) => async (
     dispatch(setLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTEBOOK,
+
       updatedNote: note,
     });
   } catch (err) {

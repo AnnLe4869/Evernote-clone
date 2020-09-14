@@ -37,7 +37,6 @@ export interface StoreType {
   notes: NoteType[];
   notebooks: NotebookType[];
 }
-
 export interface ParamType {
   notebookId: string;
   noteId: string;
