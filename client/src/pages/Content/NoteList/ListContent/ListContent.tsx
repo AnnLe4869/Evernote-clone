@@ -58,9 +58,9 @@ export default function ListContent(props: NoteType) {
   const { id, title, content, timestamp, inShortcut } = props;
 
   const selectItem = () => {
-    if (!notebookId)
-      return history.push(`/notebooks/${notebookId}/notes/${id}`);
-    return history.push(`/notes/${id}`);
+    if (notebookId)
+      return history.push(`/main/notebooks/${notebookId}/notes/${id}`);
+    return history.push(`/main/notes/${id}`);
   };
 
   return (

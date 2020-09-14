@@ -50,9 +50,7 @@ export default function NoteList() {
   const allNotes = useSelector((store: StoreType) => store.notes);
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
 
-  const [selectedNotebook, setSelectedNotebook] = useState<NotebookType>(
-    allNotebooks[0]
-  );
+  const [selectedNotebook, setSelectedNotebook] = useState<NotebookType>();
   const [filteredNotes, setFilteredNotes] = useState<NoteType[]>(allNotes);
 
   useEffect(
@@ -68,9 +66,10 @@ export default function NoteList() {
 
   useEffect(
     () => {
-      setFilteredNotes(
-        allNotes.filter((note) => selectedNotebook.notes.includes(note.id))
-      );
+      if (selectedNotebook)
+        setFilteredNotes(
+          allNotes.filter((note) => selectedNotebook.notes.includes(note.id))
+        );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [allNotes.length, allNotebooks.length, notebookId]
