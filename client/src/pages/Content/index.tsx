@@ -29,13 +29,6 @@ export default function Main() {
     dispatch(fetchAllNotebooks());
   }, []);
 
-  // useEffect(() => {
-  //   firebase
-  //     .auth()
-  //     .currentUser.getIdToken(true)
-  //     .then((token) => console.log(token));
-  // });
-
   return (
     <div>
       <CssBaseline />
@@ -52,7 +45,7 @@ export default function Main() {
           <FilterNoteLoading />
         </Route>
 
-        <Route path={`${url}/notes/:noteId`}      exact>
+        <Route path={`${url}/notes/:noteId`} exact>
           <Grid item md={4} sm={12}>
             <NoteList />
           </Grid>
@@ -61,7 +54,7 @@ export default function Main() {
           </Grid>
         </Route>
 
-        <Route path={`${url}/notebooks/:notebookId/notes/:noteId`}      exact>
+        <Route path={`${url}/notebooks/:notebookId/notes/:noteId`} exact>
           <Grid item md={4} sm={12}>
             <NoteList />
           </Grid>
@@ -70,7 +63,7 @@ export default function Main() {
           </Grid>
         </Route>
 
-        <Redirect to={`${url}/notes`} />
+        <Redirect to={`${url}/notebooks`} />
       </Switch>
 
       {/* {!expandStatus ? (

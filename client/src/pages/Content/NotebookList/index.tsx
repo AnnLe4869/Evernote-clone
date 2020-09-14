@@ -12,10 +12,18 @@ export default function NotebookList() {
   if (notebooks.length === 0) return <div>Loading</div>;
 
   return (
-    <div>
+    <ul>
       {notebooks.map((notebook) => (
-        <Link to={`/notebooks/${notebook.id}`}>{notebook.name}</Link>
+        <li>
+          <Link to={`/main/notebooks/${notebook.id}/notes`}>
+            
+            
+            {notebook.name}
+          
+          
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

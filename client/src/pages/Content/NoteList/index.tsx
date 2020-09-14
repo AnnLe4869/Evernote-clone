@@ -72,7 +72,7 @@ export default function NoteList() {
         );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [allNotes.length, allNotebooks.length, notebookId]
+    [allNotes.length, allNotebooks.length, selectedNotebook]
   );
 
   if (!filteredNotes) return <div>Loading</div>;
