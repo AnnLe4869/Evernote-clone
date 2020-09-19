@@ -29,38 +29,81 @@ export default function Main() {
     dispatch(fetchAllNotebooks());
   }, []);
 
+  function ExpandWrapperComponent(props: any) {
+    return (
+      <>
+        {expandStatus ? (
+          <Grid
+            container
+            component="main"
+            style={{
+              height: "100vh",
+              overflow: "hidden",
+            }}
+          >
+            {props.children}
+          </Grid>
+        ) : (
+          <Grid
+            container
+            component="main"
+            style={{
+              paddingLeft: open ? "18vw" : "",
+              height: "100vh",
+              overflow: "hidden",
+            }}
+          >
+            {props.children}
+          </Grid>
+        )}
+      </>
+    );
+  }
+
   return (
     <div>
       <CssBaseline />
-      {/* <Navigator open={open} setOpen={(value) => setOpen(value)} /> */}
+      {!expandStatus ? (
+        <Navigator open={open} setOpen={(value) => setOpen(value)} />
+      ) : null}
 
       <Switch>
         <Route path={`${url}/notebooks`} exact>
-          <NotebookList />
+          <ExpandWrapperComponent>
+            <NotebookList />
+          </ExpandWrapperComponent>
         </Route>
         <Route path={`${url}/notes`} exact>
-          <AllNoteLoading />
+          <ExpandWrapperComponent>
+            <AllNoteLoading />
+          </ExpandWrapperComponent>
         </Route>
         <Route path={`${url}/notebooks/:notebookId/notes`} exact>
-          <FilterNoteLoading />
+          <ExpandWrapperComponent>
+            <FilterNoteLoading />
+          </ExpandWrapperComponent>
         </Route>
 
         <Route path={`${url}/notes/:noteId`} exact>
-          <Grid item md={4} sm={12}>
-            <NoteList />
-          </Grid>
-          <Grid item md={8} sm={12}>
-            <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
-          </Grid>
+          <ExpandWrapperComponent>
+            <Grid item md={4} sm={12}>
+              <NoteList />
+            </Grid>
+            <Grid item md={8} sm={12}>
+              <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+            </Grid>
+          </ExpandWrapperComponent>
         </Route>
 
         <Route path={`${url}/notebooks/:notebookId/notes/:noteId`} exact>
-          <Grid item md={4} sm={12}>
-            <NoteList />
-          </Grid>
-          <Grid item md={8} sm={12}>
-            <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
-          </Grid>
+          <ExpandWrapperComponent>
+            <Grid item md={4} sm={12}>
+              <NoteList />
+            </Grid>
+            <Grid item md={8} sm={12}>
+              <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+            </Grid>
+          </ExpandWrapperComponent>
         </Route>
 
         <Redirect to={`${url}/notebooks`} />
