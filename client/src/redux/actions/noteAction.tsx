@@ -66,7 +66,7 @@ export const addNewNote = () => async (
     const doc: any = returnedData.data();
     newNote = {
       ...newNote,
-      id: doc.uid,
+      id: doc.id,
       timestamp: doc.timestamp.toDate().toLocaleTimeString(),
     };
 

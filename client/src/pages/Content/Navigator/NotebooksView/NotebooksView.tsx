@@ -6,6 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import SvgIcon from "@material-ui/core/SvgIcon";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -21,9 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ShortcutView() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push("/main/notebooks");
+  };
 
   return (
-    <ListItem button key="Notebooks" className={classes.listItem}>
+    <ListItem
+      button
+      key="Notebooks"
+      className={classes.listItem}
+      onClick={handleClick}
+    >
       <ListItemIcon className={classes.icon}>
         <SvgIcon>
           <path

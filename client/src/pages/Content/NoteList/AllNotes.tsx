@@ -6,13 +6,7 @@ import List from "@material-ui/core/List";
 import ListHeader from "./ListHeader/ListHeader";
 import ListContent from "./ListContent/ListContent";
 import { useSelector } from "react-redux";
-import {
-  NoteType,
-  StoreType,
-  NotebookType,
-  ParamType,
-} from "../../../redux/type/globalType";
-import { useParams } from "react-router-dom";
+import { StoreType } from "../../../redux/type/globalType";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,39 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NoteList() {
+export default function NoteListAllNotes() {
   const classes = useStyles();
-  const { notebookId } = useParams<ParamType>();
 
   const allNotes = useSelector((store: StoreType) => store.notes);
-  const allNotebooks = useSelector((store: StoreType) => store.notebooks);
-
-  const [selectedNotebook, setSelectedNotebook] = useState<NotebookType>();
-  const [filteredNotes, setFilteredNotes] = useState<NoteType[]>(allNotes);
-
-  useEffect(
-    () => {
-      const notebook = allNotebooks.find(
-        (notebook) => notebook.id === notebookId
-      );
-      if (notebook) setSelectedNotebook(notebook);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [allNotes.length, allNotebooks.length, notebookId]
-  );
-
-  useEffect(
-    () => {
-      if (selectedNotebook)
-        setFilteredNotes(
-          allNotes.filter((note) => selectedNotebook.notes.includes(note.id))
-        );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [allNotes.length, allNotebooks.length, selectedNotebook]
-  );
-
-  if (!filteredNotes) return <div>Loading</div>;
 
   return (
     <div>
@@ -81,7 +46,7 @@ export default function NoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
-          {filteredNotes.map((note) => {
+          {allNotes.map((note) => {
             return !note.inTrash ? (
               <ListContent key={note.id} {...note} />
             ) : null;

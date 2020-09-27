@@ -73,7 +73,7 @@ export default function Navigator({ open, setOpen }: Props) {
   useEffect(() => {
     if (matches) setOpen(true);
     if (!matches) setOpen(false);
-  }, [matches, setOpen]);
+  }, [matches]);
 
   return (
     <div>

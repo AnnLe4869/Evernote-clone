@@ -6,7 +6,6 @@ import { useTheme } from "@material-ui/core/styles";
 
 import Editor from "./Editor";
 import Navigator from "./Navigator";
-import NoteList from "./NoteList";
 import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import NotebookList from "./NotebookList";
 import AllNoteLoading from "./Loading/AllNoteLoading";
@@ -14,6 +13,8 @@ import FilterNoteLoading from "./Loading/FilterNoteLoading";
 import { useDispatch } from "react-redux";
 import { fetchAllNotes } from "../../redux/actions/noteAction";
 import { fetchAllNotebooks } from "../../redux/actions/notebookAction";
+import NoteListAllNotes from "./NoteList/AllNotes";
+import NoteListFilteredNotes from "./NoteList/FilteredNotes";
 
 export default function Main() {
   const theme = useTheme();
@@ -87,7 +88,7 @@ export default function Main() {
         <Route path={`${url}/notes/:noteId`} exact>
           <ExpandWrapperComponent>
             <Grid item md={4} sm={12}>
-              <NoteList />
+              <NoteListAllNotes />
             </Grid>
             <Grid item md={8} sm={12}>
               <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
@@ -98,7 +99,7 @@ export default function Main() {
         <Route path={`${url}/notebooks/:notebookId/notes/:noteId`} exact>
           <ExpandWrapperComponent>
             <Grid item md={4} sm={12}>
-              <NoteList />
+              <NoteListFilteredNotes />
             </Grid>
             <Grid item md={8} sm={12}>
               <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
