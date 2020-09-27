@@ -51,7 +51,6 @@ export const addNewNote = () => async (
   try {
     const db = firebase.firestore();
     let newNote = {
-      id: "",
       creator: user.id,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       content: "    ",
@@ -63,17 +62,17 @@ export const addNewNote = () => async (
     const noteRef = await db.collection("notes").add(newNote);
     const returnedData = await noteRef.get();
 
-    const doc: any = returnedData.data();
-    newNote = {
-      ...newNote,
-      id: doc.id,
-      timestamp: doc.timestamp.toDate().toLocaleTimeString(),
+    const doc = returnedData.data();
+    const addedNote = {
+      ...doc,
+      id: noteRef.id,
+      timestamp: doc?.timestamp.toDate().toLocaleTimeString(),
     };
 
     dispatch(setLoadingStatus(false));
     dispatch({
       type: ADD_NOTE,
-      addedNote: newNote,
+      addedNote: addedNote,
     });
   } catch (err) {
     console.error(err);
