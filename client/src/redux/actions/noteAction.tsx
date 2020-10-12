@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import { Dispatch } from "redux";
-import { setLoadingStatus } from "./loadingAction";
+import { setNotesLoadingStatus } from "./loadingAction";
 import { GET_ALL_NOTES, ADD_NOTE, UPDATE_NOTE } from "../constants/constants";
 import { UserType, NoteType } from "../type/globalType";
 
@@ -9,7 +9,7 @@ export const fetchAllNotes = () => async (
   getState: () => { user: UserType; [propName: string]: any }
 ): Promise<void> => {
   // Change the loading status to true
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotesLoadingStatus(true));
   // Get the user's id
   const { user } = getState();
   try {
@@ -34,7 +34,7 @@ export const fetchAllNotes = () => async (
       allNotes: allNotes,
     });
     // Change the loading status to false
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
@@ -45,7 +45,7 @@ export const addNewNote = () => async (
   getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   // Display the loading
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotesLoadingStatus(true));
   // Get the user's id
   const { user } = getState();
   try {
@@ -69,7 +69,7 @@ export const addNewNote = () => async (
       timestamp: doc?.timestamp.toDate().toLocaleTimeString(),
     };
 
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotesLoadingStatus(false));
     dispatch({
       type: ADD_NOTE,
       addedNote: addedNote,
@@ -84,7 +84,7 @@ export const updateNote = (note: NoteType) => async (
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   // Display the loading
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotesLoadingStatus(true));
   // Get the user's id
   try {
     const db = firebase.firestore();
@@ -100,7 +100,7 @@ export const updateNote = (note: NoteType) => async (
         inTrash,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotesLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTE,
       updatedNote: note,
@@ -115,7 +115,7 @@ export const moveNoteToTrash = (note: NoteType) => async (
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   // Display the loading
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotesLoadingStatus(true));
   // Get the user's id
   try {
     const db = firebase.firestore();
@@ -125,7 +125,7 @@ export const moveNoteToTrash = (note: NoteType) => async (
       inTrash,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotesLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTE,
       updatedNote: note,

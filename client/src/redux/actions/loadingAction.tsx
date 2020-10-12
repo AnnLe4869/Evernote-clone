@@ -1,11 +1,14 @@
-import { SET_LOADING_STATUS } from "../constants/constants";
+import {
+  SET_NOTEBOOKS_LOADING_STATUS,
+  SET_NOTES_LOADING_STATUS,
+} from "../constants/constants";
 
-interface LoadingActionType {
-  type: string;
-  isLoading: Boolean;
-}
+export const setNotesLoadingStatus = (value: boolean) => ({
+  type: SET_NOTES_LOADING_STATUS,
+  isLoading: value,
+});
 
-export const setLoadingStatus = (value: Boolean): LoadingActionType => ({
-  type: SET_LOADING_STATUS,
+export const setNotebookLoadingStatus = (value: boolean) => ({
+  type: SET_NOTEBOOKS_LOADING_STATUS,
   isLoading: value,
 });

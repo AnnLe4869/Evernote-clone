@@ -1,7 +1,6 @@
 import firebase, { User } from "firebase";
 import { Dispatch } from "redux";
 import { LOG_IN_WITH_GOOGLE } from "../constants/constants";
-import { setLoadingStatus } from "./loadingAction";
 
 export const logInWithGoogle = () => async (
   dispatch: Dispatch
@@ -18,9 +17,9 @@ export const logInWithGoogle = () => async (
       id: result.user?.uid,
       photoURL: result.user?.photoURL,
     });
-    dispatch( {
+    dispatch({
       type: LOG_IN_WITH_GOOGLE,
-    })
+    });
   } catch (err) {
     console.error(err);
   }

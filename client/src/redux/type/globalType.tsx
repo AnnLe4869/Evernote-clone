@@ -32,10 +32,16 @@ export interface NotebookType {
   timestamp: string;
 }
 
+export interface LoadingType {
+  notesLoading: boolean;
+  notebooksLoading: boolean;
+}
+
 export interface StoreType {
   user: UserType;
   notes: NoteType[];
   notebooks: NotebookType[];
+  loading: LoadingType;
 }
 export interface ParamType {
   notebookId: string;

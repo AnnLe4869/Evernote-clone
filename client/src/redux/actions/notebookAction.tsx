@@ -1,19 +1,19 @@
 import firebase from "firebase";
 import { Dispatch } from "redux";
-import { setLoadingStatus } from "./loadingAction";
+import { setNotebookLoadingStatus } from "./loadingAction";
 import {
   GET_ALL_NOTEBOOKS,
   ADD_NOTEBOOK,
   UPDATE_NOTEBOOK,
 } from "../constants/constants";
-import { UserType, NoteType } from "../type/globalType";
+import { UserType, NoteType, StoreType } from "../type/globalType";
 
 export const fetchAllNotebooks = () => async (
   dispatch: Dispatch,
   getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   // Change the loading status to true
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotebookLoadingStatus(true));
   // Get the user's id
   const { user } = getState();
   try {
@@ -38,48 +38,50 @@ export const fetchAllNotebooks = () => async (
       allNotebooks: allNotebooks,
     });
     // Change the loading status to false
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotebookLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
 };
 
-export const addNewNotebook = () => async (
+export const addNewNotebook = (name: String) => async (
   dispatch: Dispatch,
-  getState: () => { user: UserType; [propName: string]: any }
+  getState: () => StoreType
 ): Promise<any> => {
-  // Display the loading
-  dispatch(setLoadingStatus(true));
-  // Get the user's id
-  const { user } = getState();
+  // Get the user's id and existing notebooks
+  const { user, notebooks } = getState();
+
   try {
-    const db = firebase.firestore();
-    let newNote = {
-      id: "",
-      name: "",
-      creator: user.id,
-      notes: [],
-      shareWith: [],
-      inShortcut: false,
-      inTrash: false,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    };
-    const noteRef = await db.collection("notes").add(newNote);
-    const returnedData = await noteRef.get();
+    // Display the loading
+    dispatch(setNotebookLoadingStatus(true));
+    // Only add new notebook if a notebook of same name hasn't existed yet
+    if (!notebooks.find((notebook) => notebook.name === name)) {
+      const db = firebase.firestore();
+      let newNotebook = {
+        name,
+        creator: user.id,
+        notes: [],
+        shareWith: [],
+        inShortcut: false,
+        inTrash: false,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+      const notebookRef = await db.collection("notebooks").add(newNotebook);
+      const returnedData = await notebookRef.get();
 
-    const doc: any = returnedData.data();
-    newNote = {
-      ...newNote,
-      id: doc.uid,
-      timestamp: doc.timestamp.toDate().toLocaleTimeString(),
-    };
-
-    dispatch(setLoadingStatus(false));
-    dispatch({
-      type: ADD_NOTEBOOK,
-
-      addedNote: newNote,
-    });
+      const doc: any = returnedData.data();
+      const newNotebookAdded = {
+        ...newNotebook,
+        id: notebookRef.id,
+        timestamp: doc.timestamp.toDate().toLocaleTimeString(),
+      };
+      console.log(newNotebookAdded);
+      dispatch({
+        type: ADD_NOTEBOOK,
+        addedNotebook: newNotebookAdded,
+      });
+      dispatch(setNotebookLoadingStatus(false));
+    }
   } catch (err) {
     console.error(err);
   }
@@ -90,14 +92,14 @@ export const updateNotebook = (note: NoteType) => async (
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   // Display the loading
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotebookLoadingStatus(true));
   // Get the user's id
   try {
     const db = firebase.firestore();
     const { content, title, inShortcut, inTrash } = note;
 
     await db
-      .collection("notes")
+      .collection("notebooks")
       .doc(note.id)
       .update({
         content,
@@ -106,11 +108,10 @@ export const updateNotebook = (note: NoteType) => async (
         inTrash,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotebookLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTEBOOK,
-
-      updatedNote: note,
+      updatedNotebook: note,
     });
   } catch (err) {
     console.error(err);
@@ -122,7 +123,7 @@ export const moveNotebookToTrash = (note: NoteType) => async (
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   // Display the loading
-  dispatch(setLoadingStatus(true));
+  dispatch(setNotebookLoadingStatus(true));
   // Get the user's id
   try {
     const db = firebase.firestore();
@@ -132,7 +133,7 @@ export const moveNotebookToTrash = (note: NoteType) => async (
       inTrash,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch(setLoadingStatus(false));
+    dispatch(setNotebookLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTEBOOK,
 

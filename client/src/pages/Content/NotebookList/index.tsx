@@ -7,20 +7,14 @@ import { StoreType } from "../../../redux/type/globalType";
 export default function NotebookList() {
   const notebooks = useSelector((state: StoreType) => state.notebooks);
 
-  
-
   if (notebooks.length === 0) return <div>Loading</div>;
 
   return (
     <ul>
       {notebooks.map((notebook) => (
-        <li>
+        <li key={notebook.id}>
           <Link to={`/main/notebooks/${notebook.id}/notes`}>
-            
-            
             {notebook.name}
-          
-          
           </Link>
         </li>
       ))}

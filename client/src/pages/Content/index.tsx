@@ -10,17 +10,22 @@ import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 import NotebookList from "./NotebookList";
 import AllNoteLoading from "./Loading/AllNoteLoading";
 import FilterNoteLoading from "./Loading/FilterNoteLoading";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllNotes } from "../../redux/actions/noteAction";
-import { fetchAllNotebooks } from "../../redux/actions/notebookAction";
+import {
+  addNewNotebook,
+  fetchAllNotebooks,
+} from "../../redux/actions/notebookAction";
 import NoteListAllNotes from "./NoteList/AllNotes";
 import NoteListFilteredNotes from "./NoteList/FilteredNotes";
+import { StoreType } from "../../redux/type/globalType";
 
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
+  const loading = useSelector((store: StoreType) => store.loading);
 
   const [open, setOpen] = useState(!matches);
   const [expandStatus, setExpandStatus] = useState(false);
@@ -29,6 +34,11 @@ export default function Main() {
     dispatch(fetchAllNotes());
     dispatch(fetchAllNotebooks());
   }, []);
+
+  useEffect(() => {
+    if (!loading.notebooksLoading && !loading.notesLoading)
+      dispatch(addNewNotebook("My Home"));
+  }, [loading.notebooksLoading, loading.notesLoading]);
 
   function ExpandWrapperComponent(props: any) {
     return (
