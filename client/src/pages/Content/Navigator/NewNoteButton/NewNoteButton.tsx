@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   makeStyles,
   createMuiTheme,
@@ -9,7 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { green } from "@material-ui/core/colors";
 import { addNewNote } from "../../../../redux/actions/noteAction";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ParamType, StoreType } from "../../../../redux/type/globalType";
 import { MY_HOME } from "../../../../redux/constants/constants";
 
@@ -33,19 +33,22 @@ export default function NewNoteButton() {
   const dispatch = useDispatch();
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
   const { notebookId } = useParams<ParamType>();
+  //const location = useLocation();
+  useEffect(() => {
+    //console.log(notebookId);
+    //console.log(location);
+  });
 
   const handleClick = () => {
     // Check if there is notebook specified in the URL
     if (notebookId) {
       // Find the notebook accordingly
-      console.log("This is when notebookId exist");
       const notebook = allNotebooks.find(
         (notebook) => notebook.id === notebookId
       );
       // This check is just to go around the undefined error of the TypeScript
       if (notebook) dispatch(addNewNote(notebook));
     } else {
-      console.log("This is when notebookId do not exist");
       // If there is no notebook ID specified, i.e all notes mode
       const notebook = allNotebooks.find(
         // We choose our default notebook as location to create new note

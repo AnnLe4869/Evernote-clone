@@ -76,28 +76,37 @@ export default function Main() {
   return (
     <div>
       <CssBaseline />
-      {!expandStatus ? (
-        <Navigator open={open} setOpen={(value) => setOpen(value)} />
-      ) : null}
 
       <Switch>
         <Route path={`${url}/notebooks`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
           <ExpandWrapperComponent>
             <NotebookList />
           </ExpandWrapperComponent>
         </Route>
         <Route path={`${url}/notes`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
           <ExpandWrapperComponent>
             <AllNoteLoading />
           </ExpandWrapperComponent>
         </Route>
         <Route path={`${url}/notebooks/:notebookId/notes`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
           <ExpandWrapperComponent>
             <FilterNoteLoading />
           </ExpandWrapperComponent>
         </Route>
 
         <Route path={`${url}/notes/:noteId`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
           <ExpandWrapperComponent>
             <Grid item md={4} sm={12}>
               <NoteListAllNotes />
@@ -109,6 +118,9 @@ export default function Main() {
         </Route>
 
         <Route path={`${url}/notebooks/:notebookId/notes/:noteId`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
           <ExpandWrapperComponent>
             <Grid item md={4} sm={12}>
               <NoteListFilteredNotes />
