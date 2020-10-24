@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import EditorHeader from "./EditorHeader/EditorHeader";
 import EditorContent from "./EditorContent/EditorContent";
 import { useSelector } from "react-redux";
-import { StoreType, NoteType } from "../../../redux/type/globalType";
+import { StoreType, NoteType, ParamType } from "../../../redux/type/globalType";
 import { useParams } from "react-router-dom";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function Editor({ setExpandStatus }: Props) {
-  const { noteId } = useParams();
+  const { noteId } = useParams<ParamType>();
 
   const allNotes = useSelector((store: StoreType) => store.notes);
 

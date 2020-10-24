@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
@@ -29,7 +29,7 @@ export default function Editor(props: NoteType) {
   const dispatch = useDispatch();
   const { content } = props;
 
-  const [editorText, setEditorText] = useState("");
+  const [editorText, setEditorText] = useState("hello");
   const [focusStatus, setFocusStatus] = useState(false);
   // This refer to the note we previously working/display with before we click other note
   // This is needed because we need to know which item we work before so that we can update accordingly
@@ -38,12 +38,20 @@ export default function Editor(props: NoteType) {
     id: "",
     creator: "",
     timestamp: "",
-    content: "",
+    content: "hello",
     title: "",
     shareWith: [{ user: "", canWrite: false }],
     inShortcut: false,
     inTrash: false,
   });
+  const contentRef = useRef<string>();
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(editorText);
+  //     console.log(contentRef.current);
+  //   };
+  // }, []);
 
   // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
   useEffect(() => {
@@ -55,6 +63,7 @@ export default function Editor(props: NoteType) {
 
   const handleClickAway = () => {
     if (focusStatus) setFocusStatus(false);
+    console.log("click away effect");
     // Check if the content of the item is different from the content in the editor
     if (currentNote.content !== editorText) {
       dispatch(updateNote({ ...currentNote, content: editorText }));
@@ -66,6 +75,7 @@ export default function Editor(props: NoteType) {
 
   const handleChange = (content: string) => {
     setEditorText(content);
+    contentRef.current = content;
   };
 
   return (

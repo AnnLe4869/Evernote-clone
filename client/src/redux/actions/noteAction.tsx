@@ -102,7 +102,6 @@ export const updateNote = (note: NoteType) => async (
   try {
     const db = firebase.firestore();
     const { content, title, inShortcut, inTrash } = note;
-
     await db
       .collection("notes")
       .doc(note.id)
