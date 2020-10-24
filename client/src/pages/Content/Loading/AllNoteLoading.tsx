@@ -7,10 +7,11 @@ import { useHistory } from "react-router-dom";
 
 export default function AllNoteLoading() {
   const allNotes = useSelector((store: StoreType) => store.notes);
+  const loading = useSelector((store: StoreType) => store.loading);
   const history = useHistory();
   useEffect(() => {
-    if (allNotes.length > 0) history.push("/main/notes/" + allNotes[0].id);
-  }, [allNotes.length]);
+    if (!loading.notesLoading) history.push("/main/notes/" + allNotes[0].id);
+  }, [allNotes.length, loading.notesLoading]);
 
   return (
     <div>

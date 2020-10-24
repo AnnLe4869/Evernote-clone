@@ -8,7 +8,10 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import { green } from "@material-ui/core/colors";
 import { addNewNote } from "../../../../redux/actions/noteAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { ParamType, StoreType } from "../../../../redux/type/globalType";
+import { MY_HOME } from "../../../../redux/constants/constants";
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -28,9 +31,26 @@ const buttonTheme = createMuiTheme({
 export default function NewNoteButton() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const allNotebooks = useSelector((store: StoreType) => store.notebooks);
+  const { notebookId } = useParams<ParamType>();
 
   const handleClick = () => {
-    dispatch(addNewNote());
+    // Check if there is notebook specified in the URL
+    if (notebookId) {
+      // Find the notebook accordingly
+      const notebook = allNotebooks.find(
+        (notebook) => notebook.id === notebookId
+      );
+      // This check is just to go around the undefined error of the TypeScript
+      if (notebook) dispatch(addNewNote(notebook));
+    } else {
+      // If there is no notebook ID specified, i.e all notes mode
+      const notebook = allNotebooks.find(
+        // We choose our default notebook as location to create new note
+        (notebook) => notebook.name === MY_HOME
+      );
+      if (notebook) dispatch(addNewNote(notebook));
+    }
   };
 
   return (

@@ -18,12 +18,12 @@ export default function (
 
     case ADD_NOTEBOOK:
       return [action.addedNotebook, ...initialState];
-      
+
     case UPDATE_NOTEBOOK:
       const allNotebooksUpdated = initialState.filter(
         (notebook) => notebook.id !== action.updatedNotebook.id
       );
-      return [action.updatedNotebook, ...allNotebooksUpdated];;;
+      return [action.updatedNotebook, ...allNotebooksUpdated];
 
     default:
       return initialState;

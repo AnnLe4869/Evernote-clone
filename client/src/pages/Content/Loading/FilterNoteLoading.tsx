@@ -9,6 +9,7 @@ export default function FilterNoteLoading() {
 
   const allNotes = useSelector((store: StoreType) => store.notes);
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
+  const loading = useSelector((store: StoreType) => store.loading);
 
   const selectedNotebook = useMemo(
     () => allNotebooks.find((notebook) => notebook.id === notebookId),

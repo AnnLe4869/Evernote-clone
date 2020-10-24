@@ -2,11 +2,17 @@ import firebase from "firebase";
 import { Dispatch } from "redux";
 import { setNotesLoadingStatus } from "./loadingAction";
 import { GET_ALL_NOTES, ADD_NOTE, UPDATE_NOTE } from "../constants/constants";
-import { UserType, NoteType } from "../type/globalType";
+import {
+  UserType,
+  NoteType,
+  NotebookType,
+  StoreType,
+} from "../type/globalType";
+import { addNoteToNotebook } from "./notebookAction";
 
 export const fetchAllNotes = () => async (
   dispatch: Dispatch,
-  getState: () => { user: UserType; [propName: string]: any }
+  getState: () => StoreType
 ): Promise<void> => {
   // Change the loading status to true
   dispatch(setNotesLoadingStatus(true));
@@ -40,9 +46,9 @@ export const fetchAllNotes = () => async (
   }
 };
 
-export const addNewNote = () => async (
-  dispatch: Dispatch,
-  getState: () => { user: UserType; [propName: string]: any }
+export const addNewNote = (notebook: NotebookType) => async (
+  dispatch: Dispatch<any>,
+  getState: () => StoreType
 ): Promise<any> => {
   // Display the loading
   dispatch(setNotesLoadingStatus(true));
@@ -59,21 +65,28 @@ export const addNewNote = () => async (
       inShortcut: false,
       inTrash: false,
     };
+    // This is to get the the note id from firebase
     const noteRef = await db.collection("notes").add(newNote);
-    const returnedData = await noteRef.get();
-
-    const doc = returnedData.data();
+    // This is to get the latest data of the note from firebase
+    const doc = (await noteRef.get()).data();
     const addedNote = {
+      ...newNote,
       ...doc,
       id: noteRef.id,
       timestamp: doc?.timestamp.toDate().toLocaleTimeString(),
     };
 
-    dispatch(setNotesLoadingStatus(false));
+    // Create a new note in the store
     dispatch({
       type: ADD_NOTE,
       addedNote: addedNote,
     });
+    // Then add the note to notebook
+    // Note that, Because technically speaking Dispatch alone require the inside function return an action, not another function
+    // The dispatch: Dispatch require Action as return value whereas useDispatch() use any as return
+    // Change dispatch: Dispatch<any> will make the dispatch() function accept any as returned value
+    dispatch(addNoteToNotebook(addedNote, notebook));
+    dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
@@ -81,7 +94,7 @@ export const addNewNote = () => async (
 
 export const updateNote = (note: NoteType) => async (
   dispatch: Dispatch
-  //getState: () => { user: UserType; [propName: string]: any }
+  //getState: () => StoreType
 ): Promise<any> => {
   // Display the loading
   dispatch(setNotesLoadingStatus(true));

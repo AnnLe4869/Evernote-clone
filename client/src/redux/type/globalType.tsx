@@ -29,7 +29,7 @@ export interface NotebookType {
   }>;
   inShortcut: boolean;
   inTrash: boolean;
-  timestamp: string;
+  timestamp: string | firebase.firestore.FieldValue;
 }
 
 export interface LoadingType {

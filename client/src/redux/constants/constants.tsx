@@ -49,3 +49,6 @@ export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_AUTH_STATUS = "SET_AUTH_STATUS";
 export const GET_AUTH_STATUS = "GET_AUTH_STATUS";
+
+// For default notebook
+export const MY_HOME = "My Home";

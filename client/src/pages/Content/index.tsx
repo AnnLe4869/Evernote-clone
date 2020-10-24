@@ -19,6 +19,7 @@ import {
 import NoteListAllNotes from "./NoteList/AllNotes";
 import NoteListFilteredNotes from "./NoteList/FilteredNotes";
 import { StoreType } from "../../redux/type/globalType";
+import { MY_HOME } from "../../redux/constants/constants";
 
 export default function Main() {
   const theme = useTheme();
@@ -37,7 +38,8 @@ export default function Main() {
 
   useEffect(() => {
     if (!loading.notebooksLoading && !loading.notesLoading)
-      dispatch(addNewNotebook("My Home"));
+      dispatch(addNewNotebook(MY_HOME));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading.notebooksLoading, loading.notesLoading]);
 
   function ExpandWrapperComponent(props: any) {
