@@ -38,12 +38,14 @@ export default function NewNoteButton() {
     // Check if there is notebook specified in the URL
     if (notebookId) {
       // Find the notebook accordingly
+      console.log("This is when notebookId exist");
       const notebook = allNotebooks.find(
         (notebook) => notebook.id === notebookId
       );
       // This check is just to go around the undefined error of the TypeScript
       if (notebook) dispatch(addNewNote(notebook));
     } else {
+      console.log("This is when notebookId do not exist");
       // If there is no notebook ID specified, i.e all notes mode
       const notebook = allNotebooks.find(
         // We choose our default notebook as location to create new note
