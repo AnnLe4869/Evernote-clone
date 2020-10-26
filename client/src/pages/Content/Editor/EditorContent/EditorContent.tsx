@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
@@ -6,9 +6,14 @@ import "react-quill/dist/quill.snow.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
-import { NoteType } from "../../../../redux/type/globalType";
-import { useDispatch } from "react-redux";
+import {
+  NoteType,
+  ParamType,
+  StoreType,
+} from "../../../../redux/type/globalType";
+import { useDispatch, useSelector } from "react-redux";
 import { updateNote } from "../../../../redux/actions/noteAction";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -24,58 +29,59 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Editor(props: NoteType) {
+export default function Editor() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { content } = props;
 
-  const [editorText, setEditorText] = useState("hello");
+  const { noteId } = useParams<ParamType>();
+  const allNotes = useSelector((store: StoreType) => store.notes);
+  const selectedNote = useMemo(() => {
+    return allNotes.find((note) => note.id === noteId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteId, allNotes]);
+
+  const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);
-  // This refer to the note we previously working/display with before we click other note
-  // This is needed because we need to know which item we work before so that we can update accordingly
-  // Remember, when click away we re-render this component and the props is changed
-  const [currentNote, setCurrentNote] = useState({
-    id: "",
-    creator: "",
-    timestamp: "",
-    content: "hello",
-    title: "",
-    shareWith: [{ user: "", canWrite: false }],
-    inShortcut: false,
-    inTrash: false,
-  });
-  const contentRef = useRef<string>();
+  const editorRef = useRef<string>("");
 
-  // useEffect(() => {
-  //   return () => {
-  //     console.log(editorText);
-  //     console.log(contentRef.current);
-  //   };
-  // }, []);
-
+  // We assign the value of the note to editor
+  // We need to do some checking
   // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
   useEffect(() => {
-    if (content) {
-      setEditorText(content);
-      setCurrentNote(props);
+    if (selectedNote) {
+      setEditorText(selectedNote.content);
+      editorRef.current = selectedNote.content;
     }
-  }, [content]);
+  }, [selectedNote]);
 
+  // Handle when user click away from the editor
+  // For now this only apply for non-route-link element
   const handleClickAway = () => {
     if (focusStatus) setFocusStatus(false);
-    console.log("click away effect");
     // Check if the content of the item is different from the content in the editor
-    if (currentNote.content !== editorText) {
-      dispatch(updateNote({ ...currentNote, content: editorText }));
+    if (selectedNote && selectedNote?.content !== editorText) {
+      dispatch(updateNote({ ...selectedNote, content: editorText }));
     }
   };
+
+  // Fire when user click on link to other route
+  useEffect(() => {
+    return () => {
+      console.log(selectedNote);
+      // Check if the content of the item is different from the content in the editor
+      if (selectedNote && selectedNote?.content !== editorRef.current) {
+        dispatch(updateNote({ ...selectedNote, content: editorRef.current }));
+      }
+    };
+  }, []);
+
   const handleFocusIn = () => {
     if (!focusStatus) setFocusStatus(true);
   };
 
   const handleChange = (content: string) => {
     setEditorText(content);
-    contentRef.current = content;
+    editorRef.current = content;
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -11,7 +11,13 @@ import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
 import HeaderUtilityList from "./HeaderUtilityList/HeaderUtilityList";
 import HeaderDialog from "./HeaderDialog/HeaderDialog";
 import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
-import { NoteType } from "../../../../redux/type/globalType";
+import {
+  NoteType,
+  ParamType,
+  StoreType,
+} from "../../../../redux/type/globalType";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -27,14 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props extends NoteType {
+interface Props {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export default function EditorHeader(props: Props) {
   const classes = useStyles();
-  const { setExpandStatus, ...note } = props;
+  const { setExpandStatus } = props;
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
+
+  const { noteId } = useParams<ParamType>();
+  const allNotes = useSelector((store: StoreType) => store.notes);
+  const note = useMemo(() => {
+    return allNotes.find((note) => note.id === noteId);
+  }, [noteId, allNotes]);
 
   const handleClickOpenDialog = () => {
     setDialogOpenStatus(true);
@@ -43,6 +55,8 @@ export default function EditorHeader(props: Props) {
   const handleCloseDialog = () => {
     setDialogOpenStatus(false);
   };
+
+  if (!note) return <div></div>;
 
   return (
     <Paper className={classes.header} square>
