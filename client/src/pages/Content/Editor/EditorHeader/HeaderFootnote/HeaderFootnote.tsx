@@ -2,6 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import useNoteFromId from "../../../../../custom_hooks/useNoteFromId";
 
 const useStyles = makeStyles((theme) => ({
   headerFootnote: {
@@ -12,8 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function HeaderFootnote({ timestamp }: { timestamp: string }) {
+export default function HeaderFootnote() {
   const classes = useStyles();
+
+  const note = useNoteFromId();
 
   return (
     <Typography
@@ -23,7 +26,7 @@ export default function HeaderFootnote({ timestamp }: { timestamp: string }) {
       display="block"
       className={classes.headerFootnote}
     >
-      Last edit at {timestamp}
+      Last edit at {note?.timestamp}
     </Typography>
   );
 }

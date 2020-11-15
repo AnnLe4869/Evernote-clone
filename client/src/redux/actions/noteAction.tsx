@@ -2,12 +2,7 @@ import firebase from "firebase";
 import { Dispatch } from "redux";
 import { setNotesLoadingStatus } from "./loadingAction";
 import { GET_ALL_NOTES, ADD_NOTE, UPDATE_NOTE } from "../constants/constants";
-import {
-  UserType,
-  NoteType,
-  NotebookType,
-  StoreType,
-} from "../type/globalType";
+import { NoteType, NotebookType, StoreType } from "../type/globalType";
 import { addNoteToNotebook } from "./notebookAction";
 
 export const fetchAllNotes = () => async (

@@ -40,6 +40,7 @@ export default function Main() {
   useEffect(() => {
     dispatch(fetchAllNotes());
     dispatch(fetchAllNotebooks());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

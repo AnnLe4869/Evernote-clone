@@ -1,35 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { NoteType } from "../../../../../redux/type/globalType";
 import { useDispatch } from "react-redux";
 import { updateNote } from "../../../../../redux/actions/noteAction";
+import useNoteFromId from "../../../../../custom_hooks/useNoteFromId";
 
-export default function HeaderUtilityList(props: NoteType) {
+export default function HeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [currentNote, setCurrentNote] = useState({
-    id: "",
-    creator: "",
-    timestamp: "",
-    content: "",
-    title: "",
-    shareWith: [{ user: "", canWrite: false }],
-    inShortcut: false,
-    inTrash: false,
-  });
 
   const dispatch = useDispatch();
-
-  // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
-  useEffect(() => {
-    if (props.id) {
-      setCurrentNote(props);
-    }
-  }, [props.id]);
+  const currentNote = useNoteFromId();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -40,14 +24,19 @@ export default function HeaderUtilityList(props: NoteType) {
   };
 
   const toggleInShortcutStatus = () => {
-    dispatch(
-      updateNote({ ...currentNote, inShortcut: !currentNote.inShortcut })
-    );
+    if (currentNote) {
+      dispatch(
+        updateNote({ ...currentNote, inShortcut: !currentNote.inShortcut })
+      );
+    }
+
     setAnchorEl(null);
   };
 
   const moveToTrash = () => {
-    dispatch(updateNote({ ...currentNote, inTrash: true }));
+    if (currentNote) {
+      dispatch(updateNote({ ...currentNote, inTrash: true }));
+    }
     setAnchorEl(null);
   };
 
@@ -67,7 +56,7 @@ export default function HeaderUtilityList(props: NoteType) {
       >
         <MenuItem onClick={handleCloseUtilityList}>Move ...</MenuItem>
         <MenuItem onClick={toggleInShortcutStatus}>
-          {currentNote.inShortcut
+          {currentNote?.inShortcut
             ? "Remove from Shortcuts"
             : "Move to Shortcuts"}
         </MenuItem>

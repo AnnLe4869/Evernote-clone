@@ -1,28 +1,23 @@
 import firebase from "firebase";
-import { AnyAction, Dispatch } from "redux";
+import { Dispatch } from "redux";
 import { setNotebookLoadingStatus } from "./loadingAction";
 import {
   GET_ALL_NOTEBOOKS,
   ADD_NOTEBOOK,
   UPDATE_NOTEBOOK,
 } from "../constants/constants";
-import {
-  UserType,
-  NoteType,
-  StoreType,
-  NotebookType,
-} from "../type/globalType";
+import { NoteType, StoreType, NotebookType } from "../type/globalType";
 import { addNewNote } from "./noteAction";
 
 export const fetchAllNotebooks = () => async (
   dispatch: Dispatch,
-  getState: () => { user: UserType; [propName: string]: any }
+  getState: () => StoreType
 ): Promise<any> => {
-  // Change the loading status to true
-  dispatch(setNotebookLoadingStatus(true));
   // Get the user's id
   const { user } = getState();
   try {
+    // Change the loading status to true
+    dispatch(setNotebookLoadingStatus(true));
     const db = firebase.firestore();
     const querySnapshots = await db
       .collection("notebooks")
@@ -58,10 +53,12 @@ export const addNewNotebook = (name: string) => async (
   const { user, notebooks } = getState();
 
   try {
-    // Set the loading status to true
-    dispatch(setNotebookLoadingStatus(true));
     // Only add new notebook if a notebook of same name hasn't existed yet
     if (!notebooks.find((notebook) => notebook.name === name)) {
+      // Set the loading status to true
+      dispatch(setNotebookLoadingStatus(true));
+
+      // Only then we start the process
       const db = firebase.firestore();
       let newNotebook = {
         name,
@@ -102,9 +99,9 @@ export const addNoteToNotebook = (
   note: NoteType,
   notebook: NotebookType
 ) => async (dispatch: Dispatch): Promise<any> => {
-  // Set the loading status to true
-  dispatch(setNotebookLoadingStatus(true));
   try {
+    // Set the loading status to true
+    dispatch(setNotebookLoadingStatus(true));
     const db = firebase.firestore();
     await db
       .collection("notebooks")
@@ -135,10 +132,9 @@ export const removeNoteFromNotebook = (
   note: NoteType,
   notebook: NotebookType
 ) => async (dispatch: Dispatch): Promise<any> => {
-  // Display the loading
-  dispatch(setNotebookLoadingStatus(true));
-  // Get the user's id
   try {
+    // Display the loading
+    dispatch(setNotebookLoadingStatus(true));
     const db = firebase.firestore();
     await db
       .collection("notebooks")
@@ -174,10 +170,9 @@ export const moveNotebookToTrash = (note: NoteType) => async (
   dispatch: Dispatch
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
-  // Display the loading
-  dispatch(setNotebookLoadingStatus(true));
-  // Get the user's id
   try {
+    // Display the loading
+    dispatch(setNotebookLoadingStatus(true));
     const db = firebase.firestore();
     const { inTrash } = note;
 

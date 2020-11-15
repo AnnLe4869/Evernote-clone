@@ -6,11 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
-import {
-  NoteType,
-  ParamType,
-  StoreType,
-} from "../../../../redux/type/globalType";
+import { ParamType, StoreType } from "../../../../redux/type/globalType";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNote } from "../../../../redux/actions/noteAction";
 import { useParams } from "react-router-dom";
@@ -94,6 +90,7 @@ export default function Editor() {
         dispatch(updateNote({ ...selectedNote, content: editorRef.current }));
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFocusIn = () => {
