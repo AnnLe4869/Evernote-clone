@@ -112,6 +112,7 @@ export const updateNote = (note: NoteType) => async (
         inTrash,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
+    console.log("%cFrom inside the action: " + content, "color: red");
     dispatch(setNotesLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTE,

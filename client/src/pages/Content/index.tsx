@@ -37,6 +37,13 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
+    console.log(
+      "%c noteLoading status: " + loading.notesLoading,
+      "background-color: yellow"
+    );
+  });
+
+  useEffect(() => {
     if (!loading.notebooksLoading && !loading.notesLoading)
       dispatch(addNewNotebook(MY_HOME));
     // eslint-disable-next-line react-hooks/exhaustive-deps
