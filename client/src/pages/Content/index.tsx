@@ -26,7 +26,13 @@ export default function Main() {
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
-  const loading = useSelector((store: StoreType) => store.loading);
+
+  const notesLoading = useSelector(
+    (store: StoreType) => store.loading.notesLoading
+  );
+  const notebooksLoading = useSelector(
+    (store: StoreType) => store.loading.notebooksLoading
+  );
 
   const [open, setOpen] = useState(!matches);
   const [expandStatus, setExpandStatus] = useState(false);
@@ -37,17 +43,9 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
-    console.log(
-      "%c noteLoading status: " + loading.notesLoading,
-      "background-color: yellow"
-    );
-  });
-
-  useEffect(() => {
-    if (!loading.notebooksLoading && !loading.notesLoading)
-      dispatch(addNewNotebook(MY_HOME));
+    if (!notebooksLoading && !notesLoading) dispatch(addNewNotebook(MY_HOME));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading.notebooksLoading, loading.notesLoading]);
+  }, [notebooksLoading, notesLoading]);
 
   function ExpandWrapperComponent(props: any) {
     return (

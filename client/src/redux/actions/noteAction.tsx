@@ -112,12 +112,11 @@ export const updateNote = (note: NoteType) => async (
         inTrash,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
-    console.log("%cFrom inside the action: " + content, "color: red");
-    dispatch(setNotesLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTE,
       updatedNote: note,
     });
+    dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
@@ -138,11 +137,11 @@ export const moveNoteToTrash = (note: NoteType) => async (
       inTrash,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch(setNotesLoadingStatus(false));
     dispatch({
       type: UPDATE_NOTE,
       updatedNote: note,
     });
+    dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
