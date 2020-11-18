@@ -20,11 +20,12 @@ import NoteListAllNotes from "./NoteList/AllNotes";
 import NoteListFilteredNotes from "./NoteList/FilteredNotes";
 import { StoreType } from "../../redux/type/globalType";
 import { MY_HOME } from "../../redux/constants/constants";
+import { useRef } from "react";
 
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-  const { url } = useRouteMatch();
+  //const { url } = useRouteMatch();
   const dispatch = useDispatch();
 
   const notesLoading = useSelector(
@@ -38,13 +39,19 @@ export default function Main() {
   const [expandStatus, setExpandStatus] = useState(false);
 
   useEffect(() => {
+    console.log("something change in MainContent component");
+  });
+
+  useEffect(() => {
     dispatch(fetchAllNotes());
     dispatch(fetchAllNotebooks());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (!notebooksLoading && !notesLoading) dispatch(addNewNotebook(MY_HOME));
+    if (!notebooksLoading && !notesLoading) {
+      dispatch(addNewNotebook(MY_HOME));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notebooksLoading, notesLoading]);
 
@@ -84,7 +91,7 @@ export default function Main() {
       <CssBaseline />
 
       <Switch>
-        <Route path={`${url}/notebooks`} exact>
+        <Route path={`/main/notebooks`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
@@ -92,7 +99,7 @@ export default function Main() {
             <NotebookList />
           </ExpandWrapperComponent>
         </Route>
-        <Route path={`${url}/notes`} exact>
+        <Route path={`/main/notes`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
@@ -100,7 +107,7 @@ export default function Main() {
             <AllNoteLoading />
           </ExpandWrapperComponent>
         </Route>
-        <Route path={`${url}/notebooks/:notebookId/notes`} exact>
+        <Route path={`/main/notebooks/:notebookId/notes`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
@@ -109,7 +116,7 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
-        <Route path={`${url}/notes/:noteId`} exact>
+        <Route path={`/main/notes/:noteId`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
@@ -123,7 +130,7 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
-        <Route path={`${url}/notebooks/:notebookId/notes/:noteId`} exact>
+        <Route path={`/main/notebooks/:notebookId/notes/:noteId`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
@@ -137,7 +144,7 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
-        <Redirect to={`${url}/notebooks`} />
+        <Redirect to={`/main/notebooks`} />
       </Switch>
 
       {/* {!expandStatus ? (
@@ -177,4 +184,20 @@ export default function Main() {
       )} */}
     </div>
   );
+}
+
+function useTraceUpdate(props: any) {
+  const prev = useRef(props);
+  useEffect(() => {
+    const changedProps = Object.entries(props).reduce((ps: any, [k, v]) => {
+      if (prev.current[k] !== v) {
+        ps[k] = [prev.current[k], v];
+      }
+      return ps;
+    }, {});
+    if (Object.keys(changedProps).length > 0) {
+      console.log("Changed props:", changedProps);
+    }
+    prev.current = props;
+  });
 }

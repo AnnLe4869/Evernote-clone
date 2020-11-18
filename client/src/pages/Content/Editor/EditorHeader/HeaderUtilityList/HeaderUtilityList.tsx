@@ -8,11 +8,13 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useDispatch } from "react-redux";
 import { updateNote } from "../../../../../redux/actions/noteAction";
 import useNoteFromId from "../../../../../custom_hooks/useNoteFromId";
+import { useHistory } from "react-router-dom";
 
 export default function HeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const currentNote = useNoteFromId();
 
   const handleClickOpenUtilityList = (event: any) => {
@@ -36,8 +38,9 @@ export default function HeaderUtilityList() {
   const moveToTrash = () => {
     if (currentNote) {
       dispatch(updateNote({ ...currentNote, inTrash: true }));
+      setAnchorEl(null);
+      //history.push("/main/notes");
     }
-    setAnchorEl(null);
   };
 
   return (

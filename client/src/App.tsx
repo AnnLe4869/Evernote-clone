@@ -10,11 +10,9 @@ import {
 import firebase from "firebase";
 
 import Authentication from "./pages/Auth";
-import MainContent from "./pages/Content";
+import MainContent from "./pages/Content/MainContent";
 import { setCurrentUser } from "./redux/actions/userAction";
-import { StoreType, UserType } from "./redux/type/globalType";
-
-
+import { StoreType } from "./redux/type/globalType";
 
 function App() {
   const userId = useSelector((store: StoreType) => store.user.id);
@@ -37,6 +35,7 @@ function App() {
         </Route>
         {userId ? (
           <Route path="/main">
+            <DummyComponent />
             <MainContent />
           </Route>
         ) : null}
@@ -48,3 +47,13 @@ function App() {
 }
 
 export default App;
+
+function DummyComponent() {
+  useEffect(() => {
+    console.log("Check for re-mount from dummy component");
+    return () => {
+      console.log("Check for un-mount from dummy component");
+    };
+  });
+  return <div></div>;
+}

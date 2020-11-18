@@ -75,6 +75,12 @@ export default function Navigator({ open, setOpen }: Props) {
     if (!matches) setOpen(false);
   }, [matches]);
 
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("Check for un-mount");
+  //   };
+  // }, []);
+
   return (
     <div>
       {/* This is the menu button that will appear when drawer collapse */}
