@@ -39,10 +39,6 @@ export default function Main() {
   const [expandStatus, setExpandStatus] = useState(false);
 
   useEffect(() => {
-    console.log("something change in MainContent component");
-  });
-
-  useEffect(() => {
     dispatch(fetchAllNotes());
     dispatch(fetchAllNotebooks());
     // eslint-disable-next-line react-hooks/exhaustive-deps

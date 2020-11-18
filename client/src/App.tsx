@@ -35,7 +35,6 @@ function App() {
         </Route>
         {userId ? (
           <Route path="/main">
-            <DummyComponent />
             <MainContent />
           </Route>
         ) : null}
@@ -47,13 +46,3 @@ function App() {
 }
 
 export default App;
-
-function DummyComponent() {
-  useEffect(() => {
-    console.log("Check for re-mount from dummy component");
-    return () => {
-      console.log("Check for un-mount from dummy component");
-    };
-  });
-  return <div></div>;
-}

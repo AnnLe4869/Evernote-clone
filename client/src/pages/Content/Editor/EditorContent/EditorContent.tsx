@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
@@ -6,10 +6,10 @@ import "react-quill/dist/quill.snow.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
-import { ParamType, StoreType } from "../../../../redux/type/globalType";
+import { StoreType } from "../../../../redux/type/globalType";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNote } from "../../../../redux/actions/noteAction";
-import { useParams } from "react-router-dom";
+import useNoteFromId from "../../../../custom_hooks/useNoteFromId";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -29,12 +29,7 @@ export default function Editor() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { noteId } = useParams<ParamType>();
-  const allNotes = useSelector((store: StoreType) => store.notes);
-  const selectedNote = useMemo(() => {
-    return allNotes.find((note) => note.id === noteId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [noteId, allNotes]);
+  const selectedNote = useNoteFromId();
 
   const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);
@@ -51,6 +46,10 @@ export default function Editor() {
       ongoingUpdate.current = false;
     }
   }, [notesLoading]);
+
+  useEffect(() => {
+    console.log("Test for re-mount");
+  }, []);
 
   // We assign the value of the note to editor
   // We need to do some checking
