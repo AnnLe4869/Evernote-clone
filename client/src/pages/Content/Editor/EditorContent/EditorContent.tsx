@@ -48,7 +48,11 @@ export default function Editor() {
   }, [notesLoading]);
 
   useEffect(() => {
-    console.log("Test for re-mount");
+    console.log("Editor re-mount");
+
+    return () => {
+      console.log("Editor un-mount");
+    };
   }, []);
 
   // We assign the value of the note to editor

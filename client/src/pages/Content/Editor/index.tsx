@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import EditorHeader from "./EditorHeader/EditorHeader";
 import EditorContent from "./EditorContent/EditorContent";
@@ -8,6 +8,13 @@ interface Props {
 }
 
 export default function Editor({ setExpandStatus }: Props) {
+  useEffect(() => {
+    console.log("Parent editor re-mount");
+    return () => {
+      console.log("Parent of editor un-mount");
+    };
+  }, []);
+
   return (
     <div>
       {/* The header of the editor */}

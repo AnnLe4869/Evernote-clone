@@ -25,8 +25,8 @@ import { useRef } from "react";
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-  //const { url } = useRouteMatch();
   const dispatch = useDispatch();
+  useRouteMatch();
 
   const notesLoading = useSelector(
     (store: StoreType) => store.loading.notesLoading
