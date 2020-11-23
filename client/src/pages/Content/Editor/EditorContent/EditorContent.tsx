@@ -47,14 +47,6 @@ export default function Editor() {
     }
   }, [notesLoading]);
 
-  useEffect(() => {
-    console.log("Editor re-mount");
-
-    return () => {
-      console.log("Editor un-mount");
-    };
-  }, []);
-
   // We assign the value of the note to editor
   // We need to do some checking
   // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store

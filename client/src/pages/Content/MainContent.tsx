@@ -20,7 +20,6 @@ import NoteListAllNotes from "./NoteList/AllNotes";
 import NoteListFilteredNotes from "./NoteList/FilteredNotes";
 import { StoreType } from "../../redux/type/globalType";
 import { MY_HOME } from "../../redux/constants/constants";
-import { useRef } from "react";
 
 export default function Main() {
   const theme = useTheme();
@@ -51,37 +50,6 @@ export default function Main() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notebooksLoading, notesLoading]);
 
-  function ExpandWrapperComponent(props: any) {
-    return (
-      <>
-        {expandStatus ? (
-          <Grid
-            container
-            component="main"
-            style={{
-              height: "100vh",
-              overflow: "hidden",
-            }}
-          >
-            {props.children}
-          </Grid>
-        ) : (
-          <Grid
-            container
-            component="main"
-            style={{
-              paddingLeft: open ? "18vw" : "",
-              height: "100vh",
-              overflow: "hidden",
-            }}
-          >
-            {props.children}
-          </Grid>
-        )}
-      </>
-    );
-  }
-
   return (
     <div>
       <CssBaseline />
@@ -91,7 +59,7 @@ export default function Main() {
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
-          <ExpandWrapperComponent>
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <NotebookList />
           </ExpandWrapperComponent>
         </Route>
@@ -99,7 +67,7 @@ export default function Main() {
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
-          <ExpandWrapperComponent>
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <AllNoteLoading />
           </ExpandWrapperComponent>
         </Route>
@@ -107,7 +75,7 @@ export default function Main() {
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
-          <ExpandWrapperComponent>
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <FilterNoteLoading />
           </ExpandWrapperComponent>
         </Route>
@@ -116,7 +84,7 @@ export default function Main() {
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
-          <ExpandWrapperComponent>
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <Grid item md={4} sm={12}>
               <NoteListAllNotes />
             </Grid>
@@ -130,7 +98,7 @@ export default function Main() {
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
-          <ExpandWrapperComponent>
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <Grid item md={4} sm={12}>
               <NoteListFilteredNotes />
             </Grid>
@@ -182,18 +150,33 @@ export default function Main() {
   );
 }
 
-function useTraceUpdate(props: any) {
-  const prev = useRef(props);
-  useEffect(() => {
-    const changedProps = Object.entries(props).reduce((ps: any, [k, v]) => {
-      if (prev.current[k] !== v) {
-        ps[k] = [prev.current[k], v];
-      }
-      return ps;
-    }, {});
-    if (Object.keys(changedProps).length > 0) {
-      console.log("Changed props:", changedProps);
-    }
-    prev.current = props;
-  });
+function ExpandWrapperComponent(props: any) {
+  return (
+    <>
+      {props.expandStatus ? (
+        <Grid
+          container
+          component="main"
+          style={{
+            height: "100vh",
+            overflow: "hidden",
+          }}
+        >
+          {props.children}
+        </Grid>
+      ) : (
+        <Grid
+          container
+          component="main"
+          style={{
+            paddingLeft: props.open ? "18vw" : "",
+            height: "100vh",
+            overflow: "hidden",
+          }}
+        >
+          {props.children}
+        </Grid>
+      )}
+    </>
+  );
 }
