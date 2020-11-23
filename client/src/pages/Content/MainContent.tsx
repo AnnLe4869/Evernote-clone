@@ -1,31 +1,30 @@
-import React, { useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-
-import Editor from "./Editor";
-import Navigator from "./Navigator";
-import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
-import NotebookList from "./NotebookList";
-import AllNoteLoading from "./Loading/AllNoteLoading";
-import FilterNoteLoading from "./Loading/FilterNoteLoading";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { fetchAllNotes } from "../../redux/actions/noteAction";
 import {
   addNewNotebook,
   fetchAllNotebooks,
 } from "../../redux/actions/notebookAction";
+import { MY_HOME } from "../../redux/constants/constants";
+import { StoreType } from "../../redux/type/globalType";
+import Editor from "./Editor";
+import AllNoteLoading from "./Loading/AllNoteLoading";
+import FilterNoteLoading from "./Loading/FilterNoteLoading";
+import Navigator from "./Navigator";
+import NotebookList from "./NotebookList";
 import NoteListAllNotes from "./NoteList/AllNotes";
 import NoteListFilteredNotes from "./NoteList/FilteredNotes";
-import { StoreType } from "../../redux/type/globalType";
-import { MY_HOME } from "../../redux/constants/constants";
 
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
-  useRouteMatch();
+  // useRouteMatch();
 
   const notesLoading = useSelector(
     (store: StoreType) => store.loading.notesLoading

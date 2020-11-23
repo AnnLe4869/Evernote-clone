@@ -63,7 +63,7 @@ export default function NoteListFilteredNotes() {
       if (notebook) setSelectedNotebook(notebook);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [allNotes.length, allNotebooks.length, notebookId]
+    [allNotes, allNotebooks]
   );
 
   useEffect(
@@ -74,7 +74,7 @@ export default function NoteListFilteredNotes() {
         );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [allNotes.length, allNotebooks.length, selectedNotebook]
+    [allNotes, allNotebooks, selectedNotebook]
   );
 
   if (!filteredNotes) return <div>Loading</div>;

@@ -8,12 +8,12 @@ interface Props {
 }
 
 export default function Editor({ setExpandStatus }: Props) {
-  useEffect(() => {
-    console.log("Parent editor re-mount");
-    return () => {
-      console.log("Parent of editor un-mount");
-    };
-  }, []);
+  // useEffect(() => {
+  //   console.log("Parent editor re-mount");
+  //   return () => {
+  //     console.log("Parent of editor un-mount");
+  //   };
+  // }, []);
 
   return (
     <div>
