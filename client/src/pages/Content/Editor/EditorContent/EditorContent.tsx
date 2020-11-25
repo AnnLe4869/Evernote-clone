@@ -1,13 +1,14 @@
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import useNoteFromId from "../../../../custom_hooks/useNoteFromId";
 import { updateNote } from "../../../../redux/actions/noteAction";
+import { NoteType } from "../../../../redux/type/globalType";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -31,6 +32,7 @@ export default function Editor() {
 
   const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);
+  const noteRef = useRef<NoteType>();
 
   // We assign the value of the note to editor
   // We need to do some checking
@@ -39,13 +41,14 @@ export default function Editor() {
     console.log(
       "%cTitle is: " +
         selectedNote?.title +
-        " ;with content: " +
+        " ;With content: " +
         selectedNote?.content,
       "color: blue"
     );
     console.log("%c" + editorText, "color: blue");
     if (selectedNote) {
       setEditorText(selectedNote.content);
+      noteRef.current = selectedNote;
     }
   }, [selectedNote]);
 
@@ -54,17 +57,20 @@ export default function Editor() {
   const handleClickAway = () => {
     console.log(
       "%cTitle is: " +
-        selectedNote?.title +
-        " ;with content: " +
-        selectedNote?.content,
+        noteRef.current?.title +
+        " ;With content: " +
+        noteRef.current?.content,
       "color: green"
     );
     console.log("%c" + editorText, "color: green");
 
     if (focusStatus) setFocusStatus(false);
+    console.log("Plain test here");
     // Check if the content of the item is different from the content in the editor
-    if (selectedNote && selectedNote?.content !== editorText) {
-      dispatch(updateNote({ ...selectedNote, content: editorText }));
+    if (noteRef.current && noteRef.current.content !== editorText) {
+      const note = noteRef.current;
+      console.log(noteRef.current, editorText);
+      dispatch(updateNote({ ...note, content: editorText }));
     }
   };
 
