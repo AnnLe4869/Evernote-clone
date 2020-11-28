@@ -32,47 +32,25 @@ export default function Editor() {
 
   const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);
-  const noteRef = useRef<NoteType>();
-  const [count, setCount] = useState(0);
+
+  const [note, setNote] = useState<NoteType>();
 
   // We assign the value of the note to editor
   // We need to do some checking
   // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
   useEffect(() => {
-    console.log(
-      "%cuseEffect Title is: " +
-        selectedNote?.title +
-        " ;With content: " +
-        selectedNote?.content,
-      "color: blue"
-    );
-    console.log("%c" + editorText, "color: blue");
     if (selectedNote) {
       setEditorText(selectedNote.content);
-      noteRef.current = selectedNote;
+      setNote(selectedNote);
     }
   }, [selectedNote]);
 
   // Handle when user click away from the editor
   // For now this only apply for non-route-link element
   const handleClickAway = () => {
-    console.log(
-      "%cCallback Title is: " +
-        noteRef.current?.title +
-        " ;With content: " +
-        noteRef.current?.content,
-      "color: green"
-    );
-    console.log(count);
-    console.log("%c" + editorText, "color: green");
-    setCount(count + 1);
-    console.log(count);
-    // if (focusStatus) setFocusStatus(false);
-    console.log("Plain test here");
     // Check if the content of the item is different from the content in the editor
-    if (noteRef.current && noteRef.current.content !== editorText) {
-      const note = noteRef.current;
-      console.log(noteRef.current, editorText);
+    if (focusStatus) setFocusStatus(false);
+    if (note && note.content !== editorText) {
       dispatch(updateNote({ ...note, content: editorText }));
     }
   };
