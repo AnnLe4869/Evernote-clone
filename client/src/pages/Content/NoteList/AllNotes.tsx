@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-
 import List from "@material-ui/core/List";
-
-import ListHeader from "./ListHeader/ListHeader";
-import ListContent from "./ListContent/ListContent";
+import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import { useSelector } from "react-redux";
 import { StoreType } from "../../../redux/type/globalType";
+import ListContent from "./ListContent/ListContent";
+import ListHeader from "./ListHeader/ListHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {

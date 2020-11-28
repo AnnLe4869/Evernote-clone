@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useDispatch } from "react-redux";
 import { updateNote } from "../../../../../redux/actions/noteAction";
-import useNoteFromId from "../../../../../custom_hooks/useNoteFromId";
+import useNoteFromId from "../../../../../utils/useNoteFromId";
 import { useHistory } from "react-router-dom";
 
 export default function HeaderUtilityList() {

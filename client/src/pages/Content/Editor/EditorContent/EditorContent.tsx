@@ -6,9 +6,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
-import useNoteFromId from "../../../../custom_hooks/useNoteFromId";
 import { updateNote } from "../../../../redux/actions/noteAction";
 import { NoteType } from "../../../../redux/type/globalType";
+import useNoteFromId from "../../../../utils/useNoteFromId";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -33,13 +33,14 @@ export default function Editor() {
   const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);
   const noteRef = useRef<NoteType>();
+  const [count, setCount] = useState(0);
 
   // We assign the value of the note to editor
   // We need to do some checking
   // Because at first the content maybe undefined as useSelector hasn't run or data not yet available in store
   useEffect(() => {
     console.log(
-      "%cTitle is: " +
+      "%cuseEffect Title is: " +
         selectedNote?.title +
         " ;With content: " +
         selectedNote?.content,
@@ -56,15 +57,17 @@ export default function Editor() {
   // For now this only apply for non-route-link element
   const handleClickAway = () => {
     console.log(
-      "%cTitle is: " +
+      "%cCallback Title is: " +
         noteRef.current?.title +
         " ;With content: " +
         noteRef.current?.content,
       "color: green"
     );
+    console.log(count);
     console.log("%c" + editorText, "color: green");
-
-    if (focusStatus) setFocusStatus(false);
+    setCount(count + 1);
+    console.log(count);
+    // if (focusStatus) setFocusStatus(false);
     console.log("Plain test here");
     // Check if the content of the item is different from the content in the editor
     if (noteRef.current && noteRef.current.content !== editorText) {

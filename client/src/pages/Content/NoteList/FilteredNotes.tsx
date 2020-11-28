@@ -49,12 +49,6 @@ export default function NoteListFilteredNotes() {
   const [selectedNotebook, setSelectedNotebook] = useState<NotebookType>();
   const [filteredNotes, setFilteredNotes] = useState<NoteType[]>(allNotes);
 
-  // useEffect(() => {
-  //   return () => {
-  //     console.log("Check for un-mount");
-  //   };
-  // }, []);
-
   useEffect(
     () => {
       const notebook = allNotebooks.find(
