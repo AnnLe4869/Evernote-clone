@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-
-import EditorHeader from "./EditorHeader/EditorHeader";
+import React from "react";
 import EditorContent from "./EditorContent/EditorContent";
+import EditorHeader from "./EditorHeader/EditorHeader";
 
 interface Props {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;

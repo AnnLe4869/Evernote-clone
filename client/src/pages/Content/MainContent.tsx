@@ -12,7 +12,7 @@ import {
 } from "../../redux/actions/notebookAction";
 import { MY_HOME } from "../../redux/constants/constants";
 import { StoreType } from "../../redux/type/globalType";
-import Editor from "./Editor";
+import Editor from "./Editor/Editor";
 import AllNoteLoading from "./Loading/AllNoteLoading";
 import FilterNoteLoading from "./Loading/FilterNoteLoading";
 import Navigator from "./Navigator";
