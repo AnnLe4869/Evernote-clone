@@ -9,7 +9,7 @@ import HeaderExpandButton from "./HeaderExpandButton/HeaderExpandButton";
 import HeaderNotebookName from "./HeaderNotebookName/HeaderNotebookName";
 import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
 import HeaderUtilityList from "./HeaderUtilityList/HeaderUtilityList";
-import HeaderDialog from "./HeaderDialog/HeaderDialog";
+import ShareHeaderDialog from "./HeaderShareButton/ShareHeaderDialog";
 import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
 
 const useStyles = makeStyles((theme) => ({
@@ -68,10 +68,12 @@ export default function EditorHeader(props: Props) {
           <HeaderUtilityList />
 
           {/* This is the dialog that appear when we click the Share button */}
-          <HeaderDialog
+          <ShareHeaderDialog
             dialogOpenStatus={dialogOpenStatus}
             handleCloseDialog={handleCloseDialog}
           />
+
+          {/* This is the dialog that appear when we choose to move note to different notebook */}
         </div>
       </Grid>
       {/* Bottom part of the header */}

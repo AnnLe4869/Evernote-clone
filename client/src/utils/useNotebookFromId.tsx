@@ -4,7 +4,7 @@ import { ParamType, StoreType } from "../redux/type/globalType";
 
 export default function useNotebookFromId() {
   const { notebookId } = useParams<ParamType>();
-  const allNotebooks = useSelector((store: StoreType) => store.notes);
+  const allNotebooks = useSelector((store: StoreType) => store.notebooks);
 
   if (!allNotebooks.find((notebook) => notebook.id === notebookId)) {
     throw new Error(
