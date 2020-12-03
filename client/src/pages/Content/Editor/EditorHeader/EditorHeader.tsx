@@ -1,16 +1,12 @@
-import React, { useState } from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
-
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-
+import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import HeaderExpandButton from "./HeaderExpandButton/HeaderExpandButton";
+import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
 import HeaderNotebookName from "./HeaderNotebookName/HeaderNotebookName";
 import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
 import HeaderUtilityList from "./HeaderUtilityList/HeaderUtilityList";
-import ShareHeaderDialog from "./HeaderShareButton/ShareHeaderDialog";
-import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -33,15 +29,6 @@ interface Props {
 export default function EditorHeader(props: Props) {
   const classes = useStyles();
   const { setExpandStatus } = props;
-  const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
-
-  const handleClickOpenDialog = () => {
-    setDialogOpenStatus(true);
-  };
-
-  const handleCloseDialog = () => {
-    setDialogOpenStatus(false);
-  };
 
   return (
     <Paper className={classes.header} square>
@@ -62,18 +49,10 @@ export default function EditorHeader(props: Props) {
 
         <div className={classes.headerUtility}>
           {/* Share button */}
-          <HeaderShareButton handleClickOpenDialog={handleClickOpenDialog} />
+          <HeaderShareButton />
 
           {/* This is the button to show utility list and utility list itself */}
           <HeaderUtilityList />
-
-          {/* This is the dialog that appear when we click the Share button */}
-          <ShareHeaderDialog
-            dialogOpenStatus={dialogOpenStatus}
-            handleCloseDialog={handleCloseDialog}
-          />
-
-          {/* This is the dialog that appear when we choose to move note to different notebook */}
         </div>
       </Grid>
       {/* Bottom part of the header */}

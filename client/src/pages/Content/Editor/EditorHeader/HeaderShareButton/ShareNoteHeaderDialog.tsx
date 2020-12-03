@@ -24,7 +24,7 @@ interface Props {
   handleCloseDialog: () => void;
 }
 
-export default function HeaderDialog({
+export default function ShareHeaderDialog({
   dialogOpenStatus,
   handleCloseDialog,
 }: Props) {

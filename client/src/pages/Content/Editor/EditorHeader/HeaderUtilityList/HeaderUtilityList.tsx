@@ -10,14 +10,16 @@ import { updateNote } from "../../../../../redux/actions/noteAction";
 import useNoteFromId from "../../../../../utils/useNoteFromId";
 import { useHistory } from "react-router-dom";
 import useNotebookFromId from "../../../../../utils/useNotebookFromId";
+import MoveNoteHeaderDialog from "./MoveNoteHeaderDialog";
 
 export default function HeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const currentNote = useNoteFromId();
-  const currentNotebook = useNotebookFromId();
+  const { notebook: currentNotebook } = useNotebookFromId();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -25,6 +27,15 @@ export default function HeaderUtilityList() {
 
   const handleCloseUtilityList = () => {
     setAnchorEl(null);
+    openDialog();
+  };
+
+  const openDialog = () => {
+    setDialogOpenStatus(true);
+  };
+
+  const closeDialog = () => {
+    setDialogOpenStatus(false);
   };
 
   const toggleInShortcutStatus = () => {
@@ -70,6 +81,11 @@ export default function HeaderUtilityList() {
         {/* Move the note to trash */}
         <MenuItem onClick={moveToTrash}>Move to Trash</MenuItem>
       </Menu>
+
+      <MoveNoteHeaderDialog
+        dialogOpenStatus={dialogOpenStatus}
+        handleCloseDialog={closeDialog}
+      />
     </>
   );
 }

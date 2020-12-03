@@ -12,5 +12,8 @@ export default function useNotebookFromId() {
     );
   }
 
-  return allNotebooks.find((notebook) => notebook.id === notebookId);
+  return {
+    notebook: allNotebooks.find((notebook) => notebook.id === notebookId),
+    allNotebooks,
+  };
 }
