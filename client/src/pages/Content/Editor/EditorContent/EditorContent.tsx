@@ -1,12 +1,12 @@
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
-import { updateNote } from "../../../../redux/actions/noteAction";
+import { updateNoteContent } from "../../../../redux/actions/noteAction";
 import { NoteType } from "../../../../redux/type/globalType";
 import useNoteFromId from "../../../../utils/useNoteFromId";
 
@@ -51,7 +51,8 @@ export default function Editor() {
     // Check if the content of the item is different from the content in the editor
     if (focusStatus) setFocusStatus(false);
     if (note && note.content !== editorText) {
-      dispatch(updateNote({ ...note, content: editorText }));
+      dispatch(updateNoteContent(editorText, note));
+      //dispatch(updateNote({ ...note, content: editorText }));
     }
   };
 

@@ -87,13 +87,80 @@ export const addNewNote = (notebook: NotebookType) => async (
   }
 };
 
+export const updateNoteContent = (content: string, note: NoteType) => async (
+  dispatch: Dispatch
+): Promise<any> => {
+  try {
+    // Start the loading
+    dispatch(setNotesLoadingStatus(true));
+    const db = firebase.firestore();
+    await db.collection("notes").doc(note.id).update({
+      content,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    dispatch({
+      type: UPDATE_NOTE,
+      updatedNote: { ...note, content },
+    });
+    // End the loading
+    dispatch(setNotesLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const updateInShortcutStatusNote = (
+  note: NoteType,
+  status: boolean
+) => async (dispatch: Dispatch): Promise<any> => {
+  try {
+    // Start the loading
+    dispatch(setNotesLoadingStatus(true));
+    const db = firebase.firestore();
+    await db.collection("notes").doc(note.id).update({
+      inShortcut: status,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    dispatch({
+      type: UPDATE_NOTE,
+      updatedNote: { ...note, inShortcut: status },
+    });
+    // End the loading
+    dispatch(setNotesLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const moveNoteToTrash = (note: NoteType) => async (
+  dispatch: Dispatch
+): Promise<any> => {
+  try {
+    // Start the loading
+    dispatch(setNotesLoadingStatus(true));
+    const db = firebase.firestore();
+
+    await db.collection("notes").doc(note.id).update({
+      inTrash: true,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    dispatch({
+      type: UPDATE_NOTE,
+      updatedNote: { ...note, inTrash: true },
+    });
+    // End the loading
+    dispatch(setNotesLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const updateNote = (note: NoteType) => async (
   dispatch: Dispatch
   //getState: () => StoreType
 ): Promise<any> => {
   // Display the loading
   dispatch(setNotesLoadingStatus(true));
-  // Get the user's id
   try {
     const db = firebase.firestore();
     const { content, title, inShortcut, inTrash } = note;
@@ -107,31 +174,6 @@ export const updateNote = (note: NoteType) => async (
         inTrash,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
-    dispatch({
-      type: UPDATE_NOTE,
-      updatedNote: note,
-    });
-    dispatch(setNotesLoadingStatus(false));
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const moveNoteToTrash = (note: NoteType) => async (
-  dispatch: Dispatch
-  //getState: () => { user: UserType; [propName: string]: any }
-): Promise<any> => {
-  // Display the loading
-  dispatch(setNotesLoadingStatus(true));
-  // Get the user's id
-  try {
-    const db = firebase.firestore();
-    const { inTrash } = note;
-
-    await db.collection("notes").doc(note.id).update({
-      inTrash,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
     dispatch({
       type: UPDATE_NOTE,
       updatedNote: note,

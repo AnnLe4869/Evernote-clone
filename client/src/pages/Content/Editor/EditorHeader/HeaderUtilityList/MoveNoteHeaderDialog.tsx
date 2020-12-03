@@ -17,7 +17,14 @@ import {
 import SvgIcon from "@material-ui/core/SvgIcon";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  addNoteToNotebook,
+  removeNoteFromNotebook,
+} from "../../../../../redux/actions/notebookAction";
+import { NotebookType } from "../../../../../redux/type/globalType";
 import useNotebookFromId from "../../../../../utils/useNotebookFromId";
 import useNoteFromId from "../../../../../utils/useNoteFromId";
 
@@ -60,8 +67,34 @@ export default function MoveNoteHeaderDialog({
   handleCloseDialog,
 }: Props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const currentNote = useNoteFromId();
-  const { allNotebooks, notebook } = useNotebookFromId();
+  const { allNotebooks, notebook: currentNotebook } = useNotebookFromId();
+
+  const [chosenNotebook, setChosenNotebook] = useState(currentNotebook);
+
+  // Update the chosenNotebook when the notebook fetch from hook change
+  // This should run only once throughout the component life, as the notebook shouldn't change
+  useEffect(() => {
+    setChosenNotebook(currentNotebook);
+  }, [currentNotebook]);
+
+  // Select a notebook
+  const chooseNotebook = (notebook: NotebookType) => {
+    setChosenNotebook(notebook);
+  };
+
+  // Move note to different notebook
+  // Run only when user click Move button
+  const moveNoteToNotebook = () => {
+    if (currentNote && chosenNotebook && currentNotebook) {
+      dispatch(removeNoteFromNotebook(currentNote, currentNotebook));
+      dispatch(addNoteToNotebook(currentNote, chosenNotebook));
+    }
+    handleCloseDialog();
+    history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
+  };
 
   return (
     <>
@@ -93,10 +126,14 @@ export default function MoveNoteHeaderDialog({
             className={classes.dialogItemDisplay}
           >
             {allNotebooks.map((item) => {
-              if (notebook?.id === item.id) {
+              if (currentNotebook?.id === item.id) {
                 return (
                   // This one has special title to indicate current notebook
-                  <ListItem button>
+                  <ListItem
+                    button
+                    selected={chosenNotebook?.id === item.id}
+                    key={item.id}
+                  >
                     <ListItemIcon>
                       <SvgIcon>
                         <path
@@ -126,7 +163,12 @@ export default function MoveNoteHeaderDialog({
               }
               return (
                 // Other just show normal text
-                <ListItem button>
+                <ListItem
+                  button
+                  onClick={() => chooseNotebook(item)}
+                  selected={chosenNotebook?.id === item.id}
+                  key={item.id}
+                >
                   <ListItemIcon>
                     <SvgIcon>
                       <path
@@ -147,7 +189,7 @@ export default function MoveNoteHeaderDialog({
             <Button
               variant="outlined"
               color="primary"
-              onClick={handleCloseDialog}
+              onClick={moveNoteToNotebook}
             >
               Move
             </Button>

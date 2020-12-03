@@ -6,7 +6,10 @@ import IconButton from "@material-ui/core/IconButton";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useDispatch } from "react-redux";
-import { updateNote } from "../../../../../redux/actions/noteAction";
+import {
+  moveNoteToTrash,
+  updateInShortcutStatusNote,
+} from "../../../../../redux/actions/noteAction";
 import useNoteFromId from "../../../../../utils/useNoteFromId";
 import { useHistory } from "react-router-dom";
 import useNotebookFromId from "../../../../../utils/useNotebookFromId";
@@ -41,8 +44,11 @@ export default function HeaderUtilityList() {
   const toggleInShortcutStatus = () => {
     if (currentNote) {
       dispatch(
-        updateNote({ ...currentNote, inShortcut: !currentNote.inShortcut })
+        updateInShortcutStatusNote(currentNote, !currentNote.inShortcut)
       );
+      // dispatch(
+      //   updateNote({ ...currentNote, inShortcut: !currentNote.inShortcut })
+      // );
     }
 
     setAnchorEl(null);
@@ -50,7 +56,7 @@ export default function HeaderUtilityList() {
 
   const moveToTrash = () => {
     if (currentNote) {
-      dispatch(updateNote({ ...currentNote, inTrash: true }));
+      dispatch(moveNoteToTrash(currentNote));
       setAnchorEl(null);
       history.push(`/main/notebooks/${currentNotebook?.id}`);
     }
