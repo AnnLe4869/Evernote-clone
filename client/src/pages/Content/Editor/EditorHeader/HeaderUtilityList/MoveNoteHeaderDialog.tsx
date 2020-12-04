@@ -25,7 +25,8 @@ import {
   removeNoteFromNotebook,
 } from "../../../../../redux/actions/notebookAction";
 import { NotebookType } from "../../../../../redux/type/globalType";
-import useNotebookFromId from "../../../../../utils/useNotebookFromId";
+import useNotebook from "../../../../../utils/useNotebook";
+import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 import useNoteFromId from "../../../../../utils/useNoteFromId";
 
 const theme = createMuiTheme({
@@ -70,7 +71,8 @@ export default function MoveNoteHeaderDialog({
   const dispatch = useDispatch();
   const history = useHistory();
   const { note: currentNote } = useNoteFromId();
-  const { allNotebooks, notebook: currentNotebook } = useNotebookFromId();
+  const { allNotebooks } = useNotebook();
+  const { notebook: currentNotebook } = useNotebookFromNote();
 
   const [chosenNotebook, setChosenNotebook] = useState(currentNotebook);
 

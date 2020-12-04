@@ -12,8 +12,8 @@ import {
 } from "../../../../../redux/actions/noteAction";
 import useNoteFromId from "../../../../../utils/useNoteFromId";
 import { useHistory } from "react-router-dom";
-import useNotebookFromId from "../../../../../utils/useNotebookFromId";
 import MoveNoteHeaderDialog from "./MoveNoteHeaderDialog";
+import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 
 export default function HeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -22,7 +22,7 @@ export default function HeaderUtilityList() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { note: currentNote } = useNoteFromId();
-  const { notebook: currentNotebook } = useNotebookFromId();
+  const { notebook: currentNotebook } = useNotebookFromNote();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
