@@ -5,6 +5,7 @@ import Divider from "@material-ui/core/Divider";
 
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Typography from "@material-ui/core/Typography";
+import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 
 const useStyles = makeStyles((theme) => ({
   headerNotebookIcon: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HeaderNotebookName() {
   const classes = useStyles();
+  const { notebook } = useNotebookFromNote();
 
   return (
     <>
@@ -38,7 +40,7 @@ export default function HeaderNotebookName() {
         variant="subtitle2"
         display="inline"
       >
-        Notebook title
+        {notebook.name}
       </Typography>
     </>
   );
