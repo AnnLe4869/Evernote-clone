@@ -16,7 +16,10 @@ export default function FilterNoteLoading() {
     [notebookId]
   );
   const defaultNote = useMemo(
-    () => allNotes.find((note) => selectedNotebook?.notes.includes(note.id)),
+    () =>
+      allNotes.find(
+        (note) => selectedNotebook?.notes.includes(note.id) && !note.inTrash
+      ),
     [notebookId]
   );
 
