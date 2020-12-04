@@ -28,7 +28,7 @@ export default function Editor() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const selectedNote = useNoteFromId();
+  const { note: selectedNote } = useNoteFromId();
 
   const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);

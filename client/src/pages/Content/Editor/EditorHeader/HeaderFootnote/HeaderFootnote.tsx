@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HeaderFootnote() {
   const classes = useStyles();
 
-  const note = useNoteFromId();
+  const { note } = useNoteFromId();
 
   return (
     <Typography

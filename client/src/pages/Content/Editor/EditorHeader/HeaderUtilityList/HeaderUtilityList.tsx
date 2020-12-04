@@ -21,7 +21,7 @@ export default function HeaderUtilityList() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const currentNote = useNoteFromId();
+  const { note: currentNote } = useNoteFromId();
   const { notebook: currentNotebook } = useNotebookFromId();
 
   const handleClickOpenUtilityList = (event: any) => {
@@ -29,16 +29,12 @@ export default function HeaderUtilityList() {
   };
 
   const handleCloseUtilityList = () => {
+    setDialogOpenStatus(false);
     setAnchorEl(null);
-    openDialog();
   };
 
   const openDialog = () => {
     setDialogOpenStatus(true);
-  };
-
-  const closeDialog = () => {
-    setDialogOpenStatus(false);
   };
 
   const toggleInShortcutStatus = () => {
@@ -46,11 +42,7 @@ export default function HeaderUtilityList() {
       dispatch(
         updateInShortcutStatusNote(currentNote, !currentNote.inShortcut)
       );
-      // dispatch(
-      //   updateNote({ ...currentNote, inShortcut: !currentNote.inShortcut })
-      // );
     }
-
     setAnchorEl(null);
   };
 
@@ -77,7 +69,7 @@ export default function HeaderUtilityList() {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
         {/* Move to other notebook */}
-        <MenuItem onClick={handleCloseUtilityList}>Move ...</MenuItem>
+        <MenuItem onClick={openDialog}>Move ...</MenuItem>
         {/* Move or remove from shortcut list */}
         <MenuItem onClick={toggleInShortcutStatus}>
           {currentNote?.inShortcut
@@ -90,7 +82,8 @@ export default function HeaderUtilityList() {
 
       <MoveNoteHeaderDialog
         dialogOpenStatus={dialogOpenStatus}
-        handleCloseDialog={closeDialog}
+        // When close dialog we also want to close utility list
+        handleCloseDialog={handleCloseUtilityList}
       />
     </>
   );

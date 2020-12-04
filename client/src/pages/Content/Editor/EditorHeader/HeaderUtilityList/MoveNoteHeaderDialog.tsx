@@ -69,7 +69,7 @@ export default function MoveNoteHeaderDialog({
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const currentNote = useNoteFromId();
+  const { note: currentNote } = useNoteFromId();
   const { allNotebooks, notebook: currentNotebook } = useNotebookFromId();
 
   const [chosenNotebook, setChosenNotebook] = useState(currentNotebook);

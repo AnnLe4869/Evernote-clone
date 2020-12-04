@@ -12,5 +12,5 @@ export default function useNoteFromId() {
     );
   }
 
-  return allNotes.find((note) => note.id === noteId);
+  return { note: allNotes.find((note) => note.id === noteId), allNotes };
 }
