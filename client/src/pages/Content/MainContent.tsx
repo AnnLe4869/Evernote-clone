@@ -15,8 +15,8 @@ import { StoreType } from "../../redux/type/globalType";
 import Editor from "./Editor/Editor";
 import AllNoteLoading from "./Loading/AllNoteLoading";
 import FilterNoteLoading from "./Loading/FilterNoteLoading";
-import Navigator from "./Navigator";
-import NotebookList from "./NotebookList";
+import Navigator from "./Navigator/Navigator";
+import NotebookList from "./NotebookList/NotebookList";
 import NoteListAllNotes from "./NoteList/AllNotes";
 import NoteListFilteredNotes from "./NoteList/FilteredNotes";
 

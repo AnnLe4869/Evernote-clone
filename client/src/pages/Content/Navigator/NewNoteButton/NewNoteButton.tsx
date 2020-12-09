@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import Button from "@material-ui/core/Button";
+import { green } from "@material-ui/core/colors";
 import {
-  makeStyles,
   createMuiTheme,
+  makeStyles,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-import { green } from "@material-ui/core/colors";
-import { addNewNote } from "../../../../redux/actions/noteAction";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
-import { ParamType, StoreType } from "../../../../redux/type/globalType";
+import { useParams } from "react-router-dom";
+import { addNewNote } from "../../../../redux/actions/noteAction";
 import { MY_HOME } from "../../../../redux/constants/constants";
+import { ParamType, StoreType } from "../../../../redux/type/globalType";
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -33,11 +33,6 @@ export default function NewNoteButton() {
   const dispatch = useDispatch();
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
   const { notebookId } = useParams<ParamType>();
-  //const location = useLocation();
-  useEffect(() => {
-    //console.log(notebookId);
-    //console.log(location);
-  });
 
   const handleClick = () => {
     // Check if there is notebook specified in the URL
