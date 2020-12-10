@@ -11,11 +11,11 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addNewNotebook } from "../../../redux/actions/notebookAction";
 import { StoreType } from "../../../redux/type/globalType";
+import NewNotebookDialog from "./NewNotebookDialog";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -32,14 +32,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NotebookList() {
   const notebooks = useSelector((state: StoreType) => state.notebooks);
-  const dispatch = useDispatch();
   const classes = useStyles();
 
-  if (notebooks.length === 0) return <div>Loading</div>;
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const createNewNotebook = () => {
-    dispatch(addNewNotebook("New notebook"));
+  const openDialog = () => {
+    setDialogOpen(true);
   };
+  const closeDialog = () => {
+    setDialogOpen(false);
+  };
+
+  if (notebooks.length === 0) return <div>Loading</div>;
 
   return (
     <Container>
@@ -66,7 +70,7 @@ export default function NotebookList() {
         className={classes.addNotebookButton}
         variant="outlined"
         color="primary"
-        onClick={createNewNotebook}
+        onClick={openDialog}
       >
         Add new notebook
       </Button>
@@ -102,6 +106,8 @@ export default function NotebookList() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <NewNotebookDialog dialogOpen={dialogOpen} closeDialog={closeDialog} />
     </Container>
   );
 }
