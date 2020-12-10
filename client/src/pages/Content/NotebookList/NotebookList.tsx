@@ -1,5 +1,7 @@
 import {
   Button,
+  Container,
+  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -7,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +17,23 @@ import { Link } from "react-router-dom";
 import { addNewNotebook } from "../../../redux/actions/notebookAction";
 import { StoreType } from "../../../redux/type/globalType";
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  addNotebookButton: {
+    float: "right",
+  },
+  tableHeader: {
+    float: "left",
+  },
+}));
+
 export default function NotebookList() {
   const notebooks = useSelector((state: StoreType) => state.notebooks);
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   if (notebooks.length === 0) return <div>Loading</div>;
 
@@ -25,9 +42,34 @@ export default function NotebookList() {
   };
 
   return (
-    <>
-      <button onClick={createNewNotebook}>Add new notebook</button>
-
+    <Container>
+      {/* A tittle for the page */}
+      <Typography
+        className={classes.title}
+        component="h1"
+        variant="h5"
+        color="inherit"
+      >
+        Notebooks
+      </Typography>
+      {/* Title for the table */}
+      <Typography
+        className={classes.tableHeader}
+        component="h1"
+        variant="h6"
+        color="inherit"
+      >
+        My notebook list
+      </Typography>
+      {/* Button for adding new notebook */}
+      <Button
+        className={classes.addNotebookButton}
+        variant="outlined"
+        color="primary"
+        onClick={createNewNotebook}
+      >
+        Add new notebook
+      </Button>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -60,6 +102,6 @@ export default function NotebookList() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Container>
   );
 }
