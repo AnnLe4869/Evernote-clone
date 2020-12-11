@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { StoreType } from "../../../redux/type/globalType";
 import NewNotebookDialog from "./NewNotebookDialog";
+import NotebookUtilityList from "./NotebookUtilityList";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -56,15 +57,7 @@ export default function NotebookList() {
       >
         Notebooks
       </Typography>
-      {/* Title for the table */}
-      <Typography
-        className={classes.tableHeader}
-        component="h1"
-        variant="h6"
-        color="inherit"
-      >
-        My notebook list
-      </Typography>
+
       {/* Button for adding new notebook */}
       <Button
         className={classes.addNotebookButton}
@@ -97,9 +90,7 @@ export default function NotebookList() {
                 <TableCell align="right">{notebook.timestamp}</TableCell>
                 <TableCell align="right">None</TableCell>
                 <TableCell align="right">
-                  <Button variant="contained" color="primary">
-                    Click
-                  </Button>
+                  <NotebookUtilityList notebook={notebook} />
                 </TableCell>
               </TableRow>
             ))}

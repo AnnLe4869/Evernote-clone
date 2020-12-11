@@ -10,13 +10,15 @@ import {
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addNewNotebook } from "../../../redux/actions/notebookAction";
+import { NotebookType } from "../../../redux/type/globalType";
 
 interface Props {
   dialogOpen: boolean;
   closeDialog: () => void;
+  notebook: NotebookType;
 }
 
-export default function NewNotebookDialog(props: Props) {
+export default function ShareNotebookDialog(props: Props) {
   const { dialogOpen, closeDialog } = props;
 
   const dispatch = useDispatch();
@@ -40,7 +42,6 @@ export default function NewNotebookDialog(props: Props) {
         open={dialogOpen}
         onClose={closeDialog}
         aria-labelledby="form-dialog-title"
-        fullWidth
       >
         <DialogTitle id="form-dialog-title">Create new notebook</DialogTitle>
         <DialogContent>

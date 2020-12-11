@@ -166,6 +166,33 @@ export const removeNoteFromNotebook = (
   }
 };
 
+export const changeNotebookName = (
+  notebook: NotebookType,
+  newName: string
+) => async (dispatch: Dispatch): Promise<any> => {
+  try {
+    // Display the loading
+    dispatch(setNotebookLoadingStatus(true));
+    const db = firebase.firestore();
+    await db.collection("notebooks").doc(notebook.id).update({
+      name: newName,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    // Create an updated version of the notebook
+    const updatedNotebook = {
+      ...notebook,
+      name: newName,
+    };
+    dispatch({
+      type: UPDATE_NOTEBOOK,
+      updatedNotebook: updatedNotebook,
+    });
+    dispatch(setNotebookLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const moveNotebookToTrash = (note: NoteType) => async (
   dispatch: Dispatch
   //getState: () => { user: UserType; [propName: string]: any }
