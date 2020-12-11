@@ -1,7 +1,12 @@
 import firebase from "firebase";
 import { Dispatch } from "redux";
 import { setNotesLoadingStatus } from "./loadingAction";
-import { GET_ALL_NOTES, ADD_NOTE, UPDATE_NOTE } from "../constants/constants";
+import {
+  GET_ALL_NOTES,
+  ADD_NOTE,
+  UPDATE_NOTE,
+  DELETE_NOTE,
+} from "../constants/constants";
 import { NoteType, NotebookType, StoreType } from "../type/globalType";
 import { addNoteToNotebook } from "./notebookAction";
 
@@ -155,29 +160,21 @@ export const moveNoteToTrash = (note: NoteType) => async (
   }
 };
 
-export const updateNote = (note: NoteType) => async (
+// Delete single note permanently
+export const permanentDeleteNote = (note: NoteType) => async (
   dispatch: Dispatch
-  //getState: () => StoreType
 ): Promise<any> => {
-  // Display the loading
-  dispatch(setNotesLoadingStatus(true));
   try {
+    // Start the loading
+    dispatch(setNotesLoadingStatus(true));
     const db = firebase.firestore();
-    const { content, title, inShortcut, inTrash } = note;
-    await db
-      .collection("notes")
-      .doc(note.id)
-      .update({
-        content,
-        title: title ? title : "nothing",
-        inShortcut,
-        inTrash,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+
+    await db.collection("notes").doc(note.id).delete();
     dispatch({
-      type: UPDATE_NOTE,
+      type: DELETE_NOTE,
       updatedNote: note,
     });
+    // End the loading
     dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);

@@ -5,6 +5,7 @@ import {
   GET_ALL_NOTEBOOKS,
   ADD_NOTEBOOK,
   UPDATE_NOTEBOOK,
+  DELETE_MULTIPLE_NOTES,
 } from "../constants/constants";
 import { NoteType, StoreType, NotebookType } from "../type/globalType";
 import { addNewNote } from "./noteAction";
@@ -193,7 +194,7 @@ export const changeNotebookName = (
   }
 };
 
-export const moveNotebookToTrash = (note: NoteType) => async (
+export const moveNotebookToTrash = (notebook: NotebookType) => async (
   dispatch: Dispatch
   //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
@@ -201,18 +202,42 @@ export const moveNotebookToTrash = (note: NoteType) => async (
     // Display the loading
     dispatch(setNotebookLoadingStatus(true));
     const db = firebase.firestore();
-    const { inTrash } = note;
+    // Create batch to send multiple operations at once
+    const batch = db.batch();
 
-    await db.collection("notebooks").doc(note.id).update({
-      inTrash,
+    // Update the inTrash field of notebook
+    const notebookRef = db.collection("notebooks").doc(notebook.id);
+    batch.update(notebookRef, {
+      inTrash: true,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch(setNotebookLoadingStatus(false));
+
+    // Loop through and Permanently delete all notes that are in the notebook
+    notebook.notes.forEach((note) => {
+      const noteRef = db.collection("notes").doc(note);
+      batch.delete(noteRef);
+    });
+
+    // Commit the batch
+    await batch.commit();
+
+    // Create an updated version of notebook
+    const updatedNotebook = {
+      ...notebook,
+      inTrash: true,
+    };
+
+    // Dispatch the update notebook action
     dispatch({
       type: UPDATE_NOTEBOOK,
-
-      updatedNote: note,
+      updatedNotebook: updatedNotebook,
     });
+    // Dispatch the delete multiple notes action
+    dispatch({
+      type: DELETE_MULTIPLE_NOTES,
+      deletedNote: notebook.notes,
+    });
+    dispatch(setNotebookLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }

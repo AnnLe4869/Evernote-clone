@@ -17,6 +17,7 @@ export const SELECT_NOTE = "SELECT_NOTE";
 export const SHARE_NOTE = "SHARE_NOTE";
 export const SUBMIT_NOTE_CONTENT = "SUBMIT_NOTE_CONTENT";
 export const UPDATE_NOTE = "UPDATE_NOTE";
+export const DELETE_MULTIPLE_NOTES = "DELETE_MULTIPLE_NOTES";
 
 // For notebook
 export const ADD_NOTEBOOK = "ADD_NOTEBOOK";

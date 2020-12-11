@@ -1,5 +1,7 @@
 import {
   ADD_NOTE,
+  DELETE_MULTIPLE_NOTES,
+  DELETE_NOTE,
   GET_ALL_NOTES,
   UPDATE_NOTE,
 } from "../../constants/constants";
@@ -20,7 +22,19 @@ interface updateNoteAction {
   updatedNote: NoteType;
 }
 
+interface permanentDeleteNoteAction {
+  type: typeof DELETE_NOTE;
+  deletedNote: NoteType;
+}
+
+interface permanentDeleteMultipleNoteAction {
+  type: typeof DELETE_MULTIPLE_NOTES;
+  deletedNotes: string[];
+}
+
 export type noteActionTypes =
   | fetchAllNotesAction
   | addNewNoteAction
-  | updateNoteAction;
+  | updateNoteAction
+  | permanentDeleteNoteAction
+  | permanentDeleteMultipleNoteAction;

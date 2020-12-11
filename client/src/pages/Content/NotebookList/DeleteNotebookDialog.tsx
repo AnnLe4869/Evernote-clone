@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function DeleteNotebookDialog(props: Props) {
-  const { dialogOpen, closeDialog } = props;
+  const { dialogOpen, closeDialog, notebook } = props;
 
   const dispatch = useDispatch();
 
