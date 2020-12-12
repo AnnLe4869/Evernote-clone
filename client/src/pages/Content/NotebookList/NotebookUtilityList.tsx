@@ -1,6 +1,7 @@
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { useState } from "react";
+import { MY_HOME } from "../../../redux/constants/constants";
 import { NotebookType } from "../../../redux/type/globalType";
 import ChangeNameDialog from "./ChangeNameDialog";
 import DeleteNotebookDialog from "./DeleteNotebookDialog";
@@ -67,13 +68,19 @@ export default function NotebookUtilityList(props: Props) {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
         {/* Rename notebook */}
-        <MenuItem onClick={openChangeNameDialog}>Rename the notebook</MenuItem>
+        <MenuItem onClick={openChangeNameDialog}>Rename to notebook</MenuItem>
         {/* Move or remove from shortcut list */}
         <MenuItem>Move from Shortcuts</MenuItem>
         {/* Share notebook */}
         <MenuItem onClick={openShareNotebookDialog}>Share notebook</MenuItem>
-        {/* Move the note to trash */}
-        <MenuItem onClick={openDeleteNotebookDialog}>Delete notebook</MenuItem>
+        {/* Move the note to trash, except for the default notebook MY_HOME */}
+
+        <MenuItem
+          onClick={openDeleteNotebookDialog}
+          disabled={props.notebook.name === MY_HOME}
+        >
+          Delete notebook
+        </MenuItem>
       </Menu>
       {/* Dialog for change name */}
       <ChangeNameDialog

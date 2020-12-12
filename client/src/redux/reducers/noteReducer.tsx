@@ -35,8 +35,8 @@ export default function (
       // Create an array of id
       const updatedNoteIds = action.updatedNotes.map((note) => note.id);
       // Create an array of element whose id not in the array above - they are unchanged element
-      const untouchedNotes = initialState.filter((note) =>
-        updatedNoteIds.includes(note.id)
+      const untouchedNotes = initialState.filter(
+        (note) => !updatedNoteIds.includes(note.id)
       );
       return [...untouchedNotes, ...action.updatedNotes];
     }

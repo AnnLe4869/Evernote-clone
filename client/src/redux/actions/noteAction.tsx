@@ -7,6 +7,7 @@ import {
   UPDATE_NOTE,
   DELETE_NOTE,
   UPDATE_MULTIPLE_NOTES,
+  MY_HOME,
 } from "../constants/constants";
 import { NoteType, NotebookType, StoreType } from "../type/globalType";
 import { addNoteToNotebook } from "./notebookAction";
@@ -228,6 +229,50 @@ export const permanentDeleteNote = (note: NoteType) => async (
     dispatch({
       type: DELETE_NOTE,
       updatedNote: note,
+    });
+    // End the loading
+    dispatch(setNotesLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Restore the note back to its former location
+export const restoreNote = (note: NoteType) => async (
+  dispatch: Dispatch<any>,
+  getState: () => StoreType
+): Promise<any> => {
+  try {
+    const db = firebase.firestore();
+    // Start the loading
+    dispatch(setNotesLoadingStatus(true));
+    // Get all the notebooks existing
+    const { notebooks } = getState();
+
+    // Check if the note belong to any notebook
+    const notebookNoteBelongTo = notebooks.find((notebook) =>
+      notebook.notes.includes(note.id)
+    );
+    // If not, i.e the notebook was deleted, then move the note to default notebook MY_HOME
+    if (!notebookNoteBelongTo) {
+      const homeNotebook = notebooks.find(
+        (notebook) => notebook.name === MY_HOME
+      );
+      if (!homeNotebook) {
+        throw new Error(
+          "Cannot find default My Home notebook, which suggest something went wrong"
+        );
+      }
+      dispatch(addNoteToNotebook(note, homeNotebook));
+    }
+
+    // Update the inTrash field of note to false
+    await db.collection("notes").doc(note.id).update({
+      inTrash: false,
+    });
+    dispatch({
+      type: UPDATE_NOTE,
+      updatedNote: { ...note, inTrash: false },
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
