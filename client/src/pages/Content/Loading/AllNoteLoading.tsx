@@ -10,7 +10,10 @@ export default function AllNoteLoading() {
   const loading = useSelector((store: StoreType) => store.loading);
   const history = useHistory();
   useEffect(() => {
-    if (!loading.notesLoading) history.push("/main/notes/" + allNotes[0].id);
+    if (!loading.notesLoading) {
+      const notInTrashNote = allNotes.find((note) => !note.inTrash);
+      history.push("/main/notes/" + notInTrashNote?.id);
+    }
   }, [allNotes.length, loading.notesLoading]);
 
   return (

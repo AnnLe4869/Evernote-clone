@@ -1,14 +1,16 @@
 import firebase from "firebase";
-import { Dispatch } from "redux";
+import { AnyAction, Dispatch } from "redux";
 import { setNotebookLoadingStatus } from "./loadingAction";
 import {
   GET_ALL_NOTEBOOKS,
   ADD_NOTEBOOK,
   UPDATE_NOTEBOOK,
   DELETE_MULTIPLE_NOTES,
+  DELETE_NOTEBOOK,
+  UPDATE_MULTIPLE_NOTES,
 } from "../constants/constants";
 import { NoteType, StoreType, NotebookType } from "../type/globalType";
-import { addNewNote } from "./noteAction";
+import { addNewNote, moveMultipleNotesToTrash } from "./noteAction";
 
 export const fetchAllNotebooks = () => async (
   dispatch: Dispatch,
@@ -194,9 +196,10 @@ export const changeNotebookName = (
   }
 };
 
-export const moveNotebookToTrash = (notebook: NotebookType) => async (
+// This will permanently delete the notebook and all notes inside it
+// Cannot recover the notes
+export const completeDeleteNotebook = (notebook: NotebookType) => async (
   dispatch: Dispatch
-  //getState: () => { user: UserType; [propName: string]: any }
 ): Promise<any> => {
   try {
     // Display the loading
@@ -205,12 +208,9 @@ export const moveNotebookToTrash = (notebook: NotebookType) => async (
     // Create batch to send multiple operations at once
     const batch = db.batch();
 
-    // Update the inTrash field of notebook
+    // Delete the notebook permanently
     const notebookRef = db.collection("notebooks").doc(notebook.id);
-    batch.update(notebookRef, {
-      inTrash: true,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    batch.delete(notebookRef);
 
     // Loop through and Permanently delete all notes that are in the notebook
     notebook.notes.forEach((note) => {
@@ -221,22 +221,44 @@ export const moveNotebookToTrash = (notebook: NotebookType) => async (
     // Commit the batch
     await batch.commit();
 
-    // Create an updated version of notebook
-    const updatedNotebook = {
-      ...notebook,
-      inTrash: true,
-    };
-
-    // Dispatch the update notebook action
+    // Dispatch the delete notebook action
     dispatch({
-      type: UPDATE_NOTEBOOK,
-      updatedNotebook: updatedNotebook,
+      type: DELETE_NOTEBOOK,
+      deletedNotebook: notebook,
     });
     // Dispatch the delete multiple notes action
     dispatch({
       type: DELETE_MULTIPLE_NOTES,
-      deletedNote: notebook.notes,
+      deletedNotes: notebook.notes,
     });
+    dispatch(setNotebookLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// This delete the notebook and move all notes to Trash
+// Notes can be recovered
+export const partialDeleteNotebook = (notebook: NotebookType) => async (
+  dispatch: Dispatch<any>
+): Promise<any> => {
+  try {
+    // Display the loading
+    dispatch(setNotebookLoadingStatus(true));
+    const db = firebase.firestore();
+
+    // Delete the notebook from server
+    await db.collection("notebooks").doc(notebook.id).delete();
+
+    // Dispatch the move multiple notes to trash action
+    dispatch(moveMultipleNotesToTrash(notebook.notes));
+
+    // Dispatch the delete notebook action
+    dispatch({
+      type: DELETE_NOTEBOOK,
+      deletedNotebook: notebook,
+    });
+
     dispatch(setNotebookLoadingStatus(false));
   } catch (err) {
     console.error(err);

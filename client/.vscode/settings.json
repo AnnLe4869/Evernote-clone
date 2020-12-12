@@ -1,19 +1,19 @@
 {
-    "cSpell.words": [
-        "aria",
-        "aria labelledby",
-        "clsx",
-        "devtools",
-        "extension",
-        "firestore",
-        "horiz",
-        "icon",
-        "labelledby",
-        "more",
-        "more horiz icon",
-        "redux",
-        "redux devtools extension",
-        "reduxjs"
-    ],
-    "compile-hero.disable-compile-files-on-did-save-code": true
+  "cSpell.words": [
+    "aria",
+    "aria labelledby",
+    "clsx",
+    "devtools",
+    "extension",
+    "firestore",
+    "horiz",
+    "icon",
+    "labelledby",
+    "more",
+    "more horiz icon",
+    "redux",
+    "redux devtools extension",
+    "reduxjs"
+  ],
+  "compile-hero.disable-compile-files-on-did-save-code": true
 }

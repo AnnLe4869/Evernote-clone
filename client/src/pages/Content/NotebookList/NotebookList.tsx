@@ -83,7 +83,7 @@ export default function NotebookList() {
               <TableRow key={notebook.name} hover>
                 <TableCell component="th" scope="row">
                   <Link to={`/main/notebooks/${notebook.id}/notes`}>
-                    {notebook.name}
+                    {notebook.name} ({notebook.notes.length})
                   </Link>
                 </TableCell>
                 <TableCell align="right">{notebook.creator}</TableCell>

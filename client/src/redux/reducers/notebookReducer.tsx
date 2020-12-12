@@ -3,6 +3,7 @@ import {
   GET_ALL_NOTEBOOKS,
   ADD_NOTEBOOK,
   UPDATE_NOTEBOOK,
+  DELETE_NOTEBOOK,
 } from "../constants/constants";
 import { notebookActionTypes } from "../type/actionType/notebookActionType";
 
@@ -24,6 +25,11 @@ export default function (
         (notebook) => notebook.id !== action.updatedNotebook.id
       );
       return [action.updatedNotebook, ...allNotebooksUpdated];
+    case DELETE_NOTEBOOK:
+      const leftNotebooks = initialState.filter(
+        (notebook) => notebook.id !== action.deletedNotebook.id
+      );
+      return leftNotebooks;
 
     default:
       return initialState;

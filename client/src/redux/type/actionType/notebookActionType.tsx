@@ -1,5 +1,6 @@
 import {
   ADD_NOTEBOOK,
+  DELETE_NOTEBOOK,
   GET_ALL_NOTEBOOKS,
   UPDATE_NOTEBOOK,
 } from "../../constants/constants";
@@ -18,7 +19,13 @@ interface updateNotebookAction {
   updatedNotebook: NotebookType;
 }
 
+interface deleteNotebookAction {
+  type: typeof DELETE_NOTEBOOK;
+  deletedNotebook: NotebookType;
+}
+
 export type notebookActionTypes =
   | fetchALlNotebooksAction
   | addNewNotebookAction
-  | updateNotebookAction;
+  | updateNotebookAction
+  | deleteNotebookAction;

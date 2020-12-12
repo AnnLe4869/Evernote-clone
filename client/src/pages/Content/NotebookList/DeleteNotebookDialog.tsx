@@ -5,11 +5,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
 } from "@material-ui/core";
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { addNewNotebook } from "../../../redux/actions/notebookAction";
+import {
+  completeDeleteNotebook,
+  partialDeleteNotebook,
+} from "../../../redux/actions/notebookAction";
 import { NotebookType } from "../../../redux/type/globalType";
 
 interface Props {
@@ -23,16 +25,15 @@ export default function DeleteNotebookDialog(props: Props) {
 
   const dispatch = useDispatch();
 
-  const [notebookName, setNotebookName] = useState<string>("");
-
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setNotebookName(event.target.value);
+  // This delete the notebook and every notes inside it permanently
+  const handleCompleteDeleteNotebook = () => {
+    dispatch(completeDeleteNotebook(notebook));
+    closeDialog();
   };
 
-  const createNotebook = () => {
-    dispatch(addNewNotebook(notebookName));
+  // This delete the notebook but only move notes to Trash
+  const handlePartialDeleteNotebook = () => {
+    dispatch(partialDeleteNotebook(notebook));
     closeDialog();
   };
 
@@ -43,34 +44,30 @@ export default function DeleteNotebookDialog(props: Props) {
         onClose={closeDialog}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Create new notebook</DialogTitle>
+        <DialogTitle id="form-dialog-title">Delete notebook</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Notebooks are useful for grouping notes around a common topic. They
-            can be private or shared.
+            Delete this notebook with permanently delete all notes inside it.
+            This cannot be reversed. Continue?
           </DialogContentText>
-          <TextField
-            autoFocus
-            value={notebookName}
-            onChange={handleChange}
-            margin="dense"
-            id="name"
-            label="Notebook name"
-            type="text"
-            fullWidth
-          />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDialog} variant="outlined">
             Cancel
           </Button>
           <Button
-            onClick={createNotebook}
-            color="primary"
+            onClick={handlePartialDeleteNotebook}
+            color="secondary"
             variant="contained"
-            disabled={notebookName === ""}
           >
-            Continue
+            Delete notebook but only move notes to Trash
+          </Button>
+          <Button
+            onClick={handleCompleteDeleteNotebook}
+            color="secondary"
+            variant="contained"
+          >
+            Delete everything
           </Button>
         </DialogActions>
       </Dialog>

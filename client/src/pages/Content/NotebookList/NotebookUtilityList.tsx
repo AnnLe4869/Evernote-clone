@@ -3,6 +3,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { useState } from "react";
 import { NotebookType } from "../../../redux/type/globalType";
 import ChangeNameDialog from "./ChangeNameDialog";
+import DeleteNotebookDialog from "./DeleteNotebookDialog";
 import ShareNotebookDialog from "./ShareNotebookDialog";
 
 interface Props {
@@ -40,6 +41,17 @@ export default function NotebookUtilityList(props: Props) {
     setShareNotebookDialog(false);
   };
 
+  // All the management for share notebook dialog
+  const [deleteNotebookDialog, setDeleteNotebookDialog] = useState(false);
+  const openDeleteNotebookDialog = () => {
+    // We close the utility list when the dialog open
+    closeUtilityList();
+    setDeleteNotebookDialog(true);
+  };
+  const closeDeleteNotebookDialog = () => {
+    setDeleteNotebookDialog(false);
+  };
+
   return (
     <>
       <IconButton onClick={openUtilityList}>
@@ -61,9 +73,8 @@ export default function NotebookUtilityList(props: Props) {
         {/* Share notebook */}
         <MenuItem onClick={openShareNotebookDialog}>Share notebook</MenuItem>
         {/* Move the note to trash */}
-        <MenuItem>Move to Trash</MenuItem>
+        <MenuItem onClick={openDeleteNotebookDialog}>Delete notebook</MenuItem>
       </Menu>
-
       {/* Dialog for change name */}
       <ChangeNameDialog
         dialogOpen={changeNameDialogOpen}
@@ -74,6 +85,12 @@ export default function NotebookUtilityList(props: Props) {
       <ShareNotebookDialog
         dialogOpen={shareNotebookDialog}
         closeDialog={closeShareNotebookDialog}
+        notebook={props.notebook}
+      />
+      {/* Dialog for remove the notebook */}
+      <DeleteNotebookDialog
+        dialogOpen={deleteNotebookDialog}
+        closeDialog={closeDeleteNotebookDialog}
         notebook={props.notebook}
       />
     </>
