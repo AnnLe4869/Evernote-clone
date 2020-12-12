@@ -1,6 +1,8 @@
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleNotebookInShortcutStatus } from "../../../redux/actions/notebookAction";
 import { MY_HOME } from "../../../redux/constants/constants";
 import { NotebookType } from "../../../redux/type/globalType";
 import ChangeNameDialog from "./ChangeNameDialog";
@@ -13,6 +15,7 @@ interface Props {
 
 export default function NotebookUtilityList(props: Props) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
   const openUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,6 +56,12 @@ export default function NotebookUtilityList(props: Props) {
     setDeleteNotebookDialog(false);
   };
 
+  // Move notebook to Shortcuts
+  const toggleNotebookInShortcutStatusHandler = () => {
+    dispatch(toggleNotebookInShortcutStatus(props.notebook));
+    closeUtilityList();
+  };
+
   return (
     <>
       <IconButton onClick={openUtilityList}>
@@ -70,7 +79,11 @@ export default function NotebookUtilityList(props: Props) {
         {/* Rename notebook */}
         <MenuItem onClick={openChangeNameDialog}>Rename to notebook</MenuItem>
         {/* Move or remove from shortcut list */}
-        <MenuItem>Move to Shortcuts</MenuItem>
+        <MenuItem onClick={toggleNotebookInShortcutStatusHandler}>
+          {props.notebook.inShortcut
+            ? "Remove to Shortcuts"
+            : "Move to Shortcuts"}
+        </MenuItem>
         {/* Share notebook */}
         <MenuItem onClick={openShareNotebookDialog}>Share notebook</MenuItem>
         {/* Move the note to trash, except for the default notebook MY_HOME */}

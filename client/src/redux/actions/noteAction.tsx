@@ -5,7 +5,6 @@ import {
   DELETE_NOTE,
   GET_ALL_NOTES,
   MY_HOME,
-  UPDATE_MULTIPLE_NOTES,
   UPDATE_NOTE,
 } from "../constants/constants";
 import { NotebookType, NoteType, StoreType } from "../type/globalType";
@@ -64,7 +63,8 @@ export const addNewNote = (notebook: NotebookType) => async (
       content: "    ",
       title: "nothing for now",
       shareWith: [],
-      inShortcut: false,
+      // If the notebook it's in are in shortcut, so does it
+      inShortcut: notebook.inShortcut,
       inTrash: false,
     };
     // This is to get the the note id from firebase

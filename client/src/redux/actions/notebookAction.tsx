@@ -307,8 +307,10 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
   }
 };
 
-// This move all the notes inside the notebook to Shortcuts
-export const moveNotebookToShortcut = (notebook: NotebookType) => async (
+// This move or remove all the notes inside the notebook to Shortcuts
+export const toggleNotebookInShortcutStatus = (
+  notebook: NotebookType
+) => async (
   dispatch: Dispatch<any>,
   getState: () => StoreType
 ): Promise<any> => {
@@ -323,7 +325,7 @@ export const moveNotebookToShortcut = (notebook: NotebookType) => async (
     // Update the notebook inShortcut status
     const notebookRef = db.collection("notebooks").doc(notebook.id);
     batch.update(notebookRef, {
-      inShortcut: true,
+      inShortcut: !notebook.inShortcut,
     });
     /**
      * Change the inShortcut status of all notes it has to true
@@ -344,16 +346,17 @@ export const moveNotebookToShortcut = (notebook: NotebookType) => async (
         );
 
       // Update the note
+      // Note that is in Shortcuts before the Notebook get into Shortcuts also get removed altogether
       note = {
         ...note,
-        inShortcut: true,
+        inShortcut: !notebook.inShortcut,
       };
 
       // Push the note to the note list
       updatedNotes.push(note);
       // Create the update action in batch
       batch.update(noteRef, {
-        inShortcut: true,
+        inShortcut: !notebook.inShortcut,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
     });
@@ -370,7 +373,7 @@ export const moveNotebookToShortcut = (notebook: NotebookType) => async (
       type: UPDATE_NOTEBOOK,
       updatedNotebook: {
         ...notebook,
-        inShortcut: true,
+        inShortcut: !notebook.inShortcut,
       },
     });
 
