@@ -10,7 +10,11 @@ import {
   UPDATE_MULTIPLE_NOTES,
 } from "../constants/constants";
 import { NoteType, StoreType, NotebookType } from "../type/globalType";
-import { addNewNote, moveMultipleNotesToTrash } from "./noteAction";
+import {
+  addNewNote,
+  moveMultipleNotesToTrash,
+  moveMultipleNoteToShortcuts,
+} from "./noteAction";
 
 export const fetchAllNotebooks = () => async (
   dispatch: Dispatch,
@@ -258,6 +262,23 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
       type: DELETE_NOTEBOOK,
       deletedNotebook: notebook,
     });
+
+    dispatch(setNotebookLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// This move all the notes inside the notebook to Shortcuts
+export const moveNotebookToShortcut = (notebook: NotebookType) => async (
+  dispatch: Dispatch<any>
+): Promise<any> => {
+  try {
+    // Display the loading
+    dispatch(setNotebookLoadingStatus(true));
+
+    // Dispatch the action
+    dispatch(moveMultipleNoteToShortcuts(notebook.notes));
 
     dispatch(setNotebookLoadingStatus(false));
   } catch (err) {

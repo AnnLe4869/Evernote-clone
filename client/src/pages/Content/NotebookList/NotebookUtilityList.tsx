@@ -70,7 +70,7 @@ export default function NotebookUtilityList(props: Props) {
         {/* Rename notebook */}
         <MenuItem onClick={openChangeNameDialog}>Rename to notebook</MenuItem>
         {/* Move or remove from shortcut list */}
-        <MenuItem>Move from Shortcuts</MenuItem>
+        <MenuItem>Move to Shortcuts</MenuItem>
         {/* Share notebook */}
         <MenuItem onClick={openShareNotebookDialog}>Share notebook</MenuItem>
         {/* Move the note to trash, except for the default notebook MY_HOME */}

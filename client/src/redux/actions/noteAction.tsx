@@ -139,6 +139,7 @@ export const updateInShortcutStatusNote = (
   }
 };
 
+// This move single note to trash
 export const moveNoteToTrash = (note: NoteType) => async (
   dispatch: Dispatch
 ): Promise<any> => {
@@ -162,6 +163,7 @@ export const moveNoteToTrash = (note: NoteType) => async (
   }
 };
 
+// This move multiple note to trash
 export const moveMultipleNotesToTrash = (noteIds: string[]) => async (
   dispatch: Dispatch,
   getState: () => StoreType
@@ -273,6 +275,61 @@ export const restoreNote = (note: NoteType) => async (
     dispatch({
       type: UPDATE_NOTE,
       updatedNote: { ...note, inTrash: false },
+    });
+    // End the loading
+    dispatch(setNotesLoadingStatus(false));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const moveMultipleNoteToShortcuts = (noteIds: string[]) => async (
+  dispatch: Dispatch,
+  getState: () => StoreType
+): Promise<any> => {
+  try {
+    // Start the loading
+    dispatch(setNotesLoadingStatus(true));
+
+    const { notes } = getState();
+    const updatedNotes: NoteType[] = [];
+
+    const db = firebase.firestore();
+
+    // Create batch
+    const batch = db.batch();
+
+    noteIds.forEach((noteId) => {
+      const noteRef = db.collection("notes").doc(noteId);
+      let note = notes.find((note) => note.id === noteId);
+
+      if (!note)
+        throw new Error(
+          "Cannot find the note in redux store. Something went wrong"
+        );
+
+      const updatedValue = {
+        inShortcut: true,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+
+      // Update the note
+      note = {
+        ...note,
+        inShortcut: true,
+      };
+
+      // Push the note to the note list
+      updatedNotes.push(note);
+      // Create the update action in batch
+      batch.update(noteRef, updatedValue);
+    });
+
+    // Send the batch
+    await batch.commit();
+    dispatch({
+      type: UPDATE_MULTIPLE_NOTES,
+      updatedNotes,
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
