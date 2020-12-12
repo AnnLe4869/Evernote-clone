@@ -8,7 +8,7 @@ import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { updateNoteContent } from "../../../../redux/actions/noteAction";
 import { NoteType } from "../../../../redux/type/globalType";
-import useNoteFromId from "../../../../utils/useNoteFromId";
+import useNoteFromPath from "../../../../utils/useNoteFromPath";
 
 const useStyles = makeStyles(() => ({
   editor: {
@@ -28,7 +28,7 @@ export default function Editor() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { note: selectedNote } = useNoteFromId();
+  const { note: selectedNote } = useNoteFromPath();
 
   const [editorText, setEditorText] = useState<string>("");
   const [focusStatus, setFocusStatus] = useState(false);

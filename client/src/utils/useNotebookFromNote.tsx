@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { StoreType } from "../redux/type/globalType";
-import useNoteFromId from "./useNoteFromId";
+import useNoteFromPath from "./useNoteFromPath";
 
 // We find the notebook that the current selected note is in
 export default function useNotebookFromNote() {
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
-  const { note: currentNote } = useNoteFromId();
+  const { note: currentNote } = useNoteFromPath();
 
   if (!currentNote) {
     throw new Error("Something went wrong. No note is selected");

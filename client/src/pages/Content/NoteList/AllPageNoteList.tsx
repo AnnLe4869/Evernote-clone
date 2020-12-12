@@ -4,7 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { StoreType } from "../../../redux/type/globalType";
 import ListContent from "./ListContent/ListContent";
-import ListHeader from "./ListHeader/ListHeader";
+import AllPageListHeader from "./ListHeader/AllPageListHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +40,7 @@ export default function NoteListAllNotes() {
     <div>
       <List className={classes.root}>
         {/* This is the notebook title and utility button */}
-        <ListHeader />
+        <AllPageListHeader />
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}

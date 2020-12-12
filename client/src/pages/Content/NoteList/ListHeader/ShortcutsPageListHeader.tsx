@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 
 import ListHeaderDialog from "./ListHeaderDialog/ListHeaderDialog";
-import ListHeaderTitle from "./ListHeaderTitle/ListHeaderTitle";
+import ListHeaderTitle from "./ListHeaderTitle/ShortcutsPageListHeaderTitle";
 import ListHeaderFootnote from "./ListHeaderFootnote/ListHeaderFootnote";
 import ListHeaderUtility from "./ListHeaderUtility/ListHeaderUtility";
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ListHeader() {
+export default function ShortcutsPageListHeader() {
   const classes = useStyles();
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);

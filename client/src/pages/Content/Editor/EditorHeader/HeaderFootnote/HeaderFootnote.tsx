@@ -2,7 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import useNoteFromId from "../../../../../utils/useNoteFromId";
+import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 
 const useStyles = makeStyles((theme) => ({
   headerFootnote: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HeaderFootnote() {
   const classes = useStyles();
 
-  const { note } = useNoteFromId();
+  const { note } = useNoteFromPath();
 
   return (
     <Typography

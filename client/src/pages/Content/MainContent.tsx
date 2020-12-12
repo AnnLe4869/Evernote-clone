@@ -17,8 +17,8 @@ import AllNoteLoading from "./Loading/AllNoteLoading";
 import FilterNoteLoading from "./Loading/FilterNoteLoading";
 import Navigator from "./Navigator/Navigator";
 import NotebookList from "./NotebookList/NotebookList";
-import NoteListAllNotes from "./NoteList/AllNotes";
-import NoteListFilteredNotes from "./NoteList/FilteredNotes";
+import AllPageNoteList from "./NoteList/AllPageNoteList";
+import FilteredPageNoteList from "./NoteList/FilteredPageNoteList";
 
 export default function Main() {
   const theme = useTheme();
@@ -85,7 +85,7 @@ export default function Main() {
           ) : null}
           <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <Grid item md={4} sm={12}>
-              <NoteListAllNotes />
+              <AllPageNoteList />
             </Grid>
             <Grid item md={8} sm={12}>
               <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
@@ -99,7 +99,7 @@ export default function Main() {
           ) : null}
           <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
             <Grid item md={4} sm={12}>
-              <NoteListFilteredNotes />
+              <FilteredPageNoteList />
             </Grid>
             <Grid item md={8} sm={12}>
               <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />

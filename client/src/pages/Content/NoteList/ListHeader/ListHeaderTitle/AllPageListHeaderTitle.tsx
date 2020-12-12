@@ -1,8 +1,7 @@
-import React from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
 import ListItemText from "@material-ui/core/ListItemText";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   headerText: {
@@ -12,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListHeaderTitle() {
+export default function AllPageListHeaderTitle() {
   const classes = useStyles();
 
   return (
@@ -25,7 +24,7 @@ export default function ListHeaderTitle() {
             color="textPrimary"
             className={classes.headerText}
           >
-            Notebook title
+            All notes
           </Typography>
         </React.Fragment>
       }

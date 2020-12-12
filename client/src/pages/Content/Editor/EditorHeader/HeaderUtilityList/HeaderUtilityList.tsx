@@ -10,7 +10,7 @@ import {
   moveNoteToTrash,
   updateInShortcutStatusNote,
 } from "../../../../../redux/actions/noteAction";
-import useNoteFromId from "../../../../../utils/useNoteFromId";
+import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 import { useHistory } from "react-router-dom";
 import MoveNoteHeaderDialog from "./MoveNoteHeaderDialog";
 import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
@@ -21,7 +21,7 @@ export default function HeaderUtilityList() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { note: currentNote } = useNoteFromId();
+  const { note: currentNote } = useNoteFromPath();
   const { notebook: currentNotebook } = useNotebookFromNote();
 
   const handleClickOpenUtilityList = (event: any) => {

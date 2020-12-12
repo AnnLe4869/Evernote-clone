@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import List from "@material-ui/core/List";
 
-import ListHeader from "./ListHeader/ListHeader";
+import FilteredPageListHeader from "./ListHeader/FilteredPageListHeader";
 import ListContent from "./ListContent/ListContent";
 import { useSelector } from "react-redux";
 import {
@@ -77,7 +77,7 @@ export default function NoteListFilteredNotes() {
     <div>
       <List className={classes.root}>
         {/* This is the notebook title and utility button */}
-        <ListHeader />
+        <FilteredPageListHeader />
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {/* Some special item have a star to show that they are in shortcut */}
