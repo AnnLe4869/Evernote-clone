@@ -10,7 +10,7 @@ import {
 } from "../constants/constants";
 import { NotebookType, NoteType, StoreType } from "../type/globalType";
 import { setNotebookLoadingStatus } from "./loadingAction";
-import { addNewNote, moveMultipleNoteToShortcuts } from "./noteAction";
+import { addNewNote } from "./noteAction";
 
 export const fetchAllNotebooks = () => async (
   dispatch: Dispatch,
@@ -255,21 +255,24 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
     const notebookRef = db.collection("notebooks").doc(notebook.id);
     batch.delete(notebookRef);
 
-    // Move multiple notes to Trash
+    /**
+     * Move multiple notes to Trash
+     */
+
+    // Get all the notes from redux store
     const { notes } = getState();
+    // An array of notes that is updated
     const updatedNotes: NoteType[] = [];
     notebook.notes.forEach((noteId) => {
       const noteRef = db.collection("notes").doc(noteId);
+      // Find the note that is belonged to the notebook
       let note = notes.find((note) => note.id === noteId);
-
-      if (!note)
+      // If the ID in notebook doesn't match up with any notes in store, throw error
+      if (!note) {
         throw new Error(
           "Cannot find the note in redux store. Something went wrong"
         );
-      const updatedValue = {
-        inTrash: true,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      };
+      }
 
       // Update the note
       note = {
@@ -280,7 +283,10 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
       // Push the note to the note list
       updatedNotes.push(note);
       // Create the update action in batch
-      batch.update(noteRef, updatedValue);
+      batch.update(noteRef, {
+        inTrash: true,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
     });
 
     // Commit the batch operations
@@ -303,29 +309,69 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
 
 // This move all the notes inside the notebook to Shortcuts
 export const moveNotebookToShortcut = (notebook: NotebookType) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  getState: () => StoreType
 ): Promise<any> => {
   try {
     // Start the loading
     dispatch(setNotebookLoadingStatus(true));
+    const db = firebase.firestore();
+
+    // Create batch
+    const batch = db.batch();
 
     // Update the notebook inShortcut status
-    const db = firebase.firestore();
-    await db.collection("notebooks").doc(notebook.id).update({
+    const notebookRef = db.collection("notebooks").doc(notebook.id);
+    batch.update(notebookRef, {
       inShortcut: true,
     });
+    /**
+     * Change the inShortcut status of all notes it has to true
+     */
 
-    // Dispatch the move multiple notes to Shortcuts action
-    dispatch(moveMultipleNoteToShortcuts(notebook.notes));
+    // Get all the notes from redux store
+    const { notes } = getState();
+    // An array of notes that is updated
+    const updatedNotes: NoteType[] = [];
 
-    // Create an updated version of the notebook
-    const updatedNotebook = {
-      ...notebook,
-      inShortcut: true,
-    };
+    notebook.notes.forEach((noteId) => {
+      const noteRef = db.collection("notes").doc(noteId);
+      let note = notes.find((note) => note.id === noteId);
+      // Find the note that is belonged to the notebook
+      if (!note)
+        throw new Error(
+          "Cannot find the note in redux store. Something went wrong"
+        );
+
+      // Update the note
+      note = {
+        ...note,
+        inShortcut: true,
+      };
+
+      // Push the note to the note list
+      updatedNotes.push(note);
+      // Create the update action in batch
+      batch.update(noteRef, {
+        inShortcut: true,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    });
+
+    // Commit the batch operation
+    await batch.commit();
+
+    // Dispatch the change of notes and notebook
+    dispatch({
+      type: UPDATE_MULTIPLE_NOTES,
+      updatedNotes,
+    });
     dispatch({
       type: UPDATE_NOTEBOOK,
-      updatedNotebook: updatedNotebook,
+      updatedNotebook: {
+        ...notebook,
+        inShortcut: true,
+      },
     });
 
     dispatch(setNotebookLoadingStatus(false));
