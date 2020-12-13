@@ -6,6 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import StarIcon from "@material-ui/icons/Star";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -22,8 +23,19 @@ const useStyles = makeStyles((theme) => ({
 export default function ShortcutView() {
   const classes = useStyles();
 
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push("/main/shortcuts/notes");
+  };
+
   return (
-    <ListItem button key="Shortcuts" className={classes.listItem}>
+    <ListItem
+      button
+      key="Shortcuts"
+      className={classes.listItem}
+      onClick={handleClick}
+    >
       <ListItemIcon>
         <StarIcon className={classes.icon} />
       </ListItemIcon>

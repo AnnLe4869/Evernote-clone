@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NoteListFilteredNotes() {
+export default function TrashPageNoteList() {
   const classes = useStyles();
 
   const allNotes = useSelector((store: StoreType) => store.notes);

@@ -13,12 +13,17 @@ import {
 import { MY_HOME } from "../../redux/constants/constants";
 import { StoreType } from "../../redux/type/globalType";
 import Editor from "./Editor/Editor";
+import TrashPageEditor from "./Editor/TrashPageEditor";
 import AllPageLoading from "./Loading/AllPageLoading";
 import FilteredPageLoading from "./Loading/FilteredPageLoading";
+import ShortcutsPageLoading from "./Loading/ShortcutsPageLoading";
+import TrashPageLoading from "./Loading/TrashPageLoading";
 import Navigator from "./Navigator/Navigator";
 import NotebookList from "./NotebookList/NotebookList";
 import AllPageNoteList from "./NoteList/AllPageNoteList";
 import FilteredPageNoteList from "./NoteList/FilteredPageNoteList";
+import ShortcutsPageNoteList from "./NoteList/ShortcutsPageNoteList";
+import TrashPageNoteList from "./NoteList/TrashPageNoteList";
 
 export default function Main() {
   const theme = useTheme();
@@ -54,6 +59,11 @@ export default function Main() {
       <CssBaseline />
 
       <Switch>
+        {/**
+         * Show all notebooks
+         * This is default page user see after signing in
+         *
+         */}
         <Route path={`/main/notebooks`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
@@ -62,6 +72,16 @@ export default function Main() {
             <NotebookList />
           </ExpandWrapperComponent>
         </Route>
+
+        {/**
+         *
+         * This is "temporary stop" so that we can fetch data from store that we need for constructing URL
+         * Usually is :noteId
+         * After that it will redirect to specific page
+         *
+         */}
+
+        {/* "Stop" for all notes page */}
         <Route path={`/main/notes`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
@@ -70,6 +90,8 @@ export default function Main() {
             <AllPageLoading />
           </ExpandWrapperComponent>
         </Route>
+
+        {/* "Stop" for filtered page */}
         <Route path={`/main/notebooks/:notebookId/notes`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
@@ -79,6 +101,32 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
+        {/* "Stop" for shortcuts page */}
+        <Route path={`/main/shortcuts/notes`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+            <ShortcutsPageLoading />
+          </ExpandWrapperComponent>
+        </Route>
+
+        {/* "Stop" for trash page */}
+        <Route path={`/main/trash/notes`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+            <TrashPageLoading />
+          </ExpandWrapperComponent>
+        </Route>
+
+        {/**
+         *
+         * This is actual page that user will see
+         *
+         */}
+        {/* All notes show page, specific */}
         <Route path={`/main/notes/:noteId`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
@@ -93,6 +141,7 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
+        {/* Filtered notes page, specific */}
         <Route path={`/main/notebooks/:notebookId/notes/:noteId`} exact>
           {!expandStatus ? (
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
@@ -107,6 +156,43 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
+        {/* Shortcuts notes page, specific */}
+        <Route path={`/main/shortcuts/notes/:noteId`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+            <Grid item md={4} sm={12}>
+              <ShortcutsPageNoteList />
+            </Grid>
+            <Grid item md={8} sm={12}>
+              <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+            </Grid>
+          </ExpandWrapperComponent>
+        </Route>
+
+        {/* Trash notes page, specific */}
+        <Route path={`/main/trash/notes/:noteId`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+            <Grid item md={4} sm={12}>
+              <TrashPageNoteList />
+            </Grid>
+            <Grid item md={8} sm={12}>
+              <TrashPageEditor
+                setExpandStatus={() => setExpandStatus(!expandStatus)}
+              />
+            </Grid>
+          </ExpandWrapperComponent>
+        </Route>
+
+        {/**
+         *
+         * Redirect for any unrecognized routes
+         *
+         */}
         <Redirect to={`/main/notebooks`} />
       </Switch>
 

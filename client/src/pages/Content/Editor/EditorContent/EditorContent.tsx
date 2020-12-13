@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Editor() {
+export default function EditorContent() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
