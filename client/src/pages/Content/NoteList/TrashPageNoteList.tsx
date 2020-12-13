@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NoteType, StoreType } from "../../../redux/type/globalType";
-import ListContent from "./ListContent/ListContent";
+import TrashPageListContent from "./ListContent/TrashPageListContent";
 import TrashPageListHeader from "./ListHeader/TrashPageListHeader";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ export default function TrashPageNoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {noteInTrash.map((note) => (
-            <ListContent key={note.id} {...note} />
+            <TrashPageListContent key={note.id} {...note} />
           ))}
         </div>
       </List>

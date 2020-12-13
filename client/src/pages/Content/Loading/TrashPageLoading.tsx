@@ -14,7 +14,7 @@ export default function TrashPageLoading() {
     if (!loading.notesLoading) {
       const inTrashNote = allNotes.find((note) => note.inTrash);
       console.log(inTrashNote);
-      history.push("/main/trash/notes" + inTrashNote?.id);
+      history.push("/main/trash/notes/" + inTrashNote?.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allNotes, loading.notesLoading]);

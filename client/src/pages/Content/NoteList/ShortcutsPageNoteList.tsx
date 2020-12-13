@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NoteType, StoreType } from "../../../redux/type/globalType";
-import ListContent from "./ListContent/ListContent";
+import ShortcutsPageListContent from "./ListContent/ShortcutsPageListContent";
 import ShortcutsPageListHeader from "./ListHeader/ShortcutsPageListHeader";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ export default function ShortcutsPageNoteList() {
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
           {noteInShortcuts.map((note) => (
-            <ListContent key={note.id} {...note} />
+            <ShortcutsPageListContent key={note.id} {...note} />
           ))}
         </div>
       </List>

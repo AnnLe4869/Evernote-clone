@@ -14,7 +14,7 @@ export default function ShortcutsPageLoading() {
       const inShortcutsNote = allNotes.find(
         (note) => !note.inTrash && note.inShortcut
       );
-      history.push("/main/shortcuts/notes" + inShortcutsNote?.id);
+      history.push("/main/shortcuts/notes/" + inShortcutsNote?.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allNotes, loading.notesLoading]);

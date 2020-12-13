@@ -1,23 +1,19 @@
-import React, { useEffect } from "react";
-import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-
 import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-
+import List from "@material-ui/core/List";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import MenuIcon from "@material-ui/icons/Menu";
+import clsx from "clsx";
+import React, { useEffect } from "react";
+import AllNotesView from "./AllNotesView/AllNotesView";
+import TrashView from "./DeletedView/TrashView";
 import NavigationSearch from "./NavigatorSearch/NavigatorSearch";
 import NewNoteButton from "./NewNoteButton/NewNoteButton";
-import ShortcutView from "./ShortcutView/ShortcutView";
-import AllNotesView from "./AllNotesView/AllNotesView";
 import NotebooksView from "./NotebooksView/NotebooksView";
 import ShareWithMeView from "./ShareWithMeView/ShareWithMeView";
-import DeleteView from "./DeletedView/DeleteView";
+import ShortcutView from "./ShortcutView/ShortcutView";
 
 const drawerWidth = "18vw";
 
@@ -119,7 +115,7 @@ export default function Navigator({ open, setOpen }: Props) {
           {/* Show all files that are shared to me */}
           <ShareWithMeView />
           {/* Show all file that has been deleted */}
-          <DeleteView />
+          <TrashView />
         </List>
         {/* This is the button to collapse the navigation bar */}
         <div className={classes.drawerCollapseButton}>

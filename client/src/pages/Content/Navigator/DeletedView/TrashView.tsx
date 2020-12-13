@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ShortcutView() {
+export default function TrashView() {
   const classes = useStyles();
 
   const history = useHistory();
