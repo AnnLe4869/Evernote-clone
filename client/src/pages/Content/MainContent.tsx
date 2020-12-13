@@ -13,8 +13,8 @@ import {
 import { MY_HOME } from "../../redux/constants/constants";
 import { StoreType } from "../../redux/type/globalType";
 import Editor from "./Editor/Editor";
-import AllNoteLoading from "./Loading/AllNoteLoading";
-import FilterNoteLoading from "./Loading/FilterNoteLoading";
+import AllPageLoading from "./Loading/AllPageLoading";
+import FilteredPageLoading from "./Loading/FilteredPageLoading";
 import Navigator from "./Navigator/Navigator";
 import NotebookList from "./NotebookList/NotebookList";
 import AllPageNoteList from "./NoteList/AllPageNoteList";
@@ -67,7 +67,7 @@ export default function Main() {
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
           <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
-            <AllNoteLoading />
+            <AllPageLoading />
           </ExpandWrapperComponent>
         </Route>
         <Route path={`/main/notebooks/:notebookId/notes`} exact>
@@ -75,7 +75,7 @@ export default function Main() {
             <Navigator open={open} setOpen={(value) => setOpen(value)} />
           ) : null}
           <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
-            <FilterNoteLoading />
+            <FilteredPageLoading />
           </ExpandWrapperComponent>
         </Route>
 

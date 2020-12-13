@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NoteListFilteredNotes() {
+export default function FilteredPageNoteList() {
   const classes = useStyles();
   const { notebookId } = useParams<ParamType>();
 

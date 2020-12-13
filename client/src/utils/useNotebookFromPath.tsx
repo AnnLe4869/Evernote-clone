@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ParamType, StoreType } from "../redux/type/globalType";
 
-export default function useNotebookFromId() {
+export default function useNotebookFromPath() {
   const { notebookId } = useParams<ParamType>();
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
 

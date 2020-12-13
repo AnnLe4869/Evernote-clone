@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ParamType, StoreType } from "../redux/type/globalType";
 
 // Find the note from the noteId fetched from URL
-export default function useNoteFromId() {
+export default function useNoteFromPath() {
   const { noteId } = useParams<ParamType>();
   const allNotes = useSelector((store: StoreType) => store.notes);
 

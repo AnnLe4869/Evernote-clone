@@ -1,10 +1,10 @@
 import List from "@material-ui/core/List";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreType } from "../../../redux/type/globalType";
+import { NoteType, StoreType } from "../../../redux/type/globalType";
 import ListContent from "./ListContent/ListContent";
-import AllPageListHeader from "./ListHeader/AllPageListHeader";
+import ShortcutsPageListHeader from "./ListHeader/ShortcutsPageListHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,24 +31,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AllPageNoteList() {
+export default function ShortcutsPageNoteList() {
   const classes = useStyles();
 
   const allNotes = useSelector((store: StoreType) => store.notes);
+
+  const [noteInShortcuts, setNoteInShortcuts] = useState<NoteType[]>(allNotes);
+
+  useEffect(
+    () => {
+      setNoteInShortcuts(allNotes.filter((note) => note.inShortcut));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allNotes]
+  );
+
+  // In case there is no note in Trash we only render the ListHeader
+  if (!noteInShortcuts)
+    return (
+      <div>
+        <List className={classes.root}>
+          {/* This is the notebook title and utility button */}
+          <ShortcutsPageListHeader />
+        </List>
+      </div>
+    );
 
   return (
     <div>
       <List className={classes.root}>
         {/* This is the notebook title and utility button */}
-        <AllPageListHeader />
+        <ShortcutsPageListHeader />
         {/* The below are all the notes within the notebook, brief detail */}
         <div className={classes.itemDisplay}>
-          {/* Some special item have a star to show that they are in shortcut */}
-          {allNotes.map((note) => {
-            return !note.inTrash ? (
-              <ListContent key={note.id} {...note} />
-            ) : null;
-          })}
+          {noteInShortcuts.map((note) => (
+            <ListContent key={note.id} {...note} />
+          ))}
         </div>
       </List>
     </div>
