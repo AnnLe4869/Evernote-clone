@@ -13,8 +13,12 @@ export default function TrashPageLoading() {
   useEffect(() => {
     if (!loading.notesLoading) {
       const inTrashNote = allNotes.find((note) => note.inTrash);
-      console.log(inTrashNote);
-      history.push("/main/trash/notes/" + inTrashNote?.id);
+      if (inTrashNote) {
+        history.push("/main/trash/notes/" + inTrashNote.id);
+      } else {
+        // If there is no notes in trash render Trash page, blank version
+        history.push("/main/trash/notes/blank");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allNotes, loading.notesLoading]);

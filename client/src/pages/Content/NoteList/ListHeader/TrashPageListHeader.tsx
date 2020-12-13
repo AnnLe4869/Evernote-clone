@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
   listHeader: {
     height: "8rem",
     position: "relative",
+    borderBottom: "#e6e6e6 1px solid",
   },
 }));
 

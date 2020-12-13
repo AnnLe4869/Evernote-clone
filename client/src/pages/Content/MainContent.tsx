@@ -156,6 +156,17 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
+        {/* Shortcuts notes page, blank version in case no notes in Shortcuts */}
+        <Route path={`/main/shortcuts/notes/blank`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+            <Grid item md={4} sm={12}>
+              <ShortcutsPageNoteList />
+            </Grid>
+          </ExpandWrapperComponent>
+        </Route>
         {/* Shortcuts notes page, specific */}
         <Route path={`/main/shortcuts/notes/:noteId`} exact>
           {!expandStatus ? (
@@ -171,6 +182,17 @@ export default function Main() {
           </ExpandWrapperComponent>
         </Route>
 
+        {/* Trash notes page, in case there is no notes in Trash */}
+        <Route path={`/main/trash/notes/blank`} exact>
+          {!expandStatus ? (
+            <Navigator open={open} setOpen={(value) => setOpen(value)} />
+          ) : null}
+          <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+            <Grid item md={4} sm={12}>
+              <TrashPageNoteList />
+            </Grid>
+          </ExpandWrapperComponent>
+        </Route>
         {/* Trash notes page, specific */}
         <Route path={`/main/trash/notes/:noteId`} exact>
           {!expandStatus ? (

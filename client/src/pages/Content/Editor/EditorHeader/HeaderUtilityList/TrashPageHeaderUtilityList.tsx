@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useNotebooks from "../../../../../utils/useNotebook";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
+import DeleteConfirmDialog from "./DeleteConfirmDialog";
 
 export default function TrashPageHeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -56,6 +57,12 @@ export default function TrashPageHeaderUtilityList() {
         {/* Move the note to trash */}
         <MenuItem onClick={restoreNote}>Restore note</MenuItem>
       </Menu>
+
+      <DeleteConfirmDialog
+        dialogOpenStatus={dialogOpenStatus}
+        // When close dialog we also want to close utility list
+        handleCloseDialog={handleCloseUtilityList}
+      />
     </>
   );
 }

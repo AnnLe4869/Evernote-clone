@@ -2,7 +2,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 
 const useStyles = makeStyles((theme) => ({
   headerText: {
@@ -15,8 +14,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ShortcutsPageHeaderTitle() {
   const classes = useStyles();
 
-  const { notebook: currentNotebook } = useNotebookFromNote();
-
   return (
     <ListItemText
       primary={
@@ -27,7 +24,7 @@ export default function ShortcutsPageHeaderTitle() {
             color="textPrimary"
             className={classes.headerText}
           >
-            {currentNotebook?.name}
+            Shortcuts
           </Typography>
         </React.Fragment>
       }

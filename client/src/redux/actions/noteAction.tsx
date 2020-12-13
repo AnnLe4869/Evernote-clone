@@ -175,7 +175,7 @@ export const permanentDeleteNote = (note: NoteType) => async (
     await db.collection("notes").doc(note.id).delete();
     dispatch({
       type: DELETE_NOTE,
-      updatedNote: note,
+      deletedNote: note,
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
