@@ -9,18 +9,16 @@ import {
   moveNoteToTrash,
   updateInShortcutStatusNote,
 } from "../../../../../redux/actions/noteAction";
-import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 import MoveNoteHeaderDialog from "./MoveNoteHeaderDialog";
 
-export default function HeaderUtilityList() {
+export default function AllPageHeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const { note: currentNote, allNotes } = useNoteFromPath();
-  const { notebook: currentNotebook } = useNotebookFromNote();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -53,16 +51,11 @@ export default function HeaderUtilityList() {
       // Sometimes the note is "top" in alphabet order and thus,
       // still be the "selected" note and the editor display that note content
       // Do a simple check so that we always go to the right route
-      const notesBelongToCurrentNotebook = allNotes.filter((note) =>
-        currentNotebook.notes.includes(note.id)
-      );
 
-      if (notesBelongToCurrentNotebook[0].id === currentNote.id) {
-        history.push(
-          `/main/notebooks/${currentNotebook?.id}/notes/${notesBelongToCurrentNotebook[1].id}`
-        );
+      if (allNotes[0].id === currentNote.id) {
+        history.push(`/main/notes/${allNotes[1].id}`);
       } else {
-        history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
+        history.push(`/main/notes`);
       }
     }
   };

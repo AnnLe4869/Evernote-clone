@@ -6,7 +6,7 @@ import HeaderExpandButton from "./HeaderExpandButton/HeaderExpandButton";
 import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
 import HeaderNotebookName from "./HeaderNotebookName/HeaderNotebookName";
 import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
-import HeaderUtilityList from "./HeaderUtilityList/HeaderUtilityList";
+import ShortcutsPageHeaderUtilityList from "./HeaderUtilityList/ShortcutsPageHeaderUtilityList";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -26,7 +26,7 @@ interface Props {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-export default function EditorHeader(props: Props) {
+export default function ShortcutsPageEditorHeader(props: Props) {
   const classes = useStyles();
   const { setExpandStatus } = props;
 
@@ -52,7 +52,7 @@ export default function EditorHeader(props: Props) {
           <HeaderShareButton />
 
           {/* This is the button to show utility list and utility list itself */}
-          <HeaderUtilityList />
+          <ShortcutsPageHeaderUtilityList />
         </div>
       </Grid>
       {/* Bottom part of the header */}

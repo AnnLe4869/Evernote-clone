@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import HeaderExpandButton from "./HeaderExpandButton/HeaderExpandButton";
 import HeaderFootnote from "./HeaderFootnote/HeaderFootnote";
-import TrashPageHeaderNotebookName from "./HeaderNotebookName/TrashPageHeaderNotebookName";
+import HeaderNotebookName from "./HeaderNotebookName/HeaderNotebookName";
 import HeaderShareButton from "./HeaderShareButton/HeaderShareButton";
-import TrashPageHeaderUtilityList from "./HeaderUtilityList/TrashPageHeaderUtilityList";
+import AllPageHeaderUtilityList from "./HeaderUtilityList/AllPageHeaderUtilityList";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -26,7 +26,7 @@ interface Props {
   setExpandStatus: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-export default function TrashPageEditorHeader(props: Props) {
+export default function AllPageEditorHeader(props: Props) {
   const classes = useStyles();
   const { setExpandStatus } = props;
 
@@ -45,14 +45,14 @@ export default function TrashPageEditorHeader(props: Props) {
         <HeaderExpandButton setExpandStatus={setExpandStatus} />
 
         {/* Show the notebook name */}
-        <TrashPageHeaderNotebookName />
+        <HeaderNotebookName />
 
         <div className={classes.headerUtility}>
           {/* Share button */}
           <HeaderShareButton />
 
           {/* This is the button to show utility list and utility list itself */}
-          <TrashPageHeaderUtilityList />
+          <AllPageHeaderUtilityList />
         </div>
       </Grid>
       {/* Bottom part of the header */}

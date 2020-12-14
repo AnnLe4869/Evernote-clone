@@ -12,7 +12,9 @@ import {
 } from "../../redux/actions/notebookAction";
 import { MY_HOME } from "../../redux/constants/constants";
 import { StoreType } from "../../redux/type/globalType";
-import Editor from "./Editor/Editor";
+import AllPageEditor from "./Editor/AllPageEditor";
+import FilteredPageEditor from "./Editor/FilteredPageEditor";
+import ShortcutsPageEditor from "./Editor/ShortcutsPageEditor";
 import TrashPageEditor from "./Editor/TrashPageEditor";
 import AllPageLoading from "./Loading/AllPageLoading";
 import FilteredPageLoading from "./Loading/FilteredPageLoading";
@@ -136,7 +138,9 @@ export default function Main() {
               <AllPageNoteList />
             </Grid>
             <Grid item md={8} sm={12}>
-              <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+              <AllPageEditor
+                setExpandStatus={() => setExpandStatus(!expandStatus)}
+              />
             </Grid>
           </ExpandWrapperComponent>
         </Route>
@@ -151,7 +155,9 @@ export default function Main() {
               <FilteredPageNoteList />
             </Grid>
             <Grid item md={8} sm={12}>
-              <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+              <FilteredPageEditor
+                setExpandStatus={() => setExpandStatus(!expandStatus)}
+              />
             </Grid>
           </ExpandWrapperComponent>
         </Route>
@@ -177,7 +183,9 @@ export default function Main() {
               <ShortcutsPageNoteList />
             </Grid>
             <Grid item md={8} sm={12}>
-              <Editor setExpandStatus={() => setExpandStatus(!expandStatus)} />
+              <ShortcutsPageEditor
+                setExpandStatus={() => setExpandStatus(!expandStatus)}
+              />
             </Grid>
           </ExpandWrapperComponent>
         </Route>

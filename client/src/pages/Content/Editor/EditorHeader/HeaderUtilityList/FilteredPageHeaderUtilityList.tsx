@@ -5,17 +5,22 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { restoreNote } from "../../../../../redux/actions/noteAction";
+import {
+  moveNoteToTrash,
+  updateInShortcutStatusNote,
+} from "../../../../../redux/actions/noteAction";
+import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
-import DeleteConfirmDialog from "./DeleteConfirmDialog";
+import MoveNoteHeaderDialog from "./MoveNoteHeaderDialog";
 
-export default function TrashPageHeaderUtilityList() {
+export default function FilteredPageHeaderUtilityList() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogOpenStatus, setDialogOpenStatus] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const { note: currentNote, allNotes } = useNoteFromPath();
+  const { notebook: currentNotebook } = useNotebookFromNote();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -30,21 +35,34 @@ export default function TrashPageHeaderUtilityList() {
     setDialogOpenStatus(true);
   };
 
-  const handleRestoreNote = () => {
+  const toggleInShortcutStatus = () => {
     if (currentNote) {
+      dispatch(
+        updateInShortcutStatusNote(currentNote, !currentNote.inShortcut)
+      );
+    }
+    setAnchorEl(null);
+  };
+
+  const moveToTrash = () => {
+    if (currentNote) {
+      dispatch(moveNoteToTrash(currentNote));
       setAnchorEl(null);
-      dispatch(restoreNote(currentNote));
 
       // Because the action is async so the change won't reflect immediately
       // Sometimes the note is "top" in alphabet order and thus,
       // still be the "selected" note and the editor display that note content
       // Do a simple check so that we always go to the right route
-      const notesInTrash = allNotes.filter((note) => note.inTrash);
+      const notesBelongToCurrentNotebook = allNotes.filter((note) =>
+        currentNotebook.notes.includes(note.id)
+      );
 
-      if (notesInTrash[0].id === currentNote.id && notesInTrash.length > 1) {
-        history.push(`/main/trash/notes/${notesInTrash[1].id}`);
+      if (notesBelongToCurrentNotebook[0].id === currentNote.id) {
+        history.push(
+          `/main/notebooks/${currentNotebook?.id}/notes/${notesBelongToCurrentNotebook[1].id}`
+        );
       } else {
-        history.push(`/main/trash/notes`);
+        history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
       }
     }
   };
@@ -64,13 +82,18 @@ export default function TrashPageHeaderUtilityList() {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
         {/* Move to other notebook */}
-        <MenuItem onClick={openDialog}>Delete permanently</MenuItem>
-
+        <MenuItem onClick={openDialog}>Move ...</MenuItem>
+        {/* Move or remove from shortcut list */}
+        <MenuItem onClick={toggleInShortcutStatus}>
+          {currentNote?.inShortcut
+            ? "Remove from Shortcuts"
+            : "Move to Shortcuts"}
+        </MenuItem>
         {/* Move the note to trash */}
-        <MenuItem onClick={handleRestoreNote}>Restore note</MenuItem>
+        <MenuItem onClick={moveToTrash}>Move to Trash</MenuItem>
       </Menu>
 
-      <DeleteConfirmDialog
+      <MoveNoteHeaderDialog
         dialogOpenStatus={dialogOpenStatus}
         // When close dialog we also want to close utility list
         handleCloseDialog={handleCloseUtilityList}
