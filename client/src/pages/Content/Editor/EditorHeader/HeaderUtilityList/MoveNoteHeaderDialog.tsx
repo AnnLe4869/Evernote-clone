@@ -70,7 +70,7 @@ export default function MoveNoteHeaderDialog({
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { note: currentNote } = useNoteFromPath();
+  const { note: currentNote, allNotes } = useNoteFromPath();
   const { allNotebooks } = useNotebook();
   const { notebook: currentNotebook } = useNotebookFromNote();
 
@@ -95,7 +95,22 @@ export default function MoveNoteHeaderDialog({
       dispatch(addNoteToNotebook(currentNote, chosenNotebook));
     }
     handleCloseDialog();
-    history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
+
+    // Because the action is async so the change won't reflect immediately
+    // Sometimes the note is "top" in alphabet order and thus,
+    // still be the "selected" note, and the editor display that note content
+    // Do a simple check so that we always go to the right route
+    const notesBelongToCurrentNotebook = allNotes.filter((note) =>
+      currentNotebook.notes.includes(note.id)
+    );
+
+    if (notesBelongToCurrentNotebook[0].id === currentNote?.id) {
+      history.push(
+        `/main/notebooks/${currentNotebook?.id}/notes/${notesBelongToCurrentNotebook[1].id}`
+      );
+    } else {
+      history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
+    }
   };
 
   return (
