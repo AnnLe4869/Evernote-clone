@@ -6,10 +6,11 @@ import {
   GET_ALL_NOTES,
   MY_HOME,
   UPDATE_NOTE,
+  UPDATE_NOTEBOOK,
 } from "../constants/constants";
 import { NotebookType, NoteType, StoreType } from "../type/globalType";
 import { setNotesLoadingStatus } from "./loadingAction";
-import { addNoteToNotebook } from "./notebookAction";
+import { addNoteToNotebook, removeNoteFromNotebook } from "./notebookAction";
 
 export const fetchAllNotes = () => async (
   dispatch: Dispatch,
@@ -165,20 +166,67 @@ export const moveNoteToTrash = (note: NoteType) => async (
 
 // Delete single note permanently
 export const permanentDeleteNote = (note: NoteType) => async (
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  getState: () => StoreType
 ): Promise<any> => {
   try {
     // Start the loading
     dispatch(setNotesLoadingStatus(true));
     const db = firebase.firestore();
+    // Create batch for multiple action
+    const batch = db.batch();
+
+    // Get all the notebook from the store
+    const { notebooks } = getState();
+    // Then find the notebook that the note belong to
+    const notebook = notebooks.find((notebook) =>
+      notebook.notes.includes(note.id)
+    );
+
     // Delete the note on server
-    await db.collection("notes").doc(note.id).delete();
-    // Dispatch the action to stores
+    const noteRef = db.collection("notes").doc(note.id);
+    batch.delete(noteRef);
+
+    // If the note belong to a notebook that is still existing
+    if (notebook) {
+      const notebookRef = db.collection("notebooks").doc(notebook.id);
+      // Remove the noteId from the notes field
+      batch.update(notebookRef, {
+        notes: firebase.firestore.FieldValue.arrayRemove(note.id),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+
+    // Commit the batch
+    await batch.commit();
+
+    // Dispatch delete note action to stores
     dispatch({
       type: DELETE_NOTE,
       deletedNote: note,
     });
-    // Dispatch the action to store for notebooks
+
+    // When the note belong to an existing notebook, dispatch action to update that notebook
+    if (notebook) {
+      // Create updated version of the notebook
+      const updatedNotebook = {
+        ...notebook,
+        // Do an inline function call. Need to refactor later
+        notes: (() => {
+          const oldNoteList = [...notebook.notes];
+          const noteIndex = oldNoteList.indexOf(note.id);
+          if (noteIndex > -1) {
+            oldNoteList.splice(noteIndex, 1);
+          }
+          return oldNoteList;
+        })(),
+      };
+      dispatch({
+        type: UPDATE_NOTEBOOK,
+        updatedNotebook: updatedNotebook,
+      });
+    }
+
     // End the loading
     dispatch(setNotesLoadingStatus(false));
   } catch (err) {
