@@ -5,7 +5,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import useNotebooks from "../../../../../utils/useNotebook";
+import { restoreNote } from "../../../../../redux/actions/noteAction";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 import DeleteConfirmDialog from "./DeleteConfirmDialog";
 
@@ -16,7 +16,6 @@ export default function TrashPageHeaderUtilityList() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { note: currentNote } = useNoteFromPath();
-  const { allNotebooks } = useNotebooks();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -31,9 +30,11 @@ export default function TrashPageHeaderUtilityList() {
     setDialogOpenStatus(true);
   };
 
-  const restoreNote = () => {
+  const handleRestoreNote = () => {
     if (currentNote) {
       setAnchorEl(null);
+      dispatch(restoreNote(currentNote));
+      history.push("/main/trash/notes");
     }
   };
 
@@ -55,7 +56,7 @@ export default function TrashPageHeaderUtilityList() {
         <MenuItem onClick={openDialog}>Delete permanently</MenuItem>
 
         {/* Move the note to trash */}
-        <MenuItem onClick={restoreNote}>Restore note</MenuItem>
+        <MenuItem onClick={handleRestoreNote}>Restore note</MenuItem>
       </Menu>
 
       <DeleteConfirmDialog

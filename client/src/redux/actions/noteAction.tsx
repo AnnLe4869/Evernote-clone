@@ -171,12 +171,14 @@ export const permanentDeleteNote = (note: NoteType) => async (
     // Start the loading
     dispatch(setNotesLoadingStatus(true));
     const db = firebase.firestore();
-
+    // Delete the note on server
     await db.collection("notes").doc(note.id).delete();
+    // Dispatch the action to stores
     dispatch({
       type: DELETE_NOTE,
       deletedNote: note,
     });
+    // Dispatch the action to store for notebooks
     // End the loading
     dispatch(setNotesLoadingStatus(false));
   } catch (err) {

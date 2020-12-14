@@ -50,7 +50,7 @@ export default function HeaderUtilityList() {
     if (currentNote) {
       dispatch(moveNoteToTrash(currentNote));
       setAnchorEl(null);
-      history.push(`/main/notebooks/${currentNotebook?.id}`);
+      history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
     }
   };
 

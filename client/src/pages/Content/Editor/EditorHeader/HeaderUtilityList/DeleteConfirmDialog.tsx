@@ -5,29 +5,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import {
   createMuiTheme,
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core/styles";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { permanentDeleteNote } from "../../../../../redux/actions/noteAction";
-import {
-  addNoteToNotebook,
-  removeNoteFromNotebook,
-} from "../../../../../redux/actions/notebookAction";
-import { NotebookType } from "../../../../../redux/type/globalType";
-import useNotebook from "../../../../../utils/useNotebook";
-import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 
 const theme = createMuiTheme({
@@ -77,6 +63,7 @@ export default function DeleteConfirmDialog({
     if (currentNote) {
       dispatch(permanentDeleteNote(currentNote));
       handleCloseDialog();
+      history.push("/main/trash/notes");
     }
   };
 
@@ -99,15 +86,15 @@ export default function DeleteConfirmDialog({
         {/* After we choose the place to move to we click the Move button */}
         <DialogActions>
           <ThemeProvider theme={theme}>
+            <Button variant="outlined" onClick={handleCloseDialog}>
+              Cancel
+            </Button>
             <Button
               variant="contained"
               color="secondary"
               onClick={deleteNoteHandler}
             >
               Delete
-            </Button>
-            <Button variant="outlined" onClick={handleCloseDialog}>
-              Cancel
             </Button>
           </ThemeProvider>
         </DialogActions>
