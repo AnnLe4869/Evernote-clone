@@ -12,7 +12,7 @@ import { NotebookType, NoteType, StoreType } from "../type/globalType";
 import { setNotebookLoadingStatus } from "./loadingAction";
 import { addNewNote } from "./noteAction";
 
-export const fetchAllNotebooks = () => async (
+export const fetchAllNotebooks = (callback = () => {}) => async (
   dispatch: Dispatch,
   getState: () => StoreType
 ): Promise<any> => {
@@ -43,12 +43,15 @@ export const fetchAllNotebooks = () => async (
     });
     // Change the loading status to false
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
 };
 
-export const addNewNotebook = (name: string) => async (
+export const addNewNotebook = (name: string, callback = () => {}) => async (
   dispatch: Dispatch<any>,
   getState: () => StoreType
 ): Promise<any> => {
@@ -92,6 +95,9 @@ export const addNewNotebook = (name: string) => async (
 
       // After all finished set the loading status to false
       dispatch(setNotebookLoadingStatus(false));
+
+      // After all the operation, execute the optional callback
+      callback();
     }
   } catch (err) {
     console.error(err);
@@ -100,7 +106,8 @@ export const addNewNotebook = (name: string) => async (
 
 export const addNoteToNotebook = (
   note: NoteType,
-  notebook: NotebookType
+  notebook: NotebookType,
+  callback = () => {}
 ) => async (dispatch: Dispatch): Promise<any> => {
   try {
     // Set the loading status to true
@@ -126,6 +133,9 @@ export const addNoteToNotebook = (
     });
     // Set the loading status to false
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
@@ -133,7 +143,8 @@ export const addNoteToNotebook = (
 
 export const removeNoteFromNotebook = (
   note: NoteType,
-  notebook: NotebookType
+  notebook: NotebookType,
+  callback = () => {}
 ) => async (dispatch: Dispatch): Promise<any> => {
   try {
     // Start the loading
@@ -164,6 +175,9 @@ export const removeNoteFromNotebook = (
       updatedNotebook: updatedNotebook,
     });
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
@@ -171,7 +185,8 @@ export const removeNoteFromNotebook = (
 
 export const changeNotebookName = (
   notebook: NotebookType,
-  newName: string
+  newName: string,
+  callback = () => {}
 ) => async (dispatch: Dispatch): Promise<any> => {
   try {
     // Start the loading
@@ -191,6 +206,9 @@ export const changeNotebookName = (
       updatedNotebook: updatedNotebook,
     });
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
@@ -198,9 +216,10 @@ export const changeNotebookName = (
 
 // This will permanently delete the notebook and all notes inside it
 // Cannot recover the notes
-export const completeDeleteNotebook = (notebook: NotebookType) => async (
-  dispatch: Dispatch
-): Promise<any> => {
+export const completeDeleteNotebook = (
+  notebook: NotebookType,
+  callback = () => {}
+) => async (dispatch: Dispatch): Promise<any> => {
   try {
     // Start the loading
     dispatch(setNotebookLoadingStatus(true));
@@ -232,6 +251,9 @@ export const completeDeleteNotebook = (notebook: NotebookType) => async (
       deletedNotes: notebook.notes,
     });
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
@@ -239,7 +261,10 @@ export const completeDeleteNotebook = (notebook: NotebookType) => async (
 
 // This delete the notebook and move all notes to Trash
 // Notes can be recovered
-export const partialDeleteNotebook = (notebook: NotebookType) => async (
+export const partialDeleteNotebook = (
+  notebook: NotebookType,
+  callback = () => {}
+) => async (
   dispatch: Dispatch<any>,
   getState: () => StoreType
 ): Promise<any> => {
@@ -302,6 +327,9 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
     });
 
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
@@ -309,7 +337,8 @@ export const partialDeleteNotebook = (notebook: NotebookType) => async (
 
 // This move or remove all the notes inside the notebook to Shortcuts
 export const toggleNotebookInShortcutStatus = (
-  notebook: NotebookType
+  notebook: NotebookType,
+  callback = () => {}
 ) => async (
   dispatch: Dispatch<any>,
   getState: () => StoreType
@@ -378,6 +407,9 @@ export const toggleNotebookInShortcutStatus = (
     });
 
     dispatch(setNotebookLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }

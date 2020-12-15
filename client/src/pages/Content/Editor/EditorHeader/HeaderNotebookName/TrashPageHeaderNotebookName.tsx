@@ -1,11 +1,8 @@
-import React from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
-
+import { makeStyles } from "@material-ui/core/styles";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Typography from "@material-ui/core/Typography";
-import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   headerNotebookIcon: {

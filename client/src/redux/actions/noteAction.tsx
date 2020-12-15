@@ -10,9 +10,9 @@ import {
 } from "../constants/constants";
 import { NotebookType, NoteType, StoreType } from "../type/globalType";
 import { setNotesLoadingStatus } from "./loadingAction";
-import { addNoteToNotebook, removeNoteFromNotebook } from "./notebookAction";
+import { addNoteToNotebook } from "./notebookAction";
 
-export const fetchAllNotes = () => async (
+export const fetchAllNotes = (callback = () => {}) => async (
   dispatch: Dispatch,
   getState: () => StoreType
 ): Promise<void> => {
@@ -43,12 +43,18 @@ export const fetchAllNotes = () => async (
     });
     // Change the loading status to false
     dispatch(setNotesLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
 };
 
-export const addNewNote = (notebook: NotebookType) => async (
+export const addNewNote = (
+  notebook: NotebookType,
+  callback = () => {}
+) => async (
   dispatch: Dispatch<any>,
   getState: () => StoreType
 ): Promise<any> => {
@@ -90,14 +96,18 @@ export const addNewNote = (notebook: NotebookType) => async (
     // Change dispatch: Dispatch<any> will make the dispatch() function accept any as returned value
     dispatch(addNoteToNotebook(addedNote, notebook));
     dispatch(setNotesLoadingStatus(false));
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
 };
 
-export const updateNoteContent = (content: string, note: NoteType) => async (
-  dispatch: Dispatch
-): Promise<any> => {
+export const updateNoteContent = (
+  content: string,
+  note: NoteType,
+  callback = () => {}
+) => async (dispatch: Dispatch): Promise<any> => {
   try {
     // Start the loading
     dispatch(setNotesLoadingStatus(true));
@@ -112,6 +122,8 @@ export const updateNoteContent = (content: string, note: NoteType) => async (
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
@@ -119,7 +131,8 @@ export const updateNoteContent = (content: string, note: NoteType) => async (
 
 export const updateInShortcutStatusNote = (
   note: NoteType,
-  status: boolean
+  status: boolean,
+  callback = () => {}
 ) => async (dispatch: Dispatch): Promise<any> => {
   try {
     // Start the loading
@@ -135,13 +148,16 @@ export const updateInShortcutStatusNote = (
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
 };
 
 // This move single note to trash
-export const moveNoteToTrash = (note: NoteType) => async (
+export const moveNoteToTrash = (note: NoteType, callback = () => {}) => async (
   dispatch: Dispatch
 ): Promise<any> => {
   try {
@@ -159,16 +175,19 @@ export const moveNoteToTrash = (note: NoteType) => async (
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
 };
 
 // Delete single note permanently
-export const permanentDeleteNote = (note: NoteType) => async (
-  dispatch: Dispatch,
-  getState: () => StoreType
-): Promise<any> => {
+export const permanentDeleteNote = (
+  note: NoteType,
+  callback = () => {}
+) => async (dispatch: Dispatch, getState: () => StoreType): Promise<any> => {
   try {
     // Start the loading
     dispatch(setNotesLoadingStatus(true));
@@ -229,13 +248,16 @@ export const permanentDeleteNote = (note: NoteType) => async (
 
     // End the loading
     dispatch(setNotesLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }
 };
 
 // Restore the note back to its former location
-export const restoreNote = (note: NoteType) => async (
+export const restoreNote = (note: NoteType, callback = () => {}) => async (
   dispatch: Dispatch<any>,
   getState: () => StoreType
 ): Promise<any> => {
@@ -273,6 +295,9 @@ export const restoreNote = (note: NoteType) => async (
     });
     // End the loading
     dispatch(setNotesLoadingStatus(false));
+
+    // After all the operation, execute the optional callback
+    callback();
   } catch (err) {
     console.error(err);
   }

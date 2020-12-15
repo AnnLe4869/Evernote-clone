@@ -18,7 +18,7 @@ export default function ShortcutsPageHeaderUtilityList() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { note: currentNote, allNotes } = useNoteFromPath();
+  const { note: currentNote } = useNoteFromPath();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -44,23 +44,13 @@ export default function ShortcutsPageHeaderUtilityList() {
 
   const moveToTrash = () => {
     if (currentNote) {
-      dispatch(moveNoteToTrash(currentNote));
+      dispatch(
+        // The callback function run when all async action is finished
+        moveNoteToTrash(currentNote, () => {
+          history.push(`/main/shortcuts/notes`);
+        })
+      );
       setAnchorEl(null);
-
-      // Because the action is async so the change won't reflect immediately
-      // Sometimes the note is "top" in alphabet order and thus,
-      // still be the "selected" note and the editor display that note content
-      // Do a simple check so that we always go to the right route
-      const notesInShortcuts = allNotes.filter((note) => note.inShortcut);
-
-      if (
-        notesInShortcuts[0].id === currentNote.id &&
-        notesInShortcuts.length > 1
-      ) {
-        history.push(`/main/shortcuts/notes/${notesInShortcuts[1].id}`);
-      } else {
-        history.push(`/main/shortcuts/notes`);
-      }
     }
   };
 

@@ -33,19 +33,12 @@ export default function TrashPageHeaderUtilityList() {
   const handleRestoreNote = () => {
     if (currentNote) {
       setAnchorEl(null);
-      dispatch(restoreNote(currentNote));
-
-      // Because the action is async so the change won't reflect immediately
-      // Sometimes the note is "top" in alphabet order and thus,
-      // still be the "selected" note and the editor display that note content
-      // Do a simple check so that we always go to the right route
-      const notesInTrash = allNotes.filter((note) => note.inTrash);
-
-      if (notesInTrash[0].id === currentNote.id && notesInTrash.length > 1) {
-        history.push(`/main/trash/notes/${notesInTrash[1].id}`);
-      } else {
-        history.push(`/main/trash/notes`);
-      }
+      dispatch(
+        // The callback function run when all async action is finished
+        restoreNote(currentNote, () => {
+          history.push(`/main/trash/notes`);
+        })
+      );
     }
   };
 

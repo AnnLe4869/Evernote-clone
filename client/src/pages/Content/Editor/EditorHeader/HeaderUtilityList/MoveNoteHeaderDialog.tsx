@@ -70,7 +70,7 @@ export default function MoveNoteHeaderDialog({
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { note: currentNote, allNotes } = useNoteFromPath();
+  const { note: currentNote } = useNoteFromPath();
   const { allNotebooks } = useNotebook();
   const { notebook: currentNotebook } = useNotebookFromNote();
 
@@ -91,26 +91,16 @@ export default function MoveNoteHeaderDialog({
   // Run only when user click Move button
   const moveNoteToNotebook = () => {
     if (currentNote && chosenNotebook && currentNotebook) {
-      dispatch(removeNoteFromNotebook(currentNote, currentNotebook));
+      dispatch(
+        // Callback function run after all async actions are done
+        // Only run for removeNoteToNotebook because this one need to display at current route
+        removeNoteFromNotebook(currentNote, currentNotebook, () => {
+          history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
+        })
+      );
       dispatch(addNoteToNotebook(currentNote, chosenNotebook));
     }
     handleCloseDialog();
-
-    // Because the action is async so the change won't reflect immediately
-    // Sometimes the note is "top" in alphabet order and thus,
-    // still be the "selected" note, and the editor display that note content
-    // Do a simple check so that we always go to the right route
-    const notesBelongToCurrentNotebook = allNotes.filter((note) =>
-      currentNotebook.notes.includes(note.id)
-    );
-
-    if (notesBelongToCurrentNotebook[0].id === currentNote?.id) {
-      history.push(
-        `/main/notebooks/${currentNotebook?.id}/notes/${notesBelongToCurrentNotebook[1].id}`
-      );
-    } else {
-      history.push(`/main/notebooks/${currentNotebook?.id}/notes`);
-    }
   };
 
   return (
