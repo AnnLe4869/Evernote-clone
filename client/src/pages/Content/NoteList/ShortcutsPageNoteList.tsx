@@ -40,7 +40,9 @@ export default function ShortcutsPageNoteList() {
 
   useEffect(
     () => {
-      setNoteInShortcuts(allNotes.filter((note) => note.inShortcut));
+      setNoteInShortcuts(
+        allNotes.filter((note) => note.inShortcut && !note.inTrash)
+      );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [allNotes]

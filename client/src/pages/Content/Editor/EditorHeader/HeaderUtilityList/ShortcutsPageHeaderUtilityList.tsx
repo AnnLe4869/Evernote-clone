@@ -36,7 +36,9 @@ export default function ShortcutsPageHeaderUtilityList() {
   const toggleInShortcutStatus = () => {
     if (currentNote) {
       dispatch(
-        updateInShortcutStatusNote(currentNote, !currentNote.inShortcut)
+        updateInShortcutStatusNote(currentNote, !currentNote.inShortcut, () => {
+          history.push(`/main/shortcuts/notes`);
+        })
       );
     }
     setAnchorEl(null);
