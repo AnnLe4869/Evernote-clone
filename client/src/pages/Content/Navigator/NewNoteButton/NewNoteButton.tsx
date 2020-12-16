@@ -8,10 +8,10 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import { addNewNote } from "../../../../redux/actions/noteAction";
 import { MY_HOME } from "../../../../redux/constants/constants";
-import { ParamType, StoreType } from "../../../../redux/type/globalType";
+import { StoreType } from "../../../../redux/type/globalType";
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -28,18 +28,23 @@ const buttonTheme = createMuiTheme({
   },
 });
 
-export default function NewNoteButton() {
+interface MatchParams {
+  notebookId: string;
+}
+
+export default function FilteredPageNewNoteButton() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
-  const { notebookId } = useParams<ParamType>();
+
+  const match = useRouteMatch<MatchParams>("/main/notebooks/:notebookId/notes");
 
   const handleClick = () => {
     // Check if there is notebook specified in the URL
-    if (notebookId) {
+    if (match && match.params.notebookId) {
       // Find the notebook accordingly
       const notebook = allNotebooks.find(
-        (notebook) => notebook.id === notebookId
+        (notebook) => notebook.id === match.params.notebookId
       );
       // This check is just to go around the undefined error of the TypeScript
       if (notebook) dispatch(addNewNote(notebook));

@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { batch as reduxBatch } from "react-redux"; // To combine multiple dispatch into one
 import { Dispatch } from "redux";
 import {
   ADD_NOTE,
@@ -36,13 +37,15 @@ export const fetchAllNotes = (callback = () => {}) => async (
         timestamp: timestamp.toDate().toLocaleTimeString(),
       });
     });
-    // Dispatch the data to reducer
-    dispatch({
-      type: GET_ALL_NOTES,
-      allNotes: allNotes,
+    reduxBatch(() => {
+      // Dispatch the data to reducer
+      dispatch({
+        type: GET_ALL_NOTES,
+        allNotes: allNotes,
+      });
+      // Change the loading status to false
+      dispatch(setNotesLoadingStatus(false));
     });
-    // Change the loading status to false
-    dispatch(setNotesLoadingStatus(false));
 
     // After all the operation, execute the optional callback
     callback();
@@ -116,12 +119,16 @@ export const updateNoteContent = (
       content,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch({
-      type: UPDATE_NOTE,
-      updatedNote: { ...note, content },
+
+    reduxBatch(() => {
+      dispatch({
+        type: UPDATE_NOTE,
+        updatedNote: { ...note, content },
+      });
+      // End the loading
+      dispatch(setNotesLoadingStatus(false));
     });
-    // End the loading
-    dispatch(setNotesLoadingStatus(false));
+
     // After all the operation, execute the optional callback
     callback();
   } catch (err) {
@@ -142,12 +149,15 @@ export const updateInShortcutStatusNote = (
       inShortcut: status,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch({
-      type: UPDATE_NOTE,
-      updatedNote: { ...note, inShortcut: status },
+
+    reduxBatch(() => {
+      dispatch({
+        type: UPDATE_NOTE,
+        updatedNote: { ...note, inShortcut: status },
+      });
+      // End the loading
+      dispatch(setNotesLoadingStatus(false));
     });
-    // End the loading
-    dispatch(setNotesLoadingStatus(false));
 
     // After all the operation, execute the optional callback
     callback();
@@ -169,12 +179,15 @@ export const moveNoteToTrash = (note: NoteType, callback = () => {}) => async (
       inTrash: true,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    dispatch({
-      type: UPDATE_NOTE,
-      updatedNote: { ...note, inTrash: true },
+
+    reduxBatch(() => {
+      dispatch({
+        type: UPDATE_NOTE,
+        updatedNote: { ...note, inTrash: true },
+      });
+      // End the loading
+      dispatch(setNotesLoadingStatus(false));
     });
-    // End the loading
-    dispatch(setNotesLoadingStatus(false));
 
     // After all the operation, execute the optional callback
     callback();

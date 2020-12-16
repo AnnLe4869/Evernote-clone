@@ -66,6 +66,9 @@ export default function Main() {
       }}
     >
       <CssBaseline />
+      {!expandStatus ? (
+        <Navigator open={open} setOpen={(value) => setOpen(value)} />
+      ) : null}
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="fade" timeout={50}>
           <Switch>
@@ -75,9 +78,6 @@ export default function Main() {
              *
              */}
             <Route path={`/main/notebooks`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <NotebookList />
               </ExpandWrapperComponent>
@@ -93,9 +93,6 @@ export default function Main() {
 
             {/* "Stop" for all notes page */}
             <Route path={`/main/notes`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <AllPageLoading />
               </ExpandWrapperComponent>
@@ -103,9 +100,6 @@ export default function Main() {
 
             {/* "Stop" for filtered page */}
             <Route path={`/main/notebooks/:notebookId/notes`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <FilteredPageLoading />
               </ExpandWrapperComponent>
@@ -113,9 +107,6 @@ export default function Main() {
 
             {/* "Stop" for shortcuts page */}
             <Route path={`/main/shortcuts/notes`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <ShortcutsPageLoading />
               </ExpandWrapperComponent>
@@ -123,9 +114,6 @@ export default function Main() {
 
             {/* "Stop" for trash page */}
             <Route path={`/main/trash/notes`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <TrashPageLoading />
               </ExpandWrapperComponent>
@@ -138,9 +126,6 @@ export default function Main() {
              */}
             {/* All notes show page, specific */}
             <Route path={`/main/notes/:noteId`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <AllPageNoteList />
@@ -155,9 +140,6 @@ export default function Main() {
 
             {/* Filtered notes page, specific */}
             <Route path={`/main/notebooks/:notebookId/notes/:noteId`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <FilteredPageNoteList />
@@ -172,9 +154,6 @@ export default function Main() {
 
             {/* Shortcuts notes page, blank version in case no notes in Shortcuts */}
             <Route path={`/main/shortcuts/notes/blank`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <ShortcutsPageNoteList />
@@ -183,9 +162,6 @@ export default function Main() {
             </Route>
             {/* Shortcuts notes page, specific */}
             <Route path={`/main/shortcuts/notes/:noteId`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <ShortcutsPageNoteList />
@@ -200,9 +176,6 @@ export default function Main() {
 
             {/* Trash notes page, in case there is no notes in Trash */}
             <Route path={`/main/trash/notes/blank`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <TrashPageNoteList />
@@ -211,9 +184,6 @@ export default function Main() {
             </Route>
             {/* Trash notes page, specific */}
             <Route path={`/main/trash/notes/:noteId`} exact>
-              {!expandStatus ? (
-                <Navigator open={open} setOpen={(value) => setOpen(value)} />
-              ) : null}
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <TrashPageNoteList />
