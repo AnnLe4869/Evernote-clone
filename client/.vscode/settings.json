@@ -13,7 +13,8 @@
     "more horiz icon",
     "redux",
     "redux devtools extension",
-    "reduxjs"
+    "reduxjs",
+    "unmount"
   ],
   "compile-hero.disable-compile-files-on-did-save-code": true
 }

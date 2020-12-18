@@ -83,7 +83,6 @@ export default function ListHeaderDialog({
             variant="outlined"
             size="small"
             label="Find the location"
-            ///defaultValue="hello world"
             fullWidth
           />
           {/* Show list of all notebook to move to */}

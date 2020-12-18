@@ -27,13 +27,12 @@ import FilteredPageNoteList from "./NoteList/FilteredPageNoteList";
 import ShortcutsPageNoteList from "./NoteList/ShortcutsPageNoteList";
 import TrashPageNoteList from "./NoteList/TrashPageNoteList";
 
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const notesLoading = useSelector(
     (store: StoreType) => store.loading.notesLoading
@@ -52,10 +51,6 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
-    console.log("hello");
-  });
-
-  useEffect(() => {
     if (!notebooksLoading && !notesLoading) {
       dispatch(addNewNotebook(MY_HOME));
     }
@@ -68,68 +63,119 @@ export default function Main() {
         height: "100vh",
         overflow: "hidden",
       }}
+      className="container"
     >
       <CssBaseline />
       {!expandStatus ? (
         <Navigator open={open} setOpen={(value) => setOpen(value)} />
       ) : null}
-      <TransitionGroup>
-        <CSSTransition key={location.key} classNames="fade" timeout={50}>
-          <Switch>
-            {/**
-             * Show all notebooks
-             * This is default page user see after signing in
-             *
-             */}
-            <Route path={`/main/notebooks`} exact>
+      <Switch>
+        {/**
+         * Show all notebooks
+         * This is default page user see after signing in
+         *
+         */}
+        <Route path={`/main/notebooks`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <NotebookList />
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/**
-             *
-             * This is "temporary stop" so that we can fetch data from store that we need for constructing URL
-             * Usually is :noteId
-             * After that it will redirect to specific page
-             *
-             */}
+        {/**
+         *
+         * This is "temporary stop" so that we can fetch data from store that we need for constructing URL
+         * Usually is :noteId
+         * After that it will redirect to specific page
+         *
+         */}
 
-            {/* "Stop" for all notes page */}
-            <Route path={`/main/notes`} exact>
+        {/* "Stop" for all notes page */}
+        <Route path={`/main/notes`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <AllPageLoading />
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/* "Stop" for filtered page */}
-            <Route path={`/main/notebooks/:notebookId/notes`} exact>
+        {/* "Stop" for filtered page */}
+        <Route path={`/main/notebooks/:notebookId/notes`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <FilteredPageLoading />
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/* "Stop" for shortcuts page */}
-            <Route path={`/main/shortcuts/notes`} exact>
+        {/* "Stop" for shortcuts page */}
+        <Route path={`/main/shortcuts/notes`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <ShortcutsPageLoading />
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/* "Stop" for trash page */}
-            <Route path={`/main/trash/notes`} exact>
+        {/* "Stop" for trash page */}
+        <Route path={`/main/trash/notes`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <TrashPageLoading />
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/**
-             *
-             * This is actual page that user will see
-             *
-             */}
-            {/* All notes show page, specific */}
-            <Route path={`/main/notes/:noteId`} exact>
+        {/**
+         *
+         * This is actual page that user will see
+         *
+         */}
+        {/* All notes show page, specific */}
+        <Route path={`/main/notes/:noteId`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <AllPageNoteList />
@@ -140,10 +186,19 @@ export default function Main() {
                   />
                 </Grid>
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/* Filtered notes page, specific */}
-            <Route path={`/main/notebooks/:notebookId/notes/:noteId`} exact>
+        {/* Filtered notes page, specific */}
+        <Route path={`/main/notebooks/:notebookId/notes/:noteId`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <FilteredPageNoteList />
@@ -154,18 +209,36 @@ export default function Main() {
                   />
                 </Grid>
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/* Shortcuts notes page, blank version in case no notes in Shortcuts */}
-            <Route path={`/main/shortcuts/notes/blank`} exact>
+        {/* Shortcuts notes page, blank version in case no notes in Shortcuts */}
+        <Route path={`/main/shortcuts/notes/blank`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <ShortcutsPageNoteList />
                 </Grid>
               </ExpandWrapperComponent>
-            </Route>
-            {/* Shortcuts notes page, specific */}
-            <Route path={`/main/shortcuts/notes/:noteId`} exact>
+            </CSSTransition>
+          )}
+        </Route>
+        {/* Shortcuts notes page, specific */}
+        <Route path={`/main/shortcuts/notes/:noteId`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <ShortcutsPageNoteList />
@@ -176,18 +249,36 @@ export default function Main() {
                   />
                 </Grid>
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/* Trash notes page, in case there is no notes in Trash */}
-            <Route path={`/main/trash/notes/blank`} exact>
+        {/* Trash notes page, in case there is no notes in Trash */}
+        <Route path={`/main/trash/notes/blank`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <TrashPageNoteList />
                 </Grid>
               </ExpandWrapperComponent>
-            </Route>
-            {/* Trash notes page, specific */}
-            <Route path={`/main/trash/notes/:noteId`} exact>
+            </CSSTransition>
+          )}
+        </Route>
+        {/* Trash notes page, specific */}
+        <Route path={`/main/trash/notes/:noteId`} exact>
+          {({ match }) => (
+            <CSSTransition
+              in={match != null}
+              timeout={50}
+              classNames="fade"
+              unmountOnExit
+            >
               <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
                 <Grid item md={4} sm={12}>
                   <TrashPageNoteList />
@@ -198,17 +289,17 @@ export default function Main() {
                   />
                 </Grid>
               </ExpandWrapperComponent>
-            </Route>
+            </CSSTransition>
+          )}
+        </Route>
 
-            {/**
-             *
-             * Redirect for any unrecognized routes
-             *
-             */}
-            <Redirect to={`/main/notebooks`} />
-          </Switch>
-        </CSSTransition>
-      </TransitionGroup>
+        {/**
+         *
+         * Redirect for any unrecognized routes
+         *
+         */}
+        <Redirect to={`/main/notebooks`} />
+      </Switch>
 
       {/* {!expandStatus ? (
         <Navigator open={open} setOpen={(value) => setOpen(value)} />

@@ -252,13 +252,16 @@ export const permanentDeleteNote = (
         updatedNotebook: updatedNotebook,
       });
     }
+    console.log("breakpoint 3");
     // Dispatch delete note action to stores
     dispatch({
       type: DELETE_NOTE,
       deletedNote: note,
     });
+    console.log("breakpoint 1");
     // After all the operation, execute the optional callback
     callback();
+    console.log("breakpoint 2");
     // End the loading
     dispatch(setNotesLoadingStatus(false));
   } catch (err) {
