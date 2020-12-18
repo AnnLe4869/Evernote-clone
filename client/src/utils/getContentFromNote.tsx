@@ -2,11 +2,14 @@
  * Extract the content from the editor content
  */
 
-export default function getContentFromEditorContent(content: string) {
+import getTitleFromNote from "./getTitleFromNote";
+
+export default function getContentFromNote(content: string) {
   const regex = /<[^>]*>?/gm;
 
-  const noTagText = content.replace(regex, "");
-  return noTagText;
+  const noTagText = content.replace(regex, " ");
+  const title = getTitleFromNote(content);
+  return noTagText.substring(title.length + 1, 100);
 }
 
 /**

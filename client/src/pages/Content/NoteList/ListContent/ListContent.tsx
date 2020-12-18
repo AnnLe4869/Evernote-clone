@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import StarIcon from "@material-ui/icons/Star";
 import { NoteType, ParamType } from "../../../../redux/type/globalType";
 import { useParams, useHistory } from "react-router-dom";
+import getContentFromNote from "../../../../utils/getContentFromNote";
+import getTitleFromNote from "../../../../utils/getTitleFromNote";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -37,7 +39,7 @@ export default function ListContent(props: NoteType) {
   const history = useHistory();
   const { noteId, notebookId } = useParams<ParamType>();
 
-  const { id, title, content, timestamp, inShortcut } = props;
+  const { id, content, timestamp, inShortcut } = props;
 
   const selectItem = () => {
     if (notebookId)
@@ -62,7 +64,7 @@ export default function ListContent(props: NoteType) {
               color="textPrimary"
               className={classes.itemPrimaryText}
             >
-              {title}
+              {getTitleFromNote(content)}
               {inShortcut ? (
                 <StarIcon className={classes.itemStarIcon} />
               ) : null}
@@ -76,7 +78,7 @@ export default function ListContent(props: NoteType) {
               variant="subtitle2"
               color="textSecondary"
             >
-              {content}
+              {getContentFromNote(content)}
             </Typography>
           </React.Fragment>
         }

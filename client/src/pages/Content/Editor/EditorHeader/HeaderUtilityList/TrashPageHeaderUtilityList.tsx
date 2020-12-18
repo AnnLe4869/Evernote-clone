@@ -15,7 +15,7 @@ export default function TrashPageHeaderUtilityList() {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { note: currentNote, allNotes } = useNoteFromPath();
+  const { note: currentNote } = useNoteFromPath();
 
   const handleClickOpenUtilityList = (event: any) => {
     setAnchorEl(event.currentTarget);

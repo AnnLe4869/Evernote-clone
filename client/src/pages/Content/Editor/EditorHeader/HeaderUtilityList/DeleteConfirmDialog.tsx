@@ -65,9 +65,9 @@ export default function DeleteConfirmDialog({
         // The callback run after all the async is done
         permanentDeleteNote(currentNote, () => {
           history.push("/main/trash/notes");
+          handleCloseDialog();
         })
       );
-      handleCloseDialog();
     }
   };
 

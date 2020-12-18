@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import StarIcon from "@material-ui/icons/Star";
 import { NoteType, ParamType } from "../../../../redux/type/globalType";
 import { useParams, useHistory } from "react-router-dom";
+import getContentFromNote from "../../../../utils/getContentFromNote";
+import getTitleFromNote from "../../../../utils/getTitleFromNote";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -55,7 +57,7 @@ export default function TrashPageListContent(props: NoteType) {
   const history = useHistory();
   const { noteId } = useParams<ParamType>();
 
-  const { id, title, content, timestamp, inShortcut } = props;
+  const { id, content, timestamp, inShortcut } = props;
 
   const selectItem = () => {
     return history.push(`/main/trash/notes/${id}`);
@@ -78,7 +80,7 @@ export default function TrashPageListContent(props: NoteType) {
               color="textPrimary"
               className={classes.itemPrimaryText}
             >
-              {title}
+              {getTitleFromNote(content)}
               {inShortcut ? (
                 <StarIcon className={classes.itemStarIcon} />
               ) : null}
@@ -92,7 +94,7 @@ export default function TrashPageListContent(props: NoteType) {
               variant="subtitle2"
               color="textSecondary"
             >
-              {content}
+              {getContentFromNote(content)}
             </Typography>
           </React.Fragment>
         }

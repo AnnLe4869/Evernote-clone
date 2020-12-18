@@ -70,8 +70,8 @@ export const addNewNote = (
     let newNote = {
       creator: user.id,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      content: "    ",
-      title: "nothing for now",
+      content: "<h1>Title</h1><p><br></p><p>Note...</p>",
+      title: "",
       shareWith: [],
       // If the notebook it's in are in shortcut, so does it
       inShortcut: notebook.inShortcut,
@@ -232,12 +232,6 @@ export const permanentDeleteNote = (
     // Commit the batch
     await batch.commit();
 
-    // Dispatch delete note action to stores
-    dispatch({
-      type: DELETE_NOTE,
-      deletedNote: note,
-    });
-
     // When the note belong to an existing notebook, dispatch action to update that notebook
     if (notebook) {
       // Create updated version of the notebook
@@ -258,12 +252,15 @@ export const permanentDeleteNote = (
         updatedNotebook: updatedNotebook,
       });
     }
-
-    // End the loading
-    dispatch(setNotesLoadingStatus(false));
-
+    // Dispatch delete note action to stores
+    dispatch({
+      type: DELETE_NOTE,
+      deletedNote: note,
+    });
     // After all the operation, execute the optional callback
     callback();
+    // End the loading
+    dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
