@@ -52,6 +52,10 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
+    console.log("hello");
+  });
+
+  useEffect(() => {
     if (!notebooksLoading && !notesLoading) {
       dispatch(addNewNotebook(MY_HOME));
     }
