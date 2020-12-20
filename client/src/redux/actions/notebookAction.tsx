@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import { Dispatch } from "redux";
 import {
+  ADD_NOTE,
   ADD_NOTEBOOK,
   DELETE_MULTIPLE_NOTES,
   DELETE_NOTEBOOK,
@@ -76,40 +77,67 @@ export const addNewNotebook = (name: string, callback = () => {}) => async (
       // Set the loading status to true
       dispatch(setNotebookLoadingStatus(true));
 
-      // Only then we start the process
       const db = firebase.firestore();
+      // Create batch to send multiple operations at once
+      const batch = db.batch();
+
+      // Always create a new note in the notebook
+      let newNote = {
+        creator: user.id,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        content: "<h1>Title</h1><p><br></p><p>Note...</p>",
+        title: "",
+        shareWith: [],
+        inShortcut: false,
+        inTrash: false,
+      };
+      // Get the noteId
+      const noteRef = db.collection("notes").doc();
+      batch.set(noteRef, newNote);
+      // The note that go to redux store
+      const newAddedNote: NoteType = {
+        ...newNote,
+        id: noteRef.id,
+        timestamp: new Date().toLocaleTimeString(),
+      };
+
       let newNotebook = {
         name,
         creator: user.id,
-        notes: [],
+        notes: [noteRef.id],
         shareWith: [],
         inShortcut: false,
         inTrash: false,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      const notebookRef = await db.collection("notebooks").add(newNotebook);
-      const doc: any = (await notebookRef.get()).data();
-
+      const notebookRef = db.collection("notebooks").doc();
+      batch.set(notebookRef, newNotebook);
       const newNotebookAdded: NotebookType = {
         ...newNotebook,
         id: notebookRef.id,
-        timestamp: doc.timestamp.toDate().toLocaleTimeString(),
+        timestamp: new Date().toLocaleTimeString(),
       };
 
-      // First dispatch the new notebook to the reducer
-      dispatch({
-        type: ADD_NOTEBOOK,
-        addedNotebook: newNotebookAdded,
+      // Send the batch to firestore
+      await batch.commit();
+
+      reduxBatch(() => {
+        // First dispatch the new notebook to the reducer
+        dispatch({
+          type: ADD_NOTEBOOK,
+          addedNotebook: newNotebookAdded,
+        });
+        dispatch({
+          type: ADD_NOTE,
+          addedNote: newAddedNote,
+        });
+
+        // After all finished set the loading status to false
+        dispatch(setNotebookLoadingStatus(false));
+
+        // After all the operation, execute the optional callback
+        callback();
       });
-
-      // Then create a new blank note inside this notebook
-      dispatch(addNewNote(newNotebookAdded));
-
-      // After all finished set the loading status to false
-      dispatch(setNotebookLoadingStatus(false));
-
-      // After all the operation, execute the optional callback
-      callback();
     }
   } catch (err) {
     console.error(err);
