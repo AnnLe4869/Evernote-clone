@@ -1,6 +1,7 @@
 import {
   GET_CURRENT_USER,
   LOG_IN_WITH_GOOGLE,
+  LOG_OUT,
   SET_CURRENT_USER,
 } from "../constants/constants";
 import { authActionTypes } from "../type/actionType/authActionType";
@@ -31,6 +32,12 @@ export default function (
 
     case LOG_IN_WITH_GOOGLE:
       return initialState;
+    case LOG_OUT:
+      return {
+        id: "",
+        displayName: "",
+        photoURL: "",
+      };
     default:
       return initialState;
   }

@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { batch as reduxBatch } from "react-redux"; // To combine multiple dispatch into one
 import { Dispatch } from "redux";
 import {
   ADD_NOTE,
@@ -12,8 +13,6 @@ import {
 } from "../constants/constants";
 import { NotebookType, NoteType, StoreType } from "../type/globalType";
 import { setNotebookLoadingStatus } from "./loadingAction";
-import { addNewNote } from "./noteAction";
-import { batch as reduxBatch } from "react-redux"; // To combine multiple dispatch into one
 
 export const fetchAllNotebooks = (callback = () => {}) => async (
   dispatch: Dispatch<any>,

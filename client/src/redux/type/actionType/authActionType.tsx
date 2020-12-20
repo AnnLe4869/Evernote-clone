@@ -1,6 +1,7 @@
 import {
   GET_CURRENT_USER,
   LOG_IN_WITH_GOOGLE,
+  LOG_OUT,
   SET_CURRENT_USER,
 } from "../../constants/constants";
 import { UserType } from "../globalType";
@@ -19,7 +20,12 @@ interface logInWithGoogleAction {
   type: typeof LOG_IN_WITH_GOOGLE;
 }
 
+interface logOutAction {
+  type: typeof LOG_OUT;
+}
+
 export type authActionTypes =
   | getCurrentUserAction
   | setCurrentUserAction
-  | logInWithGoogleAction;
+  | logInWithGoogleAction
+  | logOutAction;
