@@ -45,10 +45,9 @@ export const fetchAllNotes = (callback = () => {}) => async (
       });
       // Change the loading status to false
       dispatch(setNotesLoadingStatus(false));
+      // After all the operation, execute the optional callback
+      callback();
     });
-
-    // After all the operation, execute the optional callback
-    callback();
   } catch (err) {
     console.error(err);
   }
@@ -127,10 +126,9 @@ export const updateNoteContent = (
       });
       // End the loading
       dispatch(setNotesLoadingStatus(false));
+      // After all the operation, execute the optional callback
+      callback();
     });
-
-    // After all the operation, execute the optional callback
-    callback();
   } catch (err) {
     console.error(err);
   }
@@ -157,11 +155,9 @@ export const updateInShortcutStatusNote = (
       });
       // End the loading
       dispatch(setNotesLoadingStatus(false));
+      // After all the operation, execute the optional callback
+      callback();
     });
-    console.log("breakpoint 1");
-
-    // After all the operation, execute the optional callback
-    callback();
   } catch (err) {
     console.error(err);
   }
@@ -188,10 +184,9 @@ export const moveNoteToTrash = (note: NoteType, callback = () => {}) => async (
       });
       // End the loading
       dispatch(setNotesLoadingStatus(false));
+      // After all the operation, execute the optional callback
+      callback();
     });
-
-    // After all the operation, execute the optional callback
-    callback();
   } catch (err) {
     console.error(err);
   }

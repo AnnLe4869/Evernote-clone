@@ -12,6 +12,7 @@ import {
 import { NotebookType, NoteType, StoreType } from "../type/globalType";
 import { setNotebookLoadingStatus } from "./loadingAction";
 import { addNewNote } from "./noteAction";
+import { batch as reduxBatch } from "react-redux"; // To combine multiple dispatch into one
 
 export const fetchAllNotebooks = (callback = () => {}) => async (
   dispatch: Dispatch<any>,
@@ -137,16 +138,19 @@ export const addNoteToNotebook = (
       ...notebook,
       notes: [...notebook.notes, note.id],
     };
-    // Update on the store
-    dispatch({
-      type: UPDATE_NOTEBOOK,
-      updatedNotebook: updatedNotebook,
-    });
-    // Set the loading status to false
-    dispatch(setNotebookLoadingStatus(false));
 
-    // After all the operation, execute the optional callback
-    callback();
+    reduxBatch(() => {
+      // Update on the store
+      dispatch({
+        type: UPDATE_NOTEBOOK,
+        updatedNotebook: updatedNotebook,
+      });
+      // Set the loading status to false
+      dispatch(setNotebookLoadingStatus(false));
+
+      // After all the operation, execute the optional callback
+      callback();
+    });
   } catch (err) {
     console.error(err);
   }
@@ -181,14 +185,17 @@ export const removeNoteFromNotebook = (
         return oldNoteList;
       })(),
     };
-    dispatch({
-      type: UPDATE_NOTEBOOK,
-      updatedNotebook: updatedNotebook,
-    });
-    dispatch(setNotebookLoadingStatus(false));
 
-    // After all the operation, execute the optional callback
-    callback();
+    reduxBatch(() => {
+      dispatch({
+        type: UPDATE_NOTEBOOK,
+        updatedNotebook: updatedNotebook,
+      });
+      dispatch(setNotebookLoadingStatus(false));
+
+      // After all the operation, execute the optional callback
+      callback();
+    });
   } catch (err) {
     console.error(err);
   }
