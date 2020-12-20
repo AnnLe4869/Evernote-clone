@@ -45,21 +45,13 @@ export default function EditorContent() {
     }
   }, [selectedNote]);
 
-  useEffect(() => {
-    return () => {
-      console.log("Run on unmount");
-    };
-  }, []);
   // Handle when user click away from the editor
   // For now this only apply for non-route-link element
   const handleClickAway = () => {
     // Check if the content of the item is different from the content in the editor
     if (focusStatus) setFocusStatus(false);
-    console.log(note);
-    console.log(editorText);
     if (note && note.content !== editorText) {
       dispatch(updateNoteContent(editorText, note));
-      console.log("It run in side dispatch");
     }
   };
 

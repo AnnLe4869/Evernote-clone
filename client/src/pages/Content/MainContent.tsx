@@ -3,15 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import { fetchAllNotes } from "../../redux/actions/noteAction";
-import {
-  addNewNotebook,
-  fetchAllNotebooks,
-} from "../../redux/actions/notebookAction";
-import { MY_HOME } from "../../redux/constants/constants";
-import { StoreType } from "../../redux/type/globalType";
+import { fetchAllNotebooks } from "../../redux/actions/notebookAction";
 import AllPageEditor from "./Editor/AllPageEditor";
 import FilteredPageEditor from "./Editor/FilteredPageEditor";
 import ShortcutsPageEditor from "./Editor/ShortcutsPageEditor";
@@ -27,19 +23,10 @@ import FilteredPageNoteList from "./NoteList/FilteredPageNoteList";
 import ShortcutsPageNoteList from "./NoteList/ShortcutsPageNoteList";
 import TrashPageNoteList from "./NoteList/TrashPageNoteList";
 
-import { CSSTransition } from "react-transition-group";
-
 export default function Main() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
-
-  const notesLoading = useSelector(
-    (store: StoreType) => store.loading.notesLoading
-  );
-  const notebooksLoading = useSelector(
-    (store: StoreType) => store.loading.notebooksLoading
-  );
 
   const [open, setOpen] = useState(!matches);
   const [expandStatus, setExpandStatus] = useState(false);
@@ -50,21 +37,8 @@ export default function Main() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (!notebooksLoading && !notesLoading) {
-      dispatch(addNewNotebook(MY_HOME));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notebooksLoading, notesLoading]);
-
   return (
-    <div
-      style={{
-        height: "100vh",
-        overflow: "hidden",
-      }}
-      className="container"
-    >
+    <div className="container">
       <CssBaseline />
       {!expandStatus ? (
         <Navigator open={open} setOpen={(value) => setOpen(value)} />
@@ -83,7 +57,11 @@ export default function Main() {
               classNames="fade"
               unmountOnExit
             >
-              <ExpandWrapperComponent open={open} expandStatus={expandStatus}>
+              <ExpandWrapperComponent
+                open={open}
+                expandStatus={expandStatus}
+                cssStyle={{ overflow: "visible" }}
+              >
                 <NotebookList />
               </ExpandWrapperComponent>
             </CSSTransition>
@@ -350,6 +328,7 @@ function ExpandWrapperComponent(props: any) {
           style={{
             height: "100vh",
             overflow: "hidden",
+            ...props.cssStyle,
           }}
         >
           {props.children}
@@ -362,6 +341,7 @@ function ExpandWrapperComponent(props: any) {
             paddingLeft: props.open ? "18vw" : "",
             height: "100vh",
             overflow: "hidden",
+            ...props.cssStyle,
           }}
         >
           {props.children}

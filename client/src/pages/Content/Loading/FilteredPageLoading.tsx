@@ -27,10 +27,6 @@ export default function FilterNoteLoading() {
     history.push(`/main/notebooks/${notebookId}/notes/${defaultNote.id}`);
   }, [notebookId]);
 
-  useEffect(() => {
-    console.log(defaultNote);
-  });
-
   return (
     <div>
       <CircularProgress />

@@ -5,6 +5,7 @@ import {
   DELETE_MULTIPLE_NOTES,
   DELETE_NOTEBOOK,
   GET_ALL_NOTEBOOKS,
+  MY_HOME,
   UPDATE_MULTIPLE_NOTES,
   UPDATE_NOTEBOOK,
 } from "../constants/constants";
@@ -13,7 +14,7 @@ import { setNotebookLoadingStatus } from "./loadingAction";
 import { addNewNote } from "./noteAction";
 
 export const fetchAllNotebooks = (callback = () => {}) => async (
-  dispatch: Dispatch,
+  dispatch: Dispatch<any>,
   getState: () => StoreType
 ): Promise<any> => {
   // Get the user's id
@@ -36,11 +37,21 @@ export const fetchAllNotebooks = (callback = () => {}) => async (
         timestamp: timestamp.toDate().toLocaleTimeString(),
       });
     });
+
     // Dispatch the data to reducer
     dispatch({
       type: GET_ALL_NOTEBOOKS,
       allNotebooks: allNotebooks,
     });
+
+    // First fetch always default created MY_HOME notebook if it's not exist yet
+    const homeNotebook = allNotebooks.find(
+      (notebook: { name: string }) => notebook.name === MY_HOME
+    );
+    if (!homeNotebook) {
+      dispatch(addNewNotebook(MY_HOME));
+    }
+
     // Change the loading status to false
     dispatch(setNotebookLoadingStatus(false));
 

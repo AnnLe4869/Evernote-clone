@@ -2,7 +2,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -29,6 +29,10 @@ export default function ShortcutsPageHeaderUtilityList() {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    console.log("breakpoint 2");
+  });
+
   const openDialog = () => {
     setDialogOpenStatus(true);
   };
@@ -38,6 +42,7 @@ export default function ShortcutsPageHeaderUtilityList() {
       dispatch(
         updateInShortcutStatusNote(currentNote, !currentNote.inShortcut, () => {
           history.push(`/main/shortcuts/notes`);
+          console.log("breakpoint 3");
         })
       );
     }

@@ -80,7 +80,7 @@ export default function NotebookList() {
           </TableHead>
           <TableBody>
             {notebooks.map((notebook) => (
-              <TableRow key={notebook.name} hover>
+              <TableRow key={notebook.id} hover>
                 <TableCell component="th" scope="row">
                   <Link to={`/main/notebooks/${notebook.id}/notes`}>
                     {notebook.name} ({notebook.notes.length})

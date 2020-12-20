@@ -158,6 +158,7 @@ export const updateInShortcutStatusNote = (
       // End the loading
       dispatch(setNotesLoadingStatus(false));
     });
+    console.log("breakpoint 1");
 
     // After all the operation, execute the optional callback
     callback();
@@ -247,23 +248,32 @@ export const permanentDeleteNote = (
           return oldNoteList;
         })(),
       };
-      dispatch({
-        type: UPDATE_NOTEBOOK,
-        updatedNotebook: updatedNotebook,
+      reduxBatch(() => {
+        dispatch({
+          type: UPDATE_NOTEBOOK,
+          updatedNotebook: updatedNotebook,
+        });
+        dispatch({
+          type: DELETE_NOTE,
+          deletedNote: note,
+        });
+        dispatch(setNotesLoadingStatus(false));
+        // After all the operation, execute the optional callback
+        callback();
+      });
+    } else {
+      reduxBatch(() => {
+        // Dispatch delete note action to stores
+        dispatch({
+          type: DELETE_NOTE,
+          deletedNote: note,
+        });
+        // End the loading
+        dispatch(setNotesLoadingStatus(false));
+        // After all the operation, execute the optional callback
+        callback();
       });
     }
-    console.log("breakpoint 3");
-    // Dispatch delete note action to stores
-    dispatch({
-      type: DELETE_NOTE,
-      deletedNote: note,
-    });
-    console.log("breakpoint 1");
-    // After all the operation, execute the optional callback
-    callback();
-    console.log("breakpoint 2");
-    // End the loading
-    dispatch(setNotesLoadingStatus(false));
   } catch (err) {
     console.error(err);
   }
