@@ -9,16 +9,14 @@ import {
 } from "@material-ui/core";
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewNotebook } from "../../../redux/actions/notebookAction";
-import { NotebookType } from "../../../redux/type/globalType";
+import { addNewNotebook } from "../../../../redux/actions/notebookAction";
 
 interface Props {
   dialogOpen: boolean;
   closeDialog: () => void;
-  notebook: NotebookType;
 }
 
-export default function ShareNotebookDialog(props: Props) {
+export default function NewNotebookDialog(props: Props) {
   const { dialogOpen, closeDialog } = props;
 
   const dispatch = useDispatch();
@@ -42,6 +40,7 @@ export default function ShareNotebookDialog(props: Props) {
         open={dialogOpen}
         onClose={closeDialog}
         aria-labelledby="form-dialog-title"
+        fullWidth
       >
         <DialogTitle id="form-dialog-title">Create new notebook</DialogTitle>
         <DialogContent>

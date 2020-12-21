@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { StoreType } from "../../../redux/type/globalType";
-import NewNotebookDialog from "./NewNotebookDialog";
+import NewNotebookDialog from "./Dialog/NewNotebookDialog";
 import NotebookUtilityList from "./NotebookUtilityList";
 
 const useStyles = makeStyles((theme) => ({

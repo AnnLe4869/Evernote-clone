@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { toggleNotebookInShortcutStatus } from "../../../redux/actions/notebookAction";
 import { MY_HOME } from "../../../redux/constants/constants";
 import { NotebookType } from "../../../redux/type/globalType";
-import ChangeNameDialog from "./ChangeNameDialog";
-import DeleteNotebookDialog from "./DeleteNotebookDialog";
-import ShareNotebookDialog from "./ShareNotebookDialog";
+import ChangeNameDialog from "./Dialog/ChangeNameDialog";
+import DeleteNotebookDialog from "./Dialog/DeleteNotebookDialog";
+import ShareNotebookDialog from "./Dialog/ShareNotebookDialog";
 
 interface Props {
   notebook: NotebookType;

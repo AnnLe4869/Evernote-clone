@@ -11,8 +11,8 @@ import { useDispatch } from "react-redux";
 import {
   completeDeleteNotebook,
   partialDeleteNotebook,
-} from "../../../redux/actions/notebookAction";
-import { NotebookType } from "../../../redux/type/globalType";
+} from "../../../../redux/actions/notebookAction";
+import { NotebookType } from "../../../../redux/type/globalType";
 
 interface Props {
   dialogOpen: boolean;

@@ -9,19 +9,21 @@ import {
 } from "@material-ui/core";
 import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewNotebook } from "../../../redux/actions/notebookAction";
+import { NotebookType } from "../../../../redux/type/globalType";
+import { changeNotebookName } from "../../../../redux/actions/notebookAction";
 
 interface Props {
   dialogOpen: boolean;
   closeDialog: () => void;
+  notebook: NotebookType;
 }
 
-export default function NewNotebookDialog(props: Props) {
-  const { dialogOpen, closeDialog } = props;
+export default function ChangeNameDialog(props: Props) {
+  const { dialogOpen, closeDialog, notebook } = props;
 
   const dispatch = useDispatch();
 
-  const [notebookName, setNotebookName] = useState<string>("");
+  const [notebookName, setNotebookName] = useState<string>(notebook.name);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -29,8 +31,8 @@ export default function NewNotebookDialog(props: Props) {
     setNotebookName(event.target.value);
   };
 
-  const createNotebook = () => {
-    dispatch(addNewNotebook(notebookName));
+  const submitNameChange = () => {
+    dispatch(changeNotebookName(notebook, notebookName));
     closeDialog();
   };
 
@@ -42,19 +44,15 @@ export default function NewNotebookDialog(props: Props) {
         aria-labelledby="form-dialog-title"
         fullWidth
       >
-        <DialogTitle id="form-dialog-title">Create new notebook</DialogTitle>
+        <DialogTitle id="form-dialog-title">Rename notebook</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Notebooks are useful for grouping notes around a common topic. They
-            can be private or shared.
-          </DialogContentText>
+          <DialogContentText>Name</DialogContentText>
           <TextField
             autoFocus
             value={notebookName}
             onChange={handleChange}
             margin="dense"
             id="name"
-            label="Notebook name"
             type="text"
             fullWidth
           />
@@ -64,10 +62,10 @@ export default function NewNotebookDialog(props: Props) {
             Cancel
           </Button>
           <Button
-            onClick={createNotebook}
+            onClick={submitNameChange}
             color="primary"
             variant="contained"
-            disabled={notebookName === ""}
+            disabled={notebookName === "" || notebook.name === notebookName}
           >
             Continue
           </Button>
