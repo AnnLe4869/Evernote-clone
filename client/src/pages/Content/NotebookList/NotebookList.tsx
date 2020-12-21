@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NotebookList() {
   const allNotebooks = useSelector((state: StoreType) => state.notebooks);
   const allNotes = useSelector((state: StoreType) => state.notes);
+  const user = useSelector((state: StoreType) => state.user);
   const classes = useStyles();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -95,7 +96,7 @@ export default function NotebookList() {
                     )
                   </Link>
                 </TableCell>
-                <TableCell align="right">{notebook.creator}</TableCell>
+                <TableCell align="right">{user.displayName}</TableCell>
                 <TableCell align="right">{notebook.timestamp}</TableCell>
                 <TableCell align="right">None</TableCell>
                 <TableCell align="right">
