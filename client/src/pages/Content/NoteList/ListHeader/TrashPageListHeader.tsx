@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
-
 import ListItem from "@material-ui/core/ListItem";
-
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
 import ListHeaderDialog from "./ListHeaderDialog/ListHeaderDialog";
+import TrashPageListHeaderFootnote from "./ListHeaderFootnote/TrashPageListHeaderFootnote";
 import ListHeaderTitle from "./ListHeaderTitle/TrashPageListHeaderTitle";
-import ListHeaderFootnote from "./ListHeaderFootnote/ListHeaderFootnote";
 import ListHeaderUtility from "./ListHeaderUtility/ListHeaderUtility";
 
 const useStyles = makeStyles(() => ({
@@ -36,7 +33,7 @@ export default function TrashPageListHeader() {
       <ListHeaderTitle />
 
       {/* Show number of notes within this notebook */}
-      <ListHeaderFootnote />
+      <TrashPageListHeaderFootnote />
 
       {/* This is the utility button and the menu that pop up when click the button*/}
       <ListHeaderUtility

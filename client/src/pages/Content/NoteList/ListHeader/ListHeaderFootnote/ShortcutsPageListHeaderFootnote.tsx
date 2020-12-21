@@ -2,6 +2,8 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { useSelector } from "react-redux";
+import { StoreType } from "../../../../../redux/type/globalType";
 
 const useStyles = makeStyles((theme) => ({
   headerSubtitle: {
@@ -11,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListHeaderFootnote() {
+export default function ShortcutsPageListHeaderFootnote() {
   const classes = useStyles();
-
+  const allNotes = useSelector((store: StoreType) => store.notes);
   return (
     <Typography
       component="span"
@@ -21,7 +23,7 @@ export default function ListHeaderFootnote() {
       color="textSecondary"
       className={classes.headerSubtitle}
     >
-      3 notes
+      {allNotes.filter((note) => note.inShortcut && !note.inTrash).length} notes
     </Typography>
   );
 }

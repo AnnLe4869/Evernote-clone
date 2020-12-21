@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NotebookList() {
-  const notebooks = useSelector((state: StoreType) => state.notebooks);
+  const allNotebooks = useSelector((state: StoreType) => state.notebooks);
+  const allNotes = useSelector((state: StoreType) => state.notes);
   const classes = useStyles();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function NotebookList() {
     setDialogOpen(false);
   };
 
-  if (notebooks.length === 0) return <div>Loading</div>;
+  if (allNotebooks.length === 0) return <div>Loading</div>;
 
   return (
     <Container>
@@ -79,11 +80,19 @@ export default function NotebookList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {notebooks.map((notebook) => (
+            {allNotebooks.map((notebook) => (
               <TableRow key={notebook.id} hover>
                 <TableCell component="th" scope="row">
                   <Link to={`/main/notebooks/${notebook.id}/notes`}>
-                    {notebook.name} ({notebook.notes.length})
+                    {notebook.name} (
+                    {
+                      // Notes must be not in trash
+                      allNotes.filter(
+                        (note) =>
+                          notebook?.notes.includes(note.id) && !note.inTrash
+                      ).length
+                    }
+                    )
                   </Link>
                 </TableCell>
                 <TableCell align="right">{notebook.creator}</TableCell>
