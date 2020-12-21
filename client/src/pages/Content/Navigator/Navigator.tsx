@@ -7,6 +7,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
 import clsx from "clsx";
 import React, { useEffect } from "react";
+import AccountSetting from "./AccountSetting/AccountSetting";
 import AllNotesView from "./AllNotesView/AllNotesView";
 import TrashView from "./DeletedView/TrashView";
 import NavigationSearch from "./NavigatorSearch/NavigatorSearch";
@@ -93,6 +94,8 @@ export default function Navigator({ open, setOpen }: Props) {
           paper: classes.drawerPaper,
         }}
       >
+        {/* This is the account setting  */}
+        <AccountSetting />
         {/* This is the search bar */}
         <NavigationSearch />
         {/* This is the new note button */}

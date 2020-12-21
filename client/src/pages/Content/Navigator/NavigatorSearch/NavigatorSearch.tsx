@@ -12,16 +12,17 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
+    color: "white",
   },
 
   search: {
     position: "relative",
     backgroundColor: fade(theme.palette.common.white, 0.15),
     marginRight: theme.spacing(2),
-    marginLeft: 0,
     width: "100%",
+    marginTop: theme.spacing(3),
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
+      marginLeft: theme.spacing(2),
       width: "auto",
     },
   },

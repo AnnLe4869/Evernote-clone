@@ -15,10 +15,14 @@ import { StoreType } from "../../../../redux/type/globalType";
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
-    margin: theme.spacing(2),
-    width: "calc(100% - 45px)",
-    borderRadius: "20px;",
+    marginTop: theme.spacing(2),
+    width: "100%",
+    borderRadius: "20px",
     color: "inherit",
+  },
+  container: {
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
   },
 }));
 
@@ -59,7 +63,7 @@ export default function FilteredPageNewNoteButton() {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       <ThemeProvider theme={buttonTheme}>
         <Button
           variant="contained"
