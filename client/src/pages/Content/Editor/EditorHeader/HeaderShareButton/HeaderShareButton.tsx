@@ -4,7 +4,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import ShareNoteHeaderDialog from "./ShareNoteHeaderDialog";
 
-const theme = createMuiTheme({
+const headerShareButtonTheme = createMuiTheme({
   palette: {
     primary: green,
   },
@@ -22,7 +22,7 @@ export default function HeaderShareButton() {
   };
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={headerShareButtonTheme}>
         <Button
           variant="contained"
           color="primary"

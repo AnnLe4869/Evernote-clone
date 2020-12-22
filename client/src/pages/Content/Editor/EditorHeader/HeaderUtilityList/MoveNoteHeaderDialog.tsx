@@ -29,7 +29,7 @@ import useNotebook from "../../../../../utils/useNotebook";
 import useNotebookFromNote from "../../../../../utils/useNotebookFromNote";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 
-const theme = createMuiTheme({
+const moveNoteHeaderDialogTheme = createMuiTheme({
   palette: {
     primary: green,
   },
@@ -192,7 +192,7 @@ export default function MoveNoteHeaderDialog({
         </DialogContent>
         {/* After we choose the place to move to we click the Move button */}
         <DialogActions>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={moveNoteHeaderDialogTheme}>
             <Button
               variant="outlined"
               color="primary"

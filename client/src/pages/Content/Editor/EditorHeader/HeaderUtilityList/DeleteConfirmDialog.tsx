@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 import { permanentDeleteNote } from "../../../../../redux/actions/noteAction";
 import useNoteFromPath from "../../../../../utils/useNoteFromPath";
 
-const theme = createMuiTheme({
+const deleteConfirmDialogTheme = createMuiTheme({
   palette: {
     primary: green,
   },
@@ -89,7 +89,7 @@ export default function DeleteConfirmDialog({
         </DialogContent>
         {/* After we choose the place to move to we click the Move button */}
         <DialogActions>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={deleteConfirmDialogTheme}>
             <Button variant="outlined" onClick={handleCloseDialog}>
               Cancel
             </Button>

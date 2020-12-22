@@ -13,7 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
-const theme = createMuiTheme({
+const shareNoteHeaderDialogTheme = createMuiTheme({
   palette: {
     primary: green,
   },
@@ -72,7 +72,7 @@ export default function ShareHeaderDialog({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={shareNoteHeaderDialogTheme}>
           <Button
             variant="outlined"
             color="primary"

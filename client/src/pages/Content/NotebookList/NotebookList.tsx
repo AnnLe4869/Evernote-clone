@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  createMuiTheme,
   makeStyles,
   Paper,
   Table,
@@ -9,14 +10,22 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  ThemeProvider,
   Typography,
 } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { StoreType } from "../../../redux/type/globalType";
 import NewNotebookDialog from "./Dialog/NewNotebookDialog";
 import NotebookUtilityList from "./NotebookUtilityList";
+
+const newNotebookButtonTheme = createMuiTheme({
+  palette: {
+    primary: green,
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -61,14 +70,17 @@ export default function NotebookList() {
       </Typography>
 
       {/* Button for adding new notebook */}
-      <Button
-        className={classes.addNotebookButton}
-        variant="outlined"
-        color="primary"
-        onClick={openDialog}
-      >
-        Add new notebook
-      </Button>
+      <ThemeProvider theme={newNotebookButtonTheme}>
+        <Button
+          className={classes.addNotebookButton}
+          variant="outlined"
+          color="primary"
+          onClick={openDialog}
+        >
+          Add new notebook
+        </Button>
+      </ThemeProvider>
+
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>

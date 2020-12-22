@@ -8,7 +8,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { addNewNote } from "../../../../redux/actions/noteAction";
 import { MY_HOME } from "../../../../redux/constants/constants";
 import { StoreType } from "../../../../redux/type/globalType";
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buttonTheme = createMuiTheme({
+const newNoteButtonTheme = createMuiTheme({
   palette: {
     primary: green,
   },
@@ -39,16 +39,39 @@ interface MatchParams {
 export default function FilteredPageNewNoteButton() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const allNotebooks = useSelector((store: StoreType) => store.notebooks);
 
-  const match = useRouteMatch<MatchParams>("/main/notebooks/:notebookId/notes");
+  const filteredPageMatch = useRouteMatch<MatchParams>(
+    "/main/notebooks/:notebookId/notes"
+  );
+  const trashPageMatch = useRouteMatch("/main/trash");
+  const shortcutsPageMatch = useRouteMatch("/main/shortcuts");
+  const notebookListPageMatch = useRouteMatch("/main/notebooks");
 
   const handleClick = () => {
+    // Check if the user is in the trash page or shortcuts page or notebooks page
+    if (trashPageMatch || shortcutsPageMatch || notebookListPageMatch) {
+      // If it's, find the MY_HOME notebook and add the note to it
+      const notebook = allNotebooks.find(
+        (notebook) => notebook.name === MY_HOME
+      );
+      if (notebook)
+        dispatch(
+          addNewNote(notebook, () => {
+            // After the operation redirect to allNotes page
+            history.push("/main/notes");
+          })
+        );
+
+      return;
+    }
+
     // Check if there is notebook specified in the URL
-    if (match && match.params.notebookId) {
+    if (filteredPageMatch && filteredPageMatch.params.notebookId) {
       // Find the notebook accordingly
       const notebook = allNotebooks.find(
-        (notebook) => notebook.id === match.params.notebookId
+        (notebook) => notebook.id === filteredPageMatch.params.notebookId
       );
       // This check is just to go around the undefined error of the TypeScript
       if (notebook) dispatch(addNewNote(notebook));
@@ -64,7 +87,7 @@ export default function FilteredPageNewNoteButton() {
 
   return (
     <div className={classes.container}>
-      <ThemeProvider theme={buttonTheme}>
+      <ThemeProvider theme={newNoteButtonTheme}>
         <Button
           variant="contained"
           color="primary"
