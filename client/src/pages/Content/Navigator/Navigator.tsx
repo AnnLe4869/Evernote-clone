@@ -70,6 +70,7 @@ export default function Navigator({ open, setOpen }: Props) {
   useEffect(() => {
     if (matches) setOpen(true);
     if (!matches) setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matches]);
 
   return (

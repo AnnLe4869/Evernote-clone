@@ -12,20 +12,20 @@ export default function FilterNoteLoading() {
 
   const selectedNotebook = useMemo(
     () => allNotebooks.find((notebook) => notebook.id === notebookId),
-    [notebookId]
+    [allNotebooks, notebookId]
   );
   const defaultNote = useMemo(
     () =>
       allNotes.find(
         (note) => selectedNotebook?.notes.includes(note.id) && !note.inTrash
       ),
-    [notebookId]
+    [allNotes, selectedNotebook]
   );
 
   useEffect(() => {
     if (!defaultNote) return;
     history.push(`/main/notebooks/${notebookId}/notes/${defaultNote.id}`);
-  }, [notebookId]);
+  }, [defaultNote, history, notebookId]);
 
   return (
     <div>

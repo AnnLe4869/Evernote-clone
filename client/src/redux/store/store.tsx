@@ -1,7 +1,6 @@
-import { configureStore, createStore, applyMiddleware } from "@reduxjs/toolkit";
+import { applyMiddleware, createStore } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-
 // import authReducer from "../reducers/authReducer";
 // import noteReducer from "../reducers/noteReducer";
 // import loadingReducer from "../reducers/loadingReducer";
@@ -15,13 +14,9 @@ import rootReducer from "../reducers";
 //   loading: loadingReducer,
 // };
 
-
-
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
 export default store;
-
-
