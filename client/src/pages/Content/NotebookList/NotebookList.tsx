@@ -96,7 +96,9 @@ export default function NotebookList() {
                     )
                   </Link>
                 </TableCell>
-                <TableCell align="right">{user.displayName}</TableCell>
+                <TableCell align="right">
+                  {user.displayName || user.email}
+                </TableCell>
                 <TableCell align="right">{notebook.timestamp}</TableCell>
                 <TableCell align="right">None</TableCell>
                 <TableCell align="right">

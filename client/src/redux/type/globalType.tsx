@@ -1,5 +1,6 @@
 export interface UserType {
   displayName: string | null;
+  email: string | null;
   photoURL: string | null;
   id: string;
 }

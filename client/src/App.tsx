@@ -22,8 +22,8 @@ function App() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        const { displayName, uid, photoURL } = user;
-        dispatch(setCurrentUser({ displayName, id: uid, photoURL }));
+        const { displayName, uid, photoURL, email } = user;
+        dispatch(setCurrentUser({ displayName, id: uid, photoURL, email }));
       }
     });
   });

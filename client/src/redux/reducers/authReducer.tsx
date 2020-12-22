@@ -13,6 +13,7 @@ const user: UserType = {
   id: "",
   displayName: "",
   photoURL: "",
+  email: "",
 };
 
 export default function (
@@ -42,6 +43,7 @@ export default function (
         id: "",
         displayName: "",
         photoURL: "",
+        email: "",
       };
     default:
       return initialState;

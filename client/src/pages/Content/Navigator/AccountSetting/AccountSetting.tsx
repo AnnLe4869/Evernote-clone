@@ -82,10 +82,6 @@ export default function AccountSetting() {
     }
   }
 
-  if (!user.displayName || !user.photoURL) {
-    return <div></div>;
-  }
-
   return (
     <div
       className={classes.container}
@@ -97,8 +93,10 @@ export default function AccountSetting() {
       <Grid container alignItems="center">
         <Grid item xs={2} md={2} lg={2}>
           <Avatar
-            alt={user.displayName}
-            src={user.photoURL}
+            alt={
+              user.displayName || user.email?.split("@").shift() || "No name"
+            }
+            src={user.photoURL || "img"}
             className={classes.icon}
           />
         </Grid>
@@ -113,7 +111,9 @@ export default function AccountSetting() {
           className={classes.text}
         >
           <Grid item>
-            <Typography>{user.displayName}</Typography>
+            <Typography>
+              {user.displayName || user.email?.split("@").shift() || "No name"}
+            </Typography>
           </Grid>
           <Grid item>
             <ArrowDropDownIcon />
