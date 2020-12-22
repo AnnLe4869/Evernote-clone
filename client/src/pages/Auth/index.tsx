@@ -1,26 +1,19 @@
 import React, { useEffect } from "react";
-import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
+import {
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useRouteMatch,
+} from "react-router-dom";
+import { StoreType } from "../../redux/type/globalType";
 import LogIn from "./LogIn";
-import SignUp from "./SignUp";
-import { logInWithGoogle } from "../../redux/actions/authAction";
-import { UserType } from "../../redux/type/globalType";
-
-interface RootState {
-  user: UserType;
-}
 
 export default function Auth() {
   const history = useHistory();
   const match = useRouteMatch();
-  const dispatch = useDispatch();
-  const userId = useSelector((store: RootState) => store.user.id);
-
-  const handleClick = () => {
-    dispatch(logInWithGoogle());
-  };
+  const userId = useSelector((store: StoreType) => store.user.id);
 
   useEffect(() => {
     if (userId) {
@@ -32,10 +25,7 @@ export default function Auth() {
     <div>
       <Switch>
         <Route path={`${match.url}/login`}>
-          <LogIn signIn={handleClick}></LogIn>
-        </Route>
-        <Route path={`${match.url}/signup`}>
-          <SignUp></SignUp>
+          <LogIn></LogIn>
         </Route>
         <Redirect to={`${match.url}/login`}></Redirect>
       </Switch>

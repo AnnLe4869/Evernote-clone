@@ -3,6 +3,8 @@ import {
   LOG_IN_WITH_GOOGLE,
   LOG_OUT,
   SET_CURRENT_USER,
+  LOG_IN_WITH_GITHUB,
+  LOG_IN_WITH_TWITTER,
 } from "../../constants/constants";
 import { UserType } from "../globalType";
 
@@ -16,8 +18,11 @@ interface setCurrentUserAction {
   user: UserType;
 }
 
-interface logInWithGoogleAction {
-  type: typeof LOG_IN_WITH_GOOGLE;
+interface logInWithOAuth {
+  type:
+    | typeof LOG_IN_WITH_GOOGLE
+    | typeof LOG_IN_WITH_TWITTER
+    | typeof LOG_IN_WITH_GITHUB;
 }
 
 interface logOutAction {
@@ -27,5 +32,5 @@ interface logOutAction {
 export type authActionTypes =
   | getCurrentUserAction
   | setCurrentUserAction
-  | logInWithGoogleAction
+  | logInWithOAuth
   | logOutAction;

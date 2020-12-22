@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import { useDispatch } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -57,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
 
   return (
     <div>
@@ -68,6 +73,7 @@ export default function SignUp() {
             <Typography component="h1" variant="h4" className={classes.header}>
               Sign Up
             </Typography>
+            {/* Redirect to sign in page if already has an account */}
             <Typography
               component="h1"
               variant="subtitle2"
@@ -78,6 +84,7 @@ export default function SignUp() {
                 Sign in
               </Link>
             </Typography>
+            {/* Form to sign up */}
             <form className={classes.form}>
               <TextField
                 margin="normal"

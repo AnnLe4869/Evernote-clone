@@ -1,6 +1,8 @@
 // For authentication
 export const LOG_IN_WITH_PASSWORD = "LOG_IN_WITH_PASSWORD";
 export const LOG_IN_WITH_GOOGLE = "LOG_IN_WITH_GOOGLE";
+export const LOG_IN_WITH_TWITTER = "LOG_IN_WITH_TWITTER";
+export const LOG_IN_WITH_GITHUB = "LOG_IN_WITH_GITHUB";
 export const SIGN_UP_WITH_PASSWORD = "SIGN_UP_WITH_PASSWORD";
 export const LOG_OUT = "LOG_OUT";
 

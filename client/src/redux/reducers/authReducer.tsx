@@ -1,6 +1,8 @@
 import {
   GET_CURRENT_USER,
+  LOG_IN_WITH_GITHUB,
   LOG_IN_WITH_GOOGLE,
+  LOG_IN_WITH_TWITTER,
   LOG_OUT,
   SET_CURRENT_USER,
 } from "../constants/constants";
@@ -31,7 +33,10 @@ export default function (
       };
 
     case LOG_IN_WITH_GOOGLE:
+    case LOG_IN_WITH_TWITTER:
+    case LOG_IN_WITH_GITHUB:
       return initialState;
+
     case LOG_OUT:
       return {
         id: "",
