@@ -12,12 +12,10 @@ import useNoteFromPath from "../../../../utils/useNoteFromPath";
 
 const useStyles = makeStyles(() => ({
   editor: {
-    height: "100vh",
-    background: "green",
+    height: "100vh"
   },
   editorContentWrite: {
     height: "100%",
-    background: "blue",
   },
   editorContentRead: {
     height: "100%",
