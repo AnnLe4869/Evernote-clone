@@ -2,7 +2,7 @@
 
 [Evernote clone app](https://evernote-e077e.web.app/)
 
-![Demo](/demo.webm.mov)
+![Demo](/demo.gif)
 
 ## Overview
 
