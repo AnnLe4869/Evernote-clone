@@ -60,7 +60,7 @@ export default function DeleteNotebookDialog(props: Props) {
             color="secondary"
             variant="contained"
           >
-            Delete notebook but only move notes to Trash
+            Delete notebook and move notes to Trash
           </Button>
           <Button
             onClick={handleCompleteDeleteNotebook}
